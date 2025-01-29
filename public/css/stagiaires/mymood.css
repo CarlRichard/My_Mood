@@ -1,0 +1,353 @@
+/*=====DESKTOP=====*/
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header_button {
+  padding: 10px 15px;
+  border-radius: 4px;
+  background-color: var(--tertiary-color);
+  color: var(--secondary-color);
+  margin-right: 25px;
+  box-shadow: 2px 2px 8px -2px var(--border-color);
+  border: 1px solid var(--secondary-bg-color);
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.header_button:hover {
+  scale: 1.04;
+  background-color: var(--button-hover-bg-color);
+  font-weight: 500;
+}
+.header_button > span {
+  font-size: 20px;
+  font-weight: lighter;
+}
+
+/* MAIN */
+h1 {
+  text-align: center;
+  margin-top: 50px;
+  color: var(--primary-color);
+}
+h1 span {
+  text-align: center;
+  margin-top: 25px;
+  color: #d91e41;
+  text-decoration: underline;
+}
+h2 {
+  text-align: center;
+  color: var(--primary-color);
+}
+/* SECTION DESCRIPTION MY MOOD */
+.section_description_mymood {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin: 50px auto;
+  margin-bottom: 0;
+  width: 700px;
+}
+
+.section_description_mymood p {
+  color: var(--primary-color);
+}
+
+/* SECTION HUMEUR MY MOOD */
+.section_humeur_mymood {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 60px;
+  margin: 50px auto;
+  border: 1px solid var(--secondary-color);
+  border-radius: 20px;
+  padding: 30px 0 30px 0;
+  width: 700px;
+  box-shadow: 2px 2px 8px -4px #ff002f;
+}
+.humeur_container_slide_text {
+  width: 100%;
+  padding: 0 10px;
+}
+.humeur_container_text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 360px;
+}
+.humeur_container_slide_text p {
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.humeur_container_slide_text p > span {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--primary-color);
+}
+.humeur_slider_container {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eff2f7;
+  width: 600px;
+  height: 60px;
+  border-radius: 50px;
+  margin-top: 20px;
+  box-shadow: 2px 2px 8px -6px #212529;
+}
+.slider {
+  width: 550px;
+  height: 16px;
+  appearance: none;
+  background: linear-gradient(to right, #00ff4d, #ffd25e, #ff0000);
+  border-radius: 50px;
+}
+/* Personnaliser le curseur pour Webkit (Chrome, Safari) */
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 42px;
+  height: 42px;
+  background-color: var(--tertiary-color);
+  border-radius: 50%;
+  box-shadow: 0px 0px 8px -2px var(--primary-color);
+  transition: 0.2s;cursor: pointer;
+}
+.slider::-webkit-slider-thumb:hover {
+  scale: 1.07;
+}
+.humeur_container_button_appel {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  gap: 35px;
+  margin: 0 10px;
+}
+.humeur_container_appel {
+  display: block;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background-color: #ff0a0a;
+  transition: 0.2s;
+  box-shadow: 2px 2px 8px -2px #212529;
+}
+.humeur_container_appel:hover {
+  scale: 1.05;
+  background-color: #ff0000;
+}
+.humeur_appel {
+  width: 65px;
+  height: 65px;
+  background-color: #d72727;
+  position: relative;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.5));
+  transition: 0.2s;
+}
+.humeur_appel:hover {
+  background-color: #ff0000;
+}
+.humeur_appel > p {
+  display: block;
+  color: var(--tertiary-color);
+  position: absolute;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: center;
+}
+.humeur_appel > p > span {
+  font-size: 28px;
+  font-weight: lighter;
+}
+.humeur_button {
+  height: fit-content;
+  background-color: #023e8a;
+  color: var(--tertiary-color);
+  padding: 12px 14px;
+  border-radius: 7px;
+  cursor: pointer;
+  box-shadow: 2px 2px 8px -2px var(--secondary-bg-color);
+  transition: 0.2s;
+  border: 1px solid var(--secondary-bg-color);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.humeur_button:hover {
+  scale: 1.03;
+  background-color: #004aaa;
+}
+.humeur_button > span {
+  font-size: 18px;
+  font-weight: lighter;
+}
+.msg_ok_humeur {
+  margin-top: 15px;
+  font-size: 16px;
+  text-align: center;
+  font-weight: 500;
+  color: red;
+}
+  /* FOOTER */
+  footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+/*=====TABLET=====*/
+@media (max-width: 768px) {
+  /* HEADER */
+  .header_button {
+    padding: 10px 30px;
+  }
+  /* MAIN */
+  h1 {
+    margin-top: 50px;
+  }
+  /* SECTION DESCRIPTION MY MOOD */
+  .section_description_mymood {
+    width: 400px;
+    margin: 0px auto;
+    margin-top: 50px;
+  }
+  /* SECTION HUMEUR MY MOOD */
+  .section_humeur_mymood {
+    width: 400px;
+    margin: 40px auto;
+    gap: 40px;
+  }
+  .humeur_container_text {
+    gap: 140px;
+  }
+  .humeur_container_slide_text p > span {
+    font-size: 20px;
+  }
+  .humeur_slider_container {
+    width: 380px;
+    height: 45px;
+  }
+  .slider {
+    width: 340px;
+    height: 12px;
+  }
+  .slider::-webkit-slider-thumb {
+    width: 30px;
+    height: 30px;
+  }
+  .humeur_container_button_appel {
+    gap: 25px;
+  }
+  .humeur_button {
+    padding: 10px 12px;
+    font-size: 12px;
+  }
+  .humeur_button > span {
+    font-size: 18px;
+  }
+  .humeur_container_appel {
+    width: 70px;
+    height: 70px;
+  }
+  .humeur_appel {
+    width: 50px;
+    height: 50px;
+  }
+  .humeur_appel > p {
+    font-size: 14px;
+  }
+  .humeur_appel > p > span {
+    font-size: 20px;
+  }
+  .msg_ok_humeur {
+  font-size: 15px;
+  }
+}
+
+/*=====SMARTPHONE=====*/
+@media (max-width: 425px) {
+  /* HEADER */
+  .header_button {
+    width: 115px;
+    height: 35px;
+    padding: 0;
+  }
+  /* MAIN */
+  h1 {
+    margin-top: 35px;
+  }
+  /* SECTION DESCRIPTION MY MOOD */
+  .section_description_mymood {
+    width: 300px;
+    margin-top: 35px;
+  }
+  /* SECTION HUMEUR MY MOOD */
+  .section_humeur_mymood {
+    width: 310px;
+    margin: 35px auto;
+    gap: 30px;
+  }
+  .humeur_container_text {
+    gap: 70px;
+  }
+   .humeur_container_slide_text p > span {
+     font-size: 18px;
+   }
+  .humeur_slider_container {
+    width: 280px;
+    height: 42px;
+  }
+  .slider {
+    width: 245px;
+    height: 11px;
+  }
+  .slider::-webkit-slider-thumb {
+    width: 28px;
+    height: 28px;
+  }
+  .humeur_container_button_appel {
+    gap: 20px;
+  }
+  .humeur_button {
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+  .humeur_button > span {
+    font-size: 16px;
+  }
+  .humeur_container_appel {
+    width: 60px;
+    height: 60px;
+  }
+  .humeur_appel {
+    width: 40px;
+    height: 40px;
+  }
+  .humeur_appel > p {
+    font-size: 12px;
+  }
+  .humeur_appel > p > span {
+    font-size: 16px;
+  }
+  .msg_ok_humeur {
+    font-size: 13px;
+    }
+}

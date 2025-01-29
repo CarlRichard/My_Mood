@@ -1,0 +1,43 @@
+:root {
+
+  /* Colors */
+  --primary-color: #000;
+  --secondary-color: #D91E41;
+  --tertiary-color: #FFF;
+
+  --border-color: #0800ff;
+
+  --primary-bg-color: #1E1C59;
+  --secondary-bg-color: #64bceb;
+  --tertiary-bg-color: #cfc50f;
+  --fourth-bg-color: #4adc54;
+  --fifth-bg-color: #d20426;
+  --sixth-bg-color: #FF6B6E;
+  --seventh-bg-color: #EFF2FF;
+
+  --body-bg-color: #ffffee;
+  --input-focus-bg-color: #caf0f8;
+  --button-hover-bg-color: #ffe169;
+
+  /* Font-family */
+  --ff-title: "Pacifico", serif;
+  --ff-body: "Roboto", sans-sérif;
+
+  /* Font-size */
+  --fs-little-text: 0.8rem;   /* 12px */
+  --fs-middle-text: 0.9rem;   /* 14px */
+  --fs-large-text: 1rem;   /* 16px */
+  --fs-little-h4: 1.125rem;   /* 18px */
+  --fs-h4: 1.25rem;   /* 20px */
+  --fs-little-h2: 1.375rem;   /* 22px */
+  --fs-h3: 1.5rem;   /* 24px */
+  --fs-h2: 1.625rem;   /* 26px */
+  --fs-h1: 1.75rem;   /* 28px */
+  
+  /* Font-weight */
+  --fw-title: 500;
+  --fw-body: 400;
+
+  /* Borders */
+  --button-border: 1px solid var(--primary-bg-color);
+}

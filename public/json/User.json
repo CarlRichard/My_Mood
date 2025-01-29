@@ -1,0 +1,35 @@
+{
+    "Utilisateur": [
+      {
+        "Id_Utilisateur": 1,
+        "Prenom": "John",
+        "Nom": "Doe",
+        "Email": "john.doe@example.com",
+        "Role": 1,
+        "ScoreHumeur": 85,
+        "MotDePasse": "password123",
+        "EstBlackliste": false
+      },
+      {
+        "Id_Utilisateur": 2,
+        "Prenom": "Jane",
+        "Nom": "Smith",
+        "Email": "jane.smith@example.com",
+        "Role": 2,
+        "ScoreHumeur": 72,
+        "MotDePasse": "securepass",
+        "EstBlackliste": false
+      },
+      {
+        "Id_Utilisateur": 3,
+        "Prenom": "Charlie",
+        "Nom": "Brown",
+        "Email": "charlie.brown@example.com",
+        "Role": 1,
+        "ScoreHumeur": 65,
+        "MotDePasse": "charliepass",
+        "EstBlackliste": true
+      }
+    ]
+  }
+  

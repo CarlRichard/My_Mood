@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- GOOGLE ICONS -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/stagiaires/mymood.css" />
+    <link rel="stylesheet" href="../../utils/global.css">
+    <!-- JS -->
+    <script defer src="../../js/stagiaires/mymood.js"></script>
+    <title>MyMood - Mood</title>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="logo-container">
+        <a href="./mymood.html">
+          <img
+          class="rotating logo"
+          src="../../assets/logo-mymood.png"
+          alt="Logo du site MyMood"
+        />
+        </a>
+      </div>
+      <button class="header_button"><span class="material-symbols-outlined">
+        person
+        </span>Mon profil</button>
+    </header>
+    <!-- MAIN -->
+    <main>
+      <h1><span>M</span>y<span>M</span>ood</h1>
+      <h2>Ton humeur, notre soutien.</h2>
+      <!-- SECTION DESCRIPTION MY MOOD -->
+      <section class="section_description_mymood">
+        <p>
+          Cet outil est conçu pour vous permettre de communiquer votre Mood.
+        </p>
+        <p>
+          Grace à ce Mood, nous savons si vous allez bien ou si vous avez besoin
+          d’aide. En cas de besoin vous pouvez appuyer sur le bouton d’appel.
+          Cela enverra une notification à votre formateur ainsi qu’a la
+          médiation.
+        </p>
+        <p>
+          En cas d’urgence, manifestez vous auprès de la personne de l’équipe la
+          plus proche.
+        </p>
+      </section>
+      <!-- SECTION HUMEUR MY MOOD -->
+      <section class="section_humeur_mymood">
+        <div class="humeur_container_button_appel">
+          <a href="#" class="humeur_container_appel">
+            <div class="humeur_appel">
+              <p>SOS<span class="material-symbols-outlined">
+                siren_open
+                </span></p>
+            </div>
+          </a>
+          <button class="humeur_button">ENVOYER HUMEUR<span class="material-symbols-outlined">
+            ios_share
+            </span></button>
+        </div>
+        <div class="humeur_container_slide_text">
+          <div class="humeur_container_text">
+            <p><span class="material-symbols-outlined">
+              arrow_left_alt
+              </span>Je vais bien</p>
+            <p>Je vais mal<span class="material-symbols-outlined">
+              arrow_right_alt
+              </span></p>
+          </div>
+          <div class="humeur_slider_container">
+            <input class="slider" type="range" min="1" max="100" value="50" />
+          </div>
+        </div>
+      </section>
+
+        <a href="../administration/liste-formation-stagiaires.html"
+        >Lien provoisoir vers la page => Liste formation & Stagiaires</a
+      >
+    </main>
+    <!-- <footer></footer> -->
+  </body>
+</html>

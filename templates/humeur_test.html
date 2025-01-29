@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tester l'Humeur</title>
+    <script>
+        async function sendHumeur() {
+            const score = document.getElementById('score').value;
+            const token = document.getElementById('token').value;
+
+            if (!score) {
+                console.log('Veuillez entrer un score avant de soumettre.');
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/humeur', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ score: parseInt(score) })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    console.log('Succès : ' + result.status);
+                } else {
+                    console.log('Erreur : ' + (result.error || 'Une erreur est survenue'));
+                }
+            } catch (error) {
+                console.error('Erreur réseau :', error);
+                console.log('Une erreur réseau est survenue. Veuillez réessayer.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Tester l'API Humeur</h1>
+    <label for="score">Score d'Humeur (0 à 100) :</label>
+    <input type="range" id="score" name="score" min="0" max="100" value="50" oninput="this.nextElementSibling.value = this.value">
+    <output>50</output>
+    <br><br>
+
+    <label for="token">Token d'authentification :</label>
+    <input type="text" id="token" placeholder="Votre token JWT">
+    <br><br>
+
+    <button onclick="sendHumeur()">Envoyer l'Humeur</button>
+</body>
+</html>

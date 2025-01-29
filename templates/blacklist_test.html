@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Blacklist</title>
+    <script>
+        // Fonction pour envoyer la requête de blacklistage
+        async function blacklistUser() {
+            const utilisateurId = document.getElementById('utilisateurId').value;
+            const token = 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3Mzc5NzMyNjEsImV4cCI6MTczNzk3Njg2MSwicm9sZXMiOlsiUk9MRV9TVVBFUlZJU0VVUiJdLCJ1c2VybmFtZSI6ImFAYS5hIn0.ocBR-SCK_AZbuspypLVR8I_On_bn2D61TUg4YEtV7jU1xvwbsxVxBQxShxjyM0NMSNAds-6XYtIrjEybJZlUxtowy_8SVdGNiVhxIPasG71HQUZ30RCGTfg39WaTUr4CtimIFQ7YdYalUxXFW-2U6YJa5j2yU7z2yI5nQaHfmpmEROyA31WIk6zNZXcKOFzhoVnlOUIAhZXnzybw4U1_qycaMf7ZU2v9cz0IkFAiT5LCsGzZjJ4mgKzKv3cDNqxICSo2DxOCt0RtIkUtM1F09tzOi-mX7ViORH1tAbf1utIR599Bi8TRgnuQd8BwcFqNbczpRlXmXYgmY6_JEW7ipQ'; 
+
+            if (!utilisateurId) {
+                alert("Veuillez entrer un ID utilisateur.");
+                return;
+            }
+
+            try {
+                const response = await fetch('/blacklist', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': token,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ utilisateurId: parseInt(utilisateurId) })
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    alert("Utilisateur ajouté à la blacklist avec succès.");
+                } else {
+                    alert("Erreur: " + result.error || result.message);
+                }
+            } catch (error) {
+                alert("Erreur de connexion à l'API.");
+                console.error(error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Test Blacklist</h1>
+    <label for="utilisateurId">ID Utilisateur à bloquer:</label>
+    <input type="number" id="utilisateurId" placeholder="Entrez l'ID de l'utilisateur">
+    <button onclick="blacklistUser()">Bloquer l'utilisateur</button>
+</body>
+</html>

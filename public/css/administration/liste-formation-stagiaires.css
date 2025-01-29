@@ -1,0 +1,568 @@
+/*=====DESKTOP=====*/
+/* HEADER */
+header {
+    justify-content: space-between;
+}
+.header_container_button {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 16px;
+    margin-right: 20px;
+}
+.header_container_button button {
+    color: var(--secondary-color);
+    border-radius: 7px;
+    background-color: var(--tertiary-color);
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    border: 1px solid var(--secondary-bg-color);
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.header_container_button button > span {
+    font-size: 20px;
+    font-weight: lighter;
+}
+.header_container_button button:hover {
+    scale: 1.02;
+    background-color: var(--button-hover-bg-color);
+    font-weight: 500;
+}
+
+/* MAIN */
+h1 {
+    text-align: center;
+    margin-top: 50px;
+    color: var(--primary-color);
+}
+h1 span {
+    text-align: center;
+    margin-top: 25px;
+    color: #d91e41;
+    text-decoration: underline;
+}
+h2 {
+    text-align: center;
+    color: var(--primary-color);
+}
+
+/* SECTION LISTE FORMATION STAGIAIRES */
+.section_liste_formation_stagiaires {
+    margin: 63px 15px;
+}
+.container_formations_h3 > h3 {
+    text-align: center;
+}
+/* container formation */
+.container_listes_formations {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+}
+.container_formations {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 15px;
+    background-color: var(--primary-bg-color);
+    padding: 37px 30px;
+    width: fit-content;
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    margin-top: 17px;
+}
+.container_formations_label_input {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.container_label_input_formation {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.container_label_input_formation label {
+    border-radius: 5px;
+    background-color: var(--tertiary-color);
+    color: var(--primary-color);
+    padding: 4px 0px 4px 8px;
+    width: 225px;
+    border: 1px solid var(--secondary-bg-color);
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+}
+.container_label_input_formation input {
+    -webkit-appearance: none;
+    background-color: var(--tertiary-color);
+    width: 28px;
+    height: 28px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    cursor: pointer;
+    position: relative;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.container_label_input_formation input:hover {
+    scale: 1.06;
+    background-color: var(--input-focus-bg-color);
+}
+.container_label_input_formation input:checked::before {
+    content: "✕";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primary-color);
+    font-size: 18px;
+    font-weight: lighter;
+}
+.container_input_button_formation {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.container_input_button_formation input {
+    border: 1px solid var(--secondary-bg-color);
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    width: 225px;
+    height: 32px;
+    border-radius: 5px;
+    padding-left: 16px;
+    background-color: var(--tertiary-color);
+}
+.container_input_button_formation input::placeholder {
+    color: #8f8f8f;
+    text-align: center;
+}
+.container_input_button_formation input:focus {
+    background-color: var(--input-focus-bg-color);
+    scale: 1.02;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+.container_input_button_formation button {
+    border: 1px solid var(--secondary-bg-color);
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    background-color: var(--tertiary-color);
+    color: var(--secondary-color);
+    width: 31px;
+    height: 31px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 25px;
+    font-weight: 300;
+}
+.container_input_button_formation button:hover {
+    scale: 1.06;
+    background-color: var(--button-hover-bg-color);
+    font-weight: 400;
+}
+.button_formation {
+    color: var(--secondary-color);
+    border-radius: 5px;
+    padding: 8px 10px;
+    background-color: var(--tertiary-color);
+    border: 1px solid var(--secondary-bg-color);
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    cursor: pointer;
+    margin-top: 30px;
+    transition: 0.2s;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.button_formation:hover {
+    scale: 1.03;
+    background-color: var(--button-hover-bg-color);
+    font-weight: 500;
+}
+.button_formation > span {
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+/* container stagiaires & listes */
+/* container stagiaires */
+.container_h4_stagiaires > h4 {
+    margin-left: 60px;
+}
+.container_stagiaires {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 22px;
+}
+.container_stagiaires input {
+    padding: 5px 0 5px 8px;
+    color: var(--primary-color);
+    background-color: var(--tertiary-color);
+    border-radius: 5px;
+    height: 30px;
+    transition: 0.2s;
+}
+.container_stagiaires input:focus {
+    background-color: var(--input-focus-bg-color);
+    scale: 1.03;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+.container_stagiaires input::placeholder {
+    color: #8f8f8f;
+}
+.input_firstname {
+    width: 169px;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -5px #ff002f;
+}
+.input_name {
+    width: 155px;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -5px #ff002f;
+}
+.container_stagiaires details {
+    width: 176px;
+    height: 30px;
+    padding: 5px 0;
+    color: var(--primary-color);
+    background-color: var(--tertiary-color);
+    border-radius: 5px;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -5px #ff002f;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.container_stagiaires details:hover {
+    background-color: var(--button-hover-bg-color);
+    scale: 1.03;
+}
+.container_stagiaires details > summary {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 400;
+}
+.input_email {
+    width: 240px;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -5px #ff002f;
+}
+.container_stagiaires button {
+    margin-left: 6px;
+    width: 30px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -5px #ff002f;
+    color: var(--secondary-color);
+    background-color: var(--tertiary-color);
+    font-size: 25px;
+    font-weight: 300;
+    transition: 0.2s;
+    cursor: pointer;
+}
+.container_stagiaires button:hover {
+    scale: 1.07;
+    background-color: var(--button-hover-bg-color);
+    font-weight: 400;
+}
+
+/* modal stagiaire */
+.container_modal_stagiaires {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 295px;
+    border-radius: 15px;
+    background-color: var(--primary-bg-color);
+    padding: 20px 14px;
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    margin-top: 15px;
+    margin-left: 0px;
+}
+.container_modal_stagiaires_label_input {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.modal_label {
+    border-radius: 5px;
+    background-color: var(--tertiary-color);
+    color: var(--primary-color);
+    padding: 4px 0px 4px 8px;
+    width: 225px;
+    border: 1px solid var(--secondary-bg-color);
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+}
+.modal_input {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--tertiary-color);
+    width: 28px;
+    height: 28px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    cursor: pointer;
+    position: relative;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.modal_input:hover {
+    scale: 1.07;
+    background-color: var(--input-focus-bg-color);
+}
+.modal_input:checked::before {
+    content: "✕";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primary-color);
+    font-size: 16px;
+    font-weight: lighter;
+}
+.container_modal_stagiaires button {
+    background-color: var(--tertiary-color);
+    border: 1px solid var(--secondary-bg-color);
+    box-shadow: 2px 2px 8px -3px var(--border-color);
+    border-radius: 5px;
+    padding: 4px 0;
+    width: 100%;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: 0.2s;
+    font-size: 15px;
+}
+.container_modal_stagiaires button > span {
+    font-size: 18px;
+    font-weight: lighter;
+}
+.container_modal_stagiaires button:hover {
+    scale: 1.02;
+    background-color: var(--button-hover-bg-color);
+    font-weight: 500;
+}
+.modal_stagiaires_valider {
+    margin-top: 15px;
+}
+
+/* container h3 listes */
+.container_h3_listes {
+    margin-top: 40px;
+}
+.container_h3_listes > h3 {
+    text-align: center;
+}
+/* container listes */
+.container_listes_border {
+    padding: 22px 56px;
+    margin-top: 10px;
+    border: 1px solid var(--primary-bg-color);
+    box-shadow: 2px 2px 8px -4px var(--border-color);
+    border-radius: 15px 0 0 15px;
+    height: 677px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 20px;
+    scroll-behavior: smooth;
+    width: fit-content;
+}
+.container_listes {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+.container_listes input {
+    padding: 5px 0 5px 8px;
+    color: var(--primary-color);
+    background-color: var(--tertiary-color);
+    border-radius: 5px;
+    height: 30px;
+    transition: 0.2s;
+}
+.container_listes input:focus {
+    background-color: var(--input-focus-bg-color);
+    scale: 1.03;
+    font-weight: 500;
+    color: var(--primary-color);
+}
+.container_listes input::placeholder {
+    color: #8f8f8f;
+}
+.input_firstname {
+    width: 169px;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -5px #ff002f;
+}
+.input_name {
+    width: 155px;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -5px #ff002f;
+}
+.container_listes details {
+    width: 176px;
+    height: 30px;
+    padding: 5px 0;
+    color: var(--primary-color);
+    background-color: var(--tertiary-color);
+    border-radius: 5px;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -5px #ff002f;
+    text-align: center;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.container_listes details > summary {
+    font-family: "Roboto", serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 16px;
+    font-weight: 400;
+}
+.container_listes details:hover {
+    background-color: var(--button-hover-bg-color);
+    scale: 1.03;
+}
+.container_modal_stagiaires_label_input input {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--tertiary-color);
+    width: 28px;
+    height: 28px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    cursor: pointer;
+    position: relative;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.input_email {
+    width: 240px;
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -5px #ff002f;
+}
+.liste_input_check {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--tertiary-color);
+    width: 28px;
+    height: 28px;
+    border-radius: 5px;
+    border: 1px solid var(--secondary-bg-color);
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    cursor: pointer;
+    position: relative;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-left: 6px;
+}
+.liste_input_check:hover {
+    scale: 1.06;
+    background-color: var(--input-focus-bg-color);
+}
+.liste_input_check:checked::before {
+    content: "✕";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primary-color);
+    font-size: 16px;
+    font-weight: lighter;
+}
+.container_listes_button {
+    color: var(--secondary-color);
+    border-radius: 5px;
+    padding: 8px 10px;
+    background-color: var(--tertiary-color);
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -4px var(--secondary-color);
+    cursor: pointer;
+    margin-top: 30px;
+    transition: 0.2s;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.container_listes_button:hover {
+    scale: 1.03;
+    background-color: var(--button-hover-bg-color);
+    font-weight: 500;
+}
+.container_listes_button > span {
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+
+/*=====RESPONSIVE=====*/
+/*=====DESKTOP=====*/
+@media (max-width: 1365px) {
+    /* MAIN */
+    /* container formation */
+    .container_listes_formations {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 80px;
+    }
+    .container_listes_button {
+        margin-top: 30px;
+    }
+    .container_h4_stagiaires > h4 {
+        text-align: center;
+        margin-left: 0px;
+    }
+    /* container listes */
+    .container_listes_border {
+        align-items: center;
+        width: fit-content;
+    }
+}
+
+/*=====DESKTOP=====*/
+@media (max-width: 1007px) {
+    /* MAIN */
+    /* container listes */
+    .container_listes_border {
+        gap: 45px;
+    }
+}
+
+/*=====TABLET=====*/
+@media (max-width: 768px) {
+    .header_container_button {
+        margin-right: 0px;
+    }
+    .header_container_button button {
+        padding: 5px 10px;
+        gap: 3px;
+        flex-shrink: 0;
+    } */
+    /* container listes */
+    .container_listes_border {
+        gap: 60px;
+    }
+}

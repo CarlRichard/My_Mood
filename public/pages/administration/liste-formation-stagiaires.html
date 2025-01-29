@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- GOOGLE ICONS -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="../../css/administration/liste-formation-stagiaires.css"
+    />
+    <link rel="stylesheet" href="../../utils/global.css" />
+    <!-- JS -->
+    <script
+      defer
+      src="../../js/administration/liste-formation-stagiaires.js"
+    ></script>
+    <title>MyMood - Liste formation & Stagiaires</title>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="logo-container">
+        <a href="../../pages/stagiaires/mymood.html">
+          <img
+            class="rotating logo"
+            src="../../assets/logo-mymood.png"
+            alt="Logo du site MyMood"
+          />
+        </a>
+      </div>
+
+      <div class="header_container_button">
+        <button>
+          <span class="material-symbols-outlined"> person </span>Mon profil
+        </button>
+        <button>
+          <span class="material-symbols-outlined"> cancel </span>Déconnexion
+        </button>
+      </div>
+    </header>
+    <!-- MAIN -->
+    <main>
+      <h1><span>M</span>y<span>M</span>ood</h1>
+      <h2>Ton humeur, notre soutien.</h2>
+      <!-- SECTION LISTE FORMATION STAGIAIRES -->
+      <section class="section_liste_formation_stagiaires">
+        <!-- container principal formation stagiaires -->
+        <div class="container_listes_formations">
+          <!-- container formation -->
+          <div class="container_formations_h3">
+            <h3>Les formations</h3>
+            <div class="container_formations">
+              <div class="container_formations_label_input"></div>
+              <div class="container_input_button_formation">
+                <input
+                  type="text"
+                  id="text"
+                  name="name"
+                  placeholder="Nouvelle formation"
+                />
+                <button class="button_add">+</button>
+              </div>
+              <button class="button_formation">
+                <span class="material-symbols-outlined"> delete </span>supprimer
+              </button>
+            </div>
+          </div>
+
+          <!-- container stagiaires & listes -->
+          <div class="container_stagiaires_liste">
+            <!-- container stagiaires -->
+            <div class="container_h4_stagiaires">
+              <h4>Ajouter un stagiaire</h4>
+              <div class="container_stagiaires">
+                <input class="input_firstname" type="text" id="first-name"
+                name="first-name" required" placeholder="Prénom"/> <input
+                class="input_name" type="text" id="name" name="name" required"
+                placeholder="Nom"/>
+                <details class="container_stagiaires_details">
+                  <summary>Formation</summary>
+                  <!-- modal stagiaire -->
+                  <div class="container_modal_stagiaires">
+                    <div class="container_formations_label_input"></div>
+                    <button class="modal_stagiaires_valider">
+                      <span class="material-symbols-outlined"> check </span
+                      >Valider
+                    </button>
+                    <button class="modal_stagiaires_annuler">
+                      <span class="material-symbols-outlined"> close </span
+                      >Annuler
+                    </button>
+                  </div>
+                </details>
+                <input
+                  class="input_email"
+                  placeholder="Adresse mail"
+                  type="email"
+                  id="email"
+                />
+                <button class="button_add" id="stagiaire_button_add">+</button>
+              </div>
+            </div>
+
+            <!-- container h3 listes -->
+            <div class="container_h3_listes">
+              <h3>Les stagiaires</h3>
+              <!-- container listes -->
+              <div class="container_listes_border">
+                <div class="container_listes">
+                  <input class="input_firstname" type="text" id="first-name"
+                  name="first-name" required" placeholder="Prénom"/> <input
+                  class="input_name" type="text" id="name" name="name" required"
+                  placeholder="Nom"/>
+                  <details class="container_stagiaires_details">
+                    <summary>Formation</summary>
+                    <!-- modal stagiaire -->
+                    <div class="container_modal_stagiaires">
+                      <div class="container_formations_label_input"></div>
+                      <button class="modal_stagiaires_valider">
+                        <span class="material-symbols-outlined"> check </span
+                        >Valider
+                      </button>
+                      <button class="modal_stagiaires_annuler">
+                        <span class="material-symbols-outlined"> close </span
+                        >Annuler
+                      </button>
+                    </div>
+                  </details>
+                  <input
+                    class="input_email"
+                    placeholder="Adresse mail"
+                    type="email"
+                    id="email"
+                  />
+                  <input
+                    class="liste_input_check"
+                    type="checkbox"
+                    id="scales"
+                    name="scales"
+                  />
+                </div>
+                <button class="container_listes_button">
+                  <span class="material-symbols-outlined">delete</span>supprimer
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- FOOTER -->
+    <footer></footer>
+  </body>
+</html>

@@ -1,0 +1,246 @@
+/*=====IMPORTATION DES VARIABLES=====*/
+@import url("../utils/variables.css");
+
+/*=====RESET CSS=====*/
+*, ::before, ::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/*=====DESKTOP=====*/
+body {
+    height: 100vh;
+    text-decoration: none;
+    list-style-type: none;
+    background-color: var(--body-bg-color); 
+    font-family: var(--ff-body);
+    font-size: var(--fs-large-text);
+    font-weight: var(--fw-body);
+}
+
+/* scroll style */
+/* page */
+body::-webkit-scrollbar {
+    width: 13px;
+}
+
+body::-webkit-scrollbar-track {
+    background: var(--primary-bg-color);
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: var(--secondary-color);
+}
+
+/* overflow scroll */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--primary-bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--secondary-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #f01940;
+}
+
+/* header */
+header {
+    height: 95px;
+    width: 100%;
+    padding: 0.5em;
+    background-color: var(--primary-bg-color); 
+    display: flex; 
+    align-items: center;     
+}
+
+/* logo */
+.logo-container {   /* div container du logo */
+    height: 120%;
+    margin-left: 4vw;
+}
+.logo {   /* img classe logo */
+    height: 100%;
+}
+.rotating {   /* img classe rotating */
+    animation: rotating 10s linear infinite;
+}
+@keyframes rotating {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* buttons */
+.btn {   /* tous les boutons */
+    font-family: var(--ff-body);
+    font-weight: var(--fw-body);
+    border-radius: 7px;
+    padding: 5px 15px;
+    border: var(--button-border);
+    color: var(--secondary-color);  
+    cursor: pointer;
+}
+
+/* header buttons */
+.left-btn-container {   /* div container bouton de gauche */
+    margin-left: 2vw;
+}
+.right-btn-container {   /* div container bouton(s) de droite */
+   margin-left: auto; 
+   margin-right: 4vw;
+}
+.header-btn {
+    width: 172px;
+    height: 42px;
+    font-size: var(--fs-middle-text);
+}
+
+/* main buttons */
+.main-btn {
+    width: 118px;
+    height: 41px;
+    font-size: var(--fs-large-text);
+}
+
+/* modal buttons */
+.big-modal-btn {
+    width: 162px;
+    height: 41px;
+    font-size: var(--fs-large-text);
+}
+.little-modal-btn {
+    width: 162px;
+    height: 28px;
+    font-size: var(--fs-large-text);
+}
+
+/* titles */
+h1, h2 {
+    font-family: var(--ff-title);
+    font-weight: var(--fw-title);
+}
+h1 {
+    font-size: var(--fs-h1);
+}
+h1 span {
+    text-decoration: underline;
+    color: var(--secondary-color);
+}
+h2 {
+    font-size: var(--fs-h2);
+}
+h3 {
+    font-size: var(--fs-h3);
+}
+h4 {
+    font-size: var(--fs-h4);
+}
+
+/* inputs */
+input {   /* ? ::placeholder, :focus ? */
+    font-family: var(--ff-body);
+    font-size: var(--fs-large-text);
+    font-weight: var(--fw-body);
+}
+
+/* details style */
+details > summary:first-of-type {
+    display: list-item;
+    counter-increment: list-item 0;
+    list-style: inside disclosure-closed;
+}
+details[open] > summary:first-of-type {
+    list-style-type: disclosure-open;
+}
+
+/* footer */
+footer {
+    height: 50px;
+    background-color: var(--primary-bg-color);
+}
+
+
+
+/*=====RESPONSIVE=====*/
+
+/*=====TABLET=====*/
+@media (max-width: 900px) {
+    /* titles */
+    h1 {
+        font-size: var(--fs-h2);
+    }
+    h2 {
+        font-size: var(--fs-h3);
+    }
+    h3 {
+        font-size: var(--fs-little-h2);
+    }
+
+    /* buttons */
+    .header-btn {
+        width: 130px;
+        height: 38px;
+    }
+   
+    /* inputs */
+    input {
+        font-size: var(--fs-middle-text);
+    }
+}
+
+
+/*=====SMARTPHONE=====*/
+@media (max-width: 600px) {
+    /* logo */
+    .logo-container {
+        margin-left: 0;
+    }
+
+    /* titles */
+    h1 {
+        font-size: var(--fs-h3);
+    }
+    h2 {
+        font-size: var(--fs-little-h2);
+        font-weight: var(--fw-body);
+    }
+    h3 {
+        font-size: var(--fs-h4);
+    }
+    h4 {
+        font-size: var(--fs-little-h4);
+    }
+
+    /* text */
+    p {
+        font-size: var(--fs-middle-text);
+    }
+
+    /* buttons */
+    .right-btn-container {   /* div container bouton(s) de droite */ 
+        margin-right: 0;
+     }
+    .header-btn {
+        width: 115px;
+        height: 35px;
+        border-radius: 4px;
+        font-size: var(--fs-little-text);
+    }
+    .main-btn {
+        font-size: var(--fs-middle-text);
+    }
+    .big-modal-btn {
+        font-size: var(--fs-middle-text);
+    }
+    .little-modal-btn {
+        font-size: var(--fs-middle-text);
+    }
+}

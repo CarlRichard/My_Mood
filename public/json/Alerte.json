@@ -1,0 +1,19 @@
+{
+    "Alerte": [
+      {
+        "Id_Alerte": 1,
+        "Date_envoi": "2025-01-20T08:30:00",
+        "Statut": 1,
+        "Message": null,
+        "Id_Utilisateur": 1
+      },
+      {
+        "Id_Alerte": 2,
+        "Date_envoi": "2025-01-19T15:00:00",
+        "Statut": 2,
+        "Message": null,
+        "Id_Utilisateur": 3
+      }
+    ]
+  }
+  

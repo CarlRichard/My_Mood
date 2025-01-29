@@ -1,0 +1,20 @@
+{
+    "Groupe": [
+      {
+        "Id_Utilisateur": 1,
+        "id_Groupe": 1,
+        "DateAjout": "2025-01-05"
+      },
+      {
+        "Id_Utilisateur": 2,
+        "id_Groupe": 2,
+        "DateAjout": "2025-01-15"
+      },
+      {
+        "Id_Utilisateur": 3,
+        "id_Groupe": 1,
+        "DateAjout": "2025-01-10"
+      }
+    ]
+  }
+  

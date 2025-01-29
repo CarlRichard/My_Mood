@@ -1,0 +1,37 @@
+security:
+    password_hashers:
+        App\Entity\Utilisateur:
+            algorithm: bcrypt
+            cost: 12
+
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\Utilisateur
+                property: email # Utilisation de l'email comme identifiant
+
+    firewalls:
+        # Firewall pour l'authentification via JSON Login
+        login:
+            pattern: ^/api/login_check
+            stateless: true
+            json_login:
+                check_path: /api/login_check
+                username_path: email  # Utilisez `email` comme identifiant
+                success_handler: lexik_jwt_authentication.handler.authentication_success
+                failure_handler: lexik_jwt_authentication.handler.authentication_failure
+
+        # Firewall principal pour les requêtes protégées
+        main:
+            lazy: true
+            provider: app_user_provider
+            stateless: true
+            jwt: ~ # Permet l'authentification avec les tokens JWT
+
+    access_control:
+        # Donne l'accès public au point de connexion
+        - { path: ^/api/login_check, roles: PUBLIC_ACCESS }
+
+        # Restreint l'accès en fonction des rôles
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/profile, roles: ROLE_USER }

@@ -1,0 +1,17 @@
+{
+    "Groupe": [
+      {
+        "id_Groupe": 1,
+        "Nom": "Développement Web",
+        "DateCreation": "2025-01-01",
+        "DateFin": null
+      },
+      {
+        "id_Groupe": 2,
+        "Nom": "Gestion de Projet",
+        "DateCreation": "2025-01-10",
+        "DateFin": "2025-06-30"
+      }
+    ]
+  }
+  

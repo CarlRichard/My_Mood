@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- GOOGLE ICONS -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <!-- CSS -->
+     <link rel="stylesheet" href="./utils/global.css">
+    <link rel="stylesheet" href="./css/style.css" />
+    <!-- JS -->
+    <script defer src="./js/script.js"></script>
+    <title>MyMood - Login</title>
+  </head>
+  <body>
+    <!-- HEADER -->
+    <header>
+      <div class="logo-container">
+        <a href="./pages/stagiaires/mymood.html">
+          <img
+          class="rotating logo"
+          src="./assets/logo-mymood.png"
+          alt="Logo du site MyMood"
+        />
+        </a>
+      </div>
+    </header>
+    <main>
+      <h1><span>M</span>y<span>M</span>ood</h1>
+      <h2>Ton humeur, notre soutien.</h2>
+      <!-- SECTION LOG AMIN/UTILISATEURS -->
+      <section class="section_admin">
+        <form id="form_stagiaire" action="">
+          <input
+            class="input_email"
+            placeholder="Adresse mail"
+            type="email"
+            id="email"
+          />
+          <input
+            class="input_password"
+            placeholder="Mots de passe"
+            type="password"
+            id="pass"
+            name="password"
+          />
+          <button class="button_submit" type="submit">CONTINUER<span class="material-symbols-outlined">
+            login
+            </span></button>
+        </form>
+      </section>
+      <div class="div_error_msg"></div>
+      <footer></footer>
+    </main>
+  </body>
+</html>
