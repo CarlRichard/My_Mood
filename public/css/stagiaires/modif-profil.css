@@ -1,48 +1,5 @@
 /*=====DESKTOP=====*/
 /* HEADER */
-header {
-  display: flex;
-  align-items: center;
-  justify-content: end;
-}
-
-.rotating {
-  margin-right: auto;
-}
-
-.admin_button {
-  width: 172px;
-  height: 42px;
-  border-radius: 7px;
-  margin-right: 25px;
-  color: var(--secondary-color);
-  background-color: var(--tertiary-color);
-  cursor: pointer;
-  border: none;
-}
-
-.admin_button:hover {
-  scale: 1.02;
-  background-color: var(--button-hover-bg-color);
-  font-weight: 600;
-}
-
-.logout_button {
-  width: 172px;
-  height: 42px;
-  border-radius: 7px;
-  margin-right: 45px;
-  color: var(--secondary-color);
-  background-color: var(--tertiary-color);
-  cursor: pointer;
-  border: none;
-}
-
-.logout_button:hover {
-  scale: 1.02;
-  background-color: var(--button-hover-bg-color);
-  font-weight: 600;
-}
 
 /* MAIN */
 /* SECTION NOTIF */

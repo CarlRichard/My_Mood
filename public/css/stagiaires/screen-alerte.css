@@ -1,26 +1,5 @@
 /*=====DESKTOP=====*/
 /* HEADER */
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.header_button {
-    border-radius: 4px;
-    background-color: var(--tertiary-color);
-    padding: 8px 25px;
-    margin-right: 13px;
-    color: var(--secondary-color);
-    border: none;
-    cursor: pointer;
-}
-
-.header_button:hover {
-    scale: 1.04;
-    background-color: var(--button-hover-bg-color);
-    font-weight: 500;
-}
 
 /* MAIN */
 /* SECTION NOTIF */
