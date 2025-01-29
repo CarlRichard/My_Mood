@@ -508,8 +508,8 @@ h2 {
     width: 28px;
     height: 28px;
     border-radius: 5px;
-    border: 1px solid var(--secondary-bg-color);
-    box-shadow: 2px 2px 8px -2px var(--border-color);
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -5px #ff002f;
     cursor: pointer;
     position: relative;
     cursor: pointer;
