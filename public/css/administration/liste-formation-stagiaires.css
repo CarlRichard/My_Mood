@@ -188,6 +188,46 @@ h2 {
     font-weight: lighter;
 }
 
+.container_liste_formation_stagiaires_vali_annul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 15px;
+    background-color: var(--primary-bg-color);
+    padding: 37px 30px;
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    margin-top: 17px;
+    display: none;
+}
+.container_liste_formation_stagiaires_vali_annul p {
+    color: var(--tertiary-color);
+    text-align: center;
+    margin-bottom: 20px;
+}
+.container_liste_formation_stagiaires_vali_annul button {
+    background-color: var(--tertiary-color);
+    border: 1px solid var(--secondary-bg-color);
+    box-shadow: 2px 2px 8px -3px var(--border-color);
+    border-radius: 5px;
+    padding: 4px 0;
+    width: 100%;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: 0.2s;
+    font-size: 15px;
+}
+.container_liste_formation_stagiaires_vali_annul button:hover {
+    scale: 1.02;
+    background-color: var(--button-hover-bg-color);
+    font-weight: 500;
+}
+.container_liste_formation_stagiaires_vali_annul button > span {
+    font-size: 24px;
+}
+
 /* container stagiaires & listes */
 /* container stagiaires */
 .container_h4_stagiaires > h4 {
@@ -515,7 +555,6 @@ h2 {
     font-weight: lighter;
 }
 
-
 /*=====RESPONSIVE=====*/
 /*=====DESKTOP=====*/
 @media (max-width: 1365px) {
@@ -560,7 +599,8 @@ h2 {
         padding: 5px 10px;
         gap: 3px;
         flex-shrink: 0;
-    } */
+    }
+    */
     /* container listes */
     .container_listes_border {
         gap: 60px;
