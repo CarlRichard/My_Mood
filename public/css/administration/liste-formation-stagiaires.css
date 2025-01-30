@@ -96,8 +96,8 @@ h2 {
 .container_label_input_formation input {
     -webkit-appearance: none;
     background-color: var(--tertiary-color);
-    width: 28px;
-    height: 28px;
+    width: 29px;
+    height: 29px;
     border-radius: 5px;
     border: 1px solid var(--border-color);
     box-shadow: 2px 2px 8px -2px var(--border-color);
@@ -350,8 +350,8 @@ h2 {
     appearance: none;
     -webkit-appearance: none;
     background-color: var(--tertiary-color);
-    width: 28px;
-    height: 28px;
+    width: 27px;
+    height: 27px;
     border-radius: 5px;
     border: 1px solid var(--border-color);
     box-shadow: 2px 2px 8px -2px var(--border-color);
@@ -482,7 +482,7 @@ h2 {
     background-color: var(--button-hover-bg-color);
     scale: 1.03;
 }
-.container_modal_stagiaires_label_input input {
+/* .container_modal_stagiaires_label_input input {
     appearance: none;
     -webkit-appearance: none;
     background-color: var(--tertiary-color);
@@ -495,7 +495,7 @@ h2 {
     position: relative;
     cursor: pointer;
     transition: 0.2s;
-}
+} */
 .input_email {
     width: 240px;
     border: 1px solid var(--secondary-color);
@@ -505,8 +505,8 @@ h2 {
     appearance: none;
     -webkit-appearance: none;
     background-color: var(--tertiary-color);
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     border-radius: 5px;
     border: 1px solid var(--secondary-color);
     box-shadow: 2px 2px 8px -5px #ff002f;
@@ -554,6 +554,13 @@ h2 {
     font-size: 20px;
     font-weight: lighter;
 }
+/* FOOTER */
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 
 /*=====RESPONSIVE=====*/
 /*=====DESKTOP=====*/
