@@ -9,10 +9,10 @@ const main = document.querySelector("main");
 formStagiaire.addEventListener("submit", (event) => {
   // Empêcher l'envoi par défaut du formulaire
   event.preventDefault();
-  
+
   // Réinitialiser la section des erreurs avant de l'actualiser
   divError.innerHTML = "";
-  
+
   // Initialiser les variables pour les messages d'erreur
   let errorMessageEmail = "";
   let errorMessageMp = "";
@@ -43,7 +43,7 @@ formStagiaire.addEventListener("submit", (event) => {
   if (errorMessageEmail || errorMessageMp) {
     main.appendChild(divError);
     return;
-  } 
+  }
 
   // Créer l'objet avec les données du formulaire à envoyer
   const data = {
@@ -63,19 +63,36 @@ formStagiaire.addEventListener("submit", (event) => {
     .then((response) => response.json())  // Convertir la réponse en format JSON
     .then((result) => {
       console.log("Données envoyées avec succès :", result);
+
       try {
         // Vérifier si un token valide est renvoyé
+        console.log("Réponse du serveur :", result);
+
         const token = result.token;
+        const decodedToken = JSON.parse(atob(token.split('.')[1]));  // Décoder le payload du JWT
+        console.log(decodedToken);  
+        const role = decodedToken.role
+
+      ///  const token = result.token;
+      //  const role = result.role;
 
         if (!token || token.length < 2) {
           throw new Error("Token invalide");
         }
 
         // Si le token est valide, le stocker dans le localStorage
-        localStorage.setItem("tokenUser", token);
+        localStorage.setItem("role", JSON.stringify(role));
+        localStorage.setItem("token", token);
 
-        // Rediriger l'utilisateur vers une autre page s'il y a un token valide
-        window.location.href = "../pages/stagiaires/mymood.html";
+        // Vérification et redirection selon le rôle
+        if (role == "ROLE_ADMIN") {
+          window.location.href = "../pages/administration/liste-formations.html";
+        } else if (role == "ROLE_SUPERVISEUR") {
+          window.location.href = "../pages/administration/liste-formation-stagiaires.html";
+        } else {
+          window.location.href = "./pages/stagiaires/mymood.html";
+        }
+
       } catch (error) {
         console.error("Erreur lors du traitement du token ou de la redirection :", error);
         // Afficher un message d'erreur si le token est invalide ou la redirection échoue
