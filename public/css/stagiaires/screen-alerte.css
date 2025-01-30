@@ -12,7 +12,7 @@
 }
 
 .notif_container {
-    width: 311px;
+    width: 612px;
     height: 343px;
     border-radius: 15px;
     background-color: var(--primary-bg-color);
@@ -42,3 +42,28 @@
     background-color: var(--button-hover-bg-color);
     font-weight: 600;
 }
+
+/*=====TABLET=====*/
+@media (max-width: 768px) {
+
+    /* MAIN */
+    /* SECTION NOTIF */
+  
+    .notif_container {
+      width: 416px;
+      height: 297px;
+    }
+  }
+  
+  
+  /*=====SMARTPHONE=====*/
+  @media (max-width: 425px) {
+
+    /* MAIN */
+    /* SECTION NOTIF */
+  
+    .notif_container {
+        width: 311px;
+        height: 343px;
+    }
+  }
