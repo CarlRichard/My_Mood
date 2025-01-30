@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Service\MailerService;
 use App\Service\PasswordGenerator;
 use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -98,46 +100,50 @@ class UtilisateurController extends AbstractController
     /**
      * Créer un utilisateur et envoyer le mot de passe par email
      */
-    #[Route('/mail', name: 'create_user_mail', methods: ['POST'])]
-    public function mailUser(
-        Request $request,
-        EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $passwordHasher,
-        PasswordGenerator $passwordGenerator,
-        EmailService $emailService
-    ): JsonResponse {
+    #[Route('/mail', name: 'mail_user', methods: ['POST'])]
+    public function createUserMail(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, MailerService $mailerService)
+    {
         $data = json_decode($request->getContent(), true);
 
         // Vérification des champs requis
-        if (!isset($data['email'], $data['nom'], $data['prenom'])) {
-            return new JsonResponse(['message' => 'Email, nom et prénom requis'], 400);
+        if (!isset($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            throw new BadRequestHttpException('Email requis ou format invalide');
         }
 
-        // Définir le rôle (par défaut : ROLE_ETUDIANT)
+        if (!isset($data['nom']) || !isset($data['prenom'])) {
+            throw new BadRequestHttpException('Nom et prénom requis');
+        }
+
+        $user = new Utilisateur();
+        $user->setEmail($data['email']);
+        $user->setNom($data['nom']);
+        $user->setPrenom($data['prenom']);
+
+        // Définir le rôle par défaut (ROLE_ETUDIANT) si non fourni
         $role = $data['role'] ?? 'ROLE_ETUDIANT';
         if (!in_array($role, ['ROLE_ETUDIANT', 'ROLE_SUPERVISEUR', 'ROLE_ADMIN'])) {
             return new JsonResponse(['message' => 'Rôle invalide : choisissez ROLE_ETUDIANT, ROLE_SUPERVISEUR ou ROLE_ADMIN'], 400);
         }
+        $user->setRoles([$role]);
 
-        // Création de l'utilisateur
-        $utilisateur = new Utilisateur();
-        $utilisateur->setEmail($data['email']);
-        $utilisateur->setNom($data['nom']);
-        $utilisateur->setPrenom($data['prenom']);
+        // Générer un mot de passe temporaire
+        $plainPassword = bin2hex(random_bytes(4)); // Un mot de passe temporaire de 8 caractères
+        $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
+        $user->setPassword($hashedPassword);
 
-        // Génération et hachage du mot de passe aléatoire
-        $plainPassword = $passwordGenerator->generatePassword();
-        $hashedPassword = $passwordHasher->hashPassword($utilisateur, $plainPassword);
-        $utilisateur->setPassword($hashedPassword);
-        $utilisateur->setRoles([$role]);
+        // Essayer d'envoyer l'email
+        try {
+            // Envoyer l'email avec les informations de compte
+            $mailerService->sendAccountCreationEmail($user->getEmail(), $plainPassword);
 
-        // Persistance en base
-        $entityManager->persist($utilisateur);
-        $entityManager->flush();
+            // Si l'email est envoyé avec succès, persister l'utilisateur en base de données
+            $entityManager->persist($user);
+            $entityManager->flush();
 
-        // Envoi du mot de passe par email
-        $emailService->sendNewAccountEmail($utilisateur->getEmail(), $utilisateur->getNom(), $plainPassword);
-
-        return new JsonResponse(['message' => 'Utilisateur créé avec succès et mot de passe envoyé par email'], 201);
+            return new JsonResponse(['message' => 'Utilisateur créé avec succès, email envoyé.']);
+        } catch (\Exception $e) {
+            // Si l'envoi échoue, renvoyer une erreur
+            return new JsonResponse(['message' => 'Erreur lors de l\'envoi de l\'email: ' . $e->getMessage()], 500);
+        }
     }
 }
