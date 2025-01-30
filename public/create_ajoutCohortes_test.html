@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Cohortes</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+        }
+        form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            margin-bottom: 20px;
+            max-width: 400px;
+            background: #f9f9f9;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Ajouter un utilisateur à une cohorte</h2>
+    <form id="cohorteForm">
+        <label for="cohorteId">ID de la cohorte:</label>
+        <input type="text" id="cohorteId" required>
+
+        <label for="userIds">IDs des utilisateurs (séparés par des virgules):</label>
+        <input type="text" id="userIds" required>
+
+        <button type="submit">Ajouter à la cohorte</button>
+    </form>
+
+    <h2>Envoyer un email</h2>
+    <form id="emailForm">
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="nom">Nom:</label>
+        <input type="text" id="nom" required>
+
+        <label for="prenom">Prénom:</label>
+        <input type="text" id="prenom" required>
+
+        <label for="role">Rôle:</label>
+        <select id="role" required>
+            <option value="ROLE_ETUDIANT">Étudiant</option>
+            <option value="ROLE_ADMIN">Admin</option>
+            <option value="ROLE_SUPERVISEUR">Superviseur</option>
+        </select>
+
+        <button type="submit">Envoyer l'email</button>
+    </form>
+
+    <script>
+        document.getElementById('cohorteForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const cohorteId = document.getElementById('cohorteId').value;
+            const userIds = document.getElementById('userIds').value.split(',').map(id => `/api/utilisateurs/${id.trim()}`);
+
+            fetch(`/api/cohortes/${cohorteId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/merge-patch+json' },
+                body: JSON.stringify({ utilisateurs: userIds })
+            })
+            .then(response => response.json())
+            .then(data => alert("Utilisateurs ajoutés avec succès !"))
+            .catch(error => alert("Erreur: " + error));
+        });
+
+        document.getElementById('emailForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const nom = document.getElementById('nom').value;
+            const prenom = document.getElementById('prenom').value;
+            const role = document.getElementById('role').value;
+
+            fetch('/mail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, nom, prenom, role })
+            })
+            .then(response => response.json())
+            .then(data => alert("Email envoyé avec succès !"))
+            .catch(error => alert("Erreur: " + error));
+        });
+    </script>
+
+</body>
+</html>

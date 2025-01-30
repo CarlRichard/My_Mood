@@ -15,6 +15,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
     operations: [
         new \ApiPlatform\Metadata\GetCollection(),
         new \ApiPlatform\Metadata\Get(),
+        new \ApiPlatform\Metadata\Put(),
+        new \ApiPlatform\Metadata\Patch(),
         new \ApiPlatform\Metadata\Delete(),
         new \ApiPlatform\Metadata\Post(
             uriTemplate: '/utilisateurs',
