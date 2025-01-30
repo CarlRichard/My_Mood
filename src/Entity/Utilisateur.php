@@ -15,7 +15,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
     operations: [
         new \ApiPlatform\Metadata\GetCollection(),
         new \ApiPlatform\Metadata\Get(),
-        new \ApiPlatform\Metadata\Put(),
+        new \ApiPlatform\Metadata\Put(            
+            uriTemplate: '/utilisateurs/{id}',
+            controller: 'App\Controller\UtilisateurController::updateUser'
+        ),
         new \ApiPlatform\Metadata\Patch(),
         new \ApiPlatform\Metadata\Delete(),
         new \ApiPlatform\Metadata\Post(
@@ -35,11 +38,13 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['utilisateur:read'])] 
+    #[Groups(['utilisateur:read', 'cohorte:read'])] 
+ 
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['utilisateur:read'])] 
+    #[Groups(['utilisateur:read', 'cohorte:read'])] 
+
     private array $roles = ["ROLE_ETUDIANT"];
 
     #[ORM\Column(length: 255)]
@@ -65,6 +70,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
      * @var Collection<int, Alerte>
      */
     #[ORM\OneToMany(targetEntity: Alerte::class, mappedBy: 'utilisateur')]
+    #[Groups(['utilisateur:read'])] 
     private Collection $alertes;
 
     public function __construct()

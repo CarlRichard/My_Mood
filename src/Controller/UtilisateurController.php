@@ -73,22 +73,25 @@ class UtilisateurController extends AbstractController
         }
 
         // Vérification des champs requis
-        if (!isset($data['email'], $data['password'], $data['nom'], $data['prenom'])) {
-            return new JsonResponse(['message' => 'Email, mot de passe, nom et prénom requis'], 400);
+        if (!isset($data['email'], $data['nom'], $data['prenom'])) {
+            return new JsonResponse(['message' => 'Email, nom et prénom requis'], 400);
         }
 
         // Mise à jour des données
-        $role = $data['role'] ?? $utilisateur->getRoles()[0];
-        if (!in_array($role, ['ROLE_ETUDIANT', 'ROLE_SUPERVISEUR', 'ROLE_ADMIN'])) {
-            return new JsonResponse(['message' => 'Rôle invalide : choisissez ROLE_ETUDIANT, ROLE_SUPERVISEUR ou ROLE_ADMIN'], 400);
-        }
-
         $utilisateur->setEmail($data['email']);
         $utilisateur->setNom($data['nom']);
         $utilisateur->setPrenom($data['prenom']);
-        $hashedPassword = $passwordHasher->hashPassword($utilisateur, $data['password']);
-        $utilisateur->setPassword($hashedPassword);
-        $utilisateur->setRoles([$role]);
+
+        // Si un mot de passe est fourni, le hacher et le mettre à jour
+        if (isset($data['password']) && !empty($data['password'])) {
+            $hashedPassword = $passwordHasher->hashPassword($utilisateur, $data['password']);
+            $utilisateur->setPassword($hashedPassword);
+        }
+
+        // Mise à jour du rôle, s'il est spécifié, sinon on garde le rôle actuel
+        if (isset($data['role']) && in_array($data['role'], ['ROLE_ETUDIANT', 'ROLE_SUPERVISEUR', 'ROLE_ADMIN'])) {
+            $utilisateur->setRoles([$data['role']]);
+        }
 
         // Sauvegarde en base
         $entityManager->persist($utilisateur);

@@ -19,7 +19,9 @@ use Doctrine\Common\Collections\Collection;
             name: 'create_sos' 
         ),
         new \ApiPlatform\Metadata\Put(),
-        new \ApiPlatform\Metadata\Delete(),
+        new \ApiPlatform\Metadata\Delete(
+                security: "is_granted('ROLE_SUPERVISEUR')",      
+        ),
         new \ApiPlatform\Metadata\Get(),
     ]
 )]
