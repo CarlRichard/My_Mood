@@ -122,6 +122,18 @@ header {
     font-size: var(--fs-large-text);
 }
 
+/* links */
+.header-link {
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
+    background: var(--seventh-bg-color);
+    width: 172px;
+    height: 42px;
+    line-height: 28px;   /* => pour centrer verticalement => 42 - 14 = 28 */
+    font-size: var(--fs-middle-text);
+}
+
 /* titles */
 h1, h2 {
     font-family: var(--ff-title);
@@ -184,10 +196,13 @@ footer {
         font-size: var(--fs-little-h2);
     }
 
-    /* buttons */
-    .header-btn {
+    /* buttons, links */
+    .header-btn, .header-link {
         width: 130px;
         height: 38px;
+    }
+    .header-link {
+    line-height: 24px;   /* => pour centrer verticalement => 38 - 14 = 24 */
     }
    
     /* inputs */
@@ -220,7 +235,7 @@ footer {
     }
 
     /* text */
-    p {
+    p, ul {
         font-size: var(--fs-middle-text);
     }
 
@@ -228,11 +243,14 @@ footer {
     .right-btn-container {   /* div container bouton(s) de droite */ 
         margin-right: 0;
      }
-    .header-btn {
+    .header-btn, .header-link {
         width: 115px;
         height: 35px;
         border-radius: 4px;
         font-size: var(--fs-little-text);
+    }
+    .header-link {
+        line-height: 23px;   /* => pour centrer verticalement => 35 - 12 = 23 */
     }
     .main-btn {
         font-size: var(--fs-middle-text);
