@@ -7,7 +7,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use App\Entity\Cohorte;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity]
@@ -26,7 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
             controller: 'App\Controller\UtilisateurController::createUser'
         ),
     ],
-    normalizationContext: ['groups' => ['utilisateur:read']], // Groupe global pour la lecture des utilisateurs
+    normalizationContext: ['groups' => ['utilisateur:read']], // pour la lecture des utilisateurs
 )]
 #[ORM\Table(name: 'utilisateur')]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
@@ -39,12 +38,10 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Groups(['utilisateur:read', 'cohorte:read'])] 
- 
     private ?string $email = null;
 
     #[ORM\Column]
     #[Groups(['utilisateur:read', 'cohorte:read'])] 
-
     private array $roles = ["ROLE_ETUDIANT"];
 
     #[ORM\Column(length: 255)]
@@ -58,25 +55,24 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    /**
-     * @var Collection<int, Cohorte>
-     */
     #[ORM\ManyToMany(targetEntity: Cohorte::class, inversedBy: 'utilisateurs')]
     #[ORM\JoinTable(name: 'utilisateur_cohorte')]  
     #[Groups(['utilisateur:read'])] 
     private Collection $groupes;
 
-    /**
-     * @var Collection<int, Alerte>
-     */
     #[ORM\OneToMany(targetEntity: Alerte::class, mappedBy: 'utilisateur')]
     #[Groups(['utilisateur:read'])] 
     private Collection $alertes;
+
+    #[ORM\OneToMany(mappedBy: "utilisateur", targetEntity: Historique::class, cascade: ["persist", "remove"])]
+    #[Groups(['utilisateur:read'])] 
+    private Collection $historiques;
 
     public function __construct()
     {
         $this->groupes = new ArrayCollection();
         $this->alertes = new ArrayCollection();
+        $this->historiques = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,7 +88,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -104,7 +99,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
-
         return $this;
     }
 
@@ -116,7 +110,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -128,7 +121,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNom(?string $nom): self
     {
         $this->nom = $nom;
-
         return $this;
     }
 
@@ -140,25 +132,18 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
-
         return $this;
     }
 
-    // Méthodes requises par UserInterface
     public function eraseCredentials(): void
     {
-        // Si des données sensibles sont temporairement stockées, nettoyez-les ici.
     }
 
     public function getUserIdentifier(): string
     {
-        // surement une une methode d'ancienne version symfony
         return $this->email;
     }
 
-    /**
-     * @return Collection<int, Cohorte>
-     */
     public function getGroupes(): Collection
     {
         return $this->groupes;
@@ -169,20 +154,15 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->groupes->contains($groupe)) {
             $this->groupes->add($groupe);
         }
-
         return $this;
     }
 
     public function removeGroupe(Cohorte $groupe): self
     {
         $this->groupes->removeElement($groupe);
-
         return $this;
     }
 
-    /**
-     * @return Collection<int, Alerte>
-     */
     public function getAlertes(): Collection
     {
         return $this->alertes;
@@ -194,19 +174,40 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
             $this->alertes->add($alerte);
             $alerte->setUtilisateur($this);
         }
-
         return $this;
     }
 
     public function removeAlerte(Alerte $alerte): static
     {
         if ($this->alertes->removeElement($alerte)) {
-            // set the owning side to null (unless already changed)
             if ($alerte->getUtilisateur() === $this) {
                 $alerte->setUtilisateur(null);
             }
         }
+        return $this;
+    }
 
+    public function getHistoriques(): Collection
+    {
+        return $this->historiques;
+    }
+
+    public function addHistorique(Historique $historique): static
+    {
+        if (!$this->historiques->contains($historique)) {
+            $this->historiques->add($historique);
+            $historique->setUtilisateur($this);
+        }
+        return $this;
+    }
+
+    public function removeHistorique(Historique $historique): static
+    {
+        if ($this->historiques->removeElement($historique)) {
+            if ($historique->getUtilisateur() === $this) {
+                $historique->setUtilisateur(null);
+            }
+        }
         return $this;
     }
 }

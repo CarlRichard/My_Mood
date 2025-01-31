@@ -5,27 +5,35 @@ use App\Repository\HistoriqueRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: HistoriqueRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['historique:read']],
+    denormalizationContext: ['groups' => ['historique:write']]
+)]
 class Historique
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['historique:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['historique:read'])]
     private ?\DateTimeInterface $dateCreation  = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['historique:read'])]
     private ?int $humeur = null;
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'historiques')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['historique:read'])] 
     private ?Utilisateur $utilisateur = null;
 
-    // Getters et setters pour id, dateCreation , humeur, utilisateur 
+    // Getters et setters pour id, dateCreation, humeur, utilisateur
 
     public function getId(): ?int
     {
@@ -64,5 +72,4 @@ class Historique
         $this->utilisateur = $utilisateur;
         return $this;
     }
-
 }

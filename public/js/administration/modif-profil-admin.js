@@ -12,7 +12,26 @@ adminButton.addEventListener("click", function () {
     window.location.href = ""; 
 });
 
-document.getElementById('.logout-btn').addEventListener("click", function() {
-    localStorage.removeItem('tokenUser'); // Supprime le token
-    window.location.href = '../../index.html'; // Redirige vers la page de connexion
+logoutButton.addEventListener("click", function() {
+
+// Envoi de la requête POST à l'API Symfony pour la déconnexion
+fetch('/logout', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    }
+})
+    .then(response => response.json())
+    .then(data => {
+        if (data.message === 'Déconnexion réussie') {
+            // Effacer le token dans localStorage
+            localStorage.removeItem('token');
+            // Rediriger vers la page de connexion
+            window.location.href = '../../index.html'; 
+        }
+    })
+    .catch(error => {
+        console.error('Erreur lors de la déconnexion:', error);
+    });
+
 });
