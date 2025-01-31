@@ -19,68 +19,68 @@ const formationDivLabelInput = document.querySelector(
 // Fonction pour récupérer et afficher toutes les formations
 function fetchFormations() {
   // Récupérer le token de l'utilisateur depuis le localStorage
-  let tokenUser = localStorage.getItem("tokenUser");
+  let tokenUser = localStorage.getItem("token");
 
   // Vérifier si un token est disponible dans le localStorage
   if (tokenUser) {
     console.log("Token récupéré :", tokenUser);
 
-    // Faire une requête GET vers l'API pour récupérer les formations
-    fetch("/api/cohortes", {
-      method: "GET", // Méthode HTTP GET
-      headers: {
-        "Content-Type": "application/json", // Définir le type de contenu en JSON
-        Authorization: `Bearer ${tokenUser}`, // Ajouter le token d'authentification dans l'en-tête
-      },
-    })
-      .then((response) => response.json()) // Convertir la réponse en JSON
-      .then((data) => {
-        console.log("Réponse après GET :", data); // Afficher la réponse de l'API dans la console
-        
-        // Si la réponse est un tableau directement contenant les formations
-        if (Array.isArray(data) && data.length > 0) {
-          // Sélectionner tous les éléments HTML où les formations seront affichées
-          const formationsLists = document.querySelectorAll(".container_formations_label_input");
+    // Faire une requête GET pour récupérer les formations
+fetch("/api/cohortes", {
+  method: "GET", // Méthode HTTP GET
+  headers: {
+    "Content-Type": "application/json", // Définir le type de contenu en JSON
+    Authorization: `Bearer ${tokenUser}`, // Ajouter le token d'authentification dans l'en-tête
+  },
+})
+  .then((response) => response.json()) // Convertir la réponse en JSON
+  .then((data) => {
+    console.log("Réponse après GET :", data); // Afficher la réponse de l'API dans la console
 
-          // Parcourir chaque élément où les formations seront affichées
-          formationsLists.forEach((formationsList) => {
-            // Vider la liste des formations avant de la remplir
-            formationsList.innerHTML = "";
+    // Si la réponse est un tableau directement contenant les formations
+    if (Array.isArray(data) && data.length > 0) {
+      // Sélectionner tous les éléments HTML où les formations seront affichées
+      const formationsLists = document.querySelectorAll(".container_formations_label_input");
 
-            // Parcourir chaque formation et créer les éléments correspondants
-            data.forEach((formation) => {
-              // Créer un conteneur pour chaque formation
-              const containerLabelInputFormation = document.createElement("div");
-              containerLabelInputFormation.classList.add("container_label_input_formation");
+      // Parcourir chaque élément où les formations seront affichées
+      formationsLists.forEach((formationsList) => {
+        // Vider la liste des formations avant de la remplir
+        formationsList.innerHTML = "";
 
-              // Créer un label pour afficher le nom de la formation
-              const labelFormation = document.createElement("label");
-              labelFormation.classList.add("formation_label");
-              labelFormation.textContent = formation.nom;
+        // Parcourir chaque formation et créer les éléments correspondants
+        data.forEach((formation) => {
+          // Créer un conteneur pour chaque formation
+          const containerLabelInputFormation = document.createElement("div");
+          containerLabelInputFormation.classList.add("container_label_input_formation");
 
-              // Créer un champ de type checkbox pour chaque formation
-              const inputFormation = document.createElement("input");
-              inputFormation.classList.add("formation_input");
-              inputFormation.type = "checkbox";
-              const uniqueId = `formation-${Date.now()}`; // Générer un ID unique basé sur le timestamp
-              inputFormation.id = uniqueId;
-              inputFormation.name = "scales";
+          // Créer un label pour afficher le nom de la formation
+          const labelFormation = document.createElement("label");
+          labelFormation.classList.add("formation_label");
+          labelFormation.textContent = formation.nom;
 
-              // Ajouter le label et le checkbox dans le conteneur de formation
-              containerLabelInputFormation.appendChild(labelFormation);
-              containerLabelInputFormation.appendChild(inputFormation);
+          // Créer un champ de type checkbox pour chaque formation
+          const inputFormation = document.createElement("input");
+          inputFormation.classList.add("formation_input");
+          inputFormation.type = "checkbox";
+          inputFormation.id = formation.id; // Utiliser l'ID renvoyé par l'API
+          inputFormation.name = "scales";
 
-              // Ajouter ce conteneur à la liste des formations
-              formationsList.appendChild(containerLabelInputFormation);
-            });
-          });
-        } else { 
-          console.log("Aucune formation à afficher.");
-        }
-      })
-      .catch((error) => {
-        console.error("Erreur lors de la récupération des formations:", error);
+          // Ajouter le label et le checkbox dans le conteneur de formation
+          containerLabelInputFormation.appendChild(labelFormation);
+          containerLabelInputFormation.appendChild(inputFormation);
+
+          // Ajouter ce conteneur à la liste des formations
+          formationsList.appendChild(containerLabelInputFormation);
+        });
       });
+    } else {
+      console.log("Aucune formation à afficher.");
+    }
+  })
+  .catch((error) => {
+    console.error("Erreur lors de la récupération des formations:", error);
+  });
+
   } else {
     console.log("Aucun token trouvé. Impossible de récupérer les formations.");
   }
@@ -139,56 +139,92 @@ formationButtonAdd.addEventListener("click", function () {
 });
 
 
-// Ajouter un événement au clic du bouton "Supprimer formation"
+// Fonction pour supprimer les formations sélectionnées
 formationButtonDelete.addEventListener("click", function () {
-  // Sélectionner la div qui contient les formations et celle qui contient la confirmation de suppression
-  const formationDiv = document.querySelector(".container_formations");
-  const confirmationDiv = document.querySelector(
-    ".container_liste_formation_stagiaires_vali_annul"
-  );
+  // Sélectionner toutes les cases à cocher pour les formations
+  const checkboxes = document.querySelectorAll(".formation_input:checked");
 
-  // Masquer la div des formations et afficher la div de confirmation
-  formationDiv.style.display = "none";
-  confirmationDiv.style.display = "block";
+  // Vérifier s'il y a des formations sélectionnées
+  if (checkboxes.length === 0) {
+    alert("Aucune formation sélectionnée pour la suppression.");
+    return;
+  }
 
-  // Ajouter un événement au bouton de confirmation de suppression
-  const buttonConfirm = confirmationDiv.querySelector("button:first-of-type");
-  buttonConfirm.addEventListener("click", function () {
-    // Sélectionner toutes les divs contenant un checkbox (les formations à supprimer)
-    const allFormationDivs = document.querySelectorAll(
-      ".container_label_input_formation, .container_modal_stagiaires_label_input"
-    );
+  // Récupérer le token de l'utilisateur depuis le localStorage
+  let tokenUser = localStorage.getItem("token");
 
-    // Parcourir chaque div pour vérifier si le checkbox est sélectionné
-    allFormationDivs.forEach(function (div) {
-      const checkbox = div.querySelector("input[type='checkbox']");
+  if (!tokenUser) {
+    console.log("Aucun token trouvé.");
+    return;
+  }
 
-      // Si le checkbox est coché, supprimer la div correspondante
-      if (checkbox && checkbox.checked) {
-        const uniqueId = checkbox.id; // Récupérer l'ID unique du checkbox
+  // Afficher la div de confirmation de suppression
+  confirmationDiv.style.display = "block"; // Afficher la confirmation
+  formationDiv.style.display = "none"; // Cacher la liste des formations pour éviter des actions en cours
 
-        // Supprimer toutes les divs contenant ce même ID
-        document
-          .querySelectorAll(`#${uniqueId}`)
-          .forEach(function (divToRemove) {
-            divToRemove.closest(".container_label_input_formation").remove();
+  // Ajouter un événement pour valider la suppression
+  const confirmationButton = document.querySelector(".container_liste_formation_stagiaires_vali");
+  const cancelButton = document.querySelector(".container_liste_formation_stagiaires_annul");
+
+  confirmationButton.addEventListener("click", function () {
+    // Supprimer chaque formation sélectionnée
+    checkboxes.forEach((checkbox) => {
+      const formationId = checkbox.id; // L'ID de la formation cochée
+
+      // Faire une requête DELETE pour chaque formation cochée
+      fetch(`/api/cohortes/${formationId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${tokenUser}`, // Ajouter le token d'authentification
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Réponse après suppression :", data);
+          
+          // 1. Supprimer la formation de la liste des formations dans le DOM
+          const formationElement = checkbox.closest(".container_label_input_formation");
+          if (formationElement) {
+            formationElement.remove();
+          }
+
+          // 2. Supprimer la formation de toutes les autres sections de la page (stagiaires, etc.)
+          const allFormationElements = document.querySelectorAll(`input[type="checkbox"][id='${formationId}']`);
+          allFormationElements.forEach((input) => {
+            // Supprimer l'élément parent contenant la formation, basé sur l'ID
+            const formationParentElement = input.closest(".container_label_input_formation");
+            if (formationParentElement) {
+              formationParentElement.remove();
+            }
           });
-      }
+        })
+        .catch((error) => {
+          console.error("Erreur lors de la suppression de la formation :", error);
+        });
     });
 
-    // Réafficher la div des formations et masquer la div de confirmation
-    formationDiv.style.display = "block";
+    // Fermer la confirmation après la suppression
     confirmationDiv.style.display = "none";
+    formationDiv.style.display = "block"; // Réafficher la liste des formations
+    
+    // Recharger la page après la suppression
+    window.location.reload();
   });
 
-  // Ajouter un événement au bouton d'annulation de suppression
-  const buttonCancel = confirmationDiv.querySelector("button:last-of-type");
-  buttonCancel.addEventListener("click", function () {
-    // Réafficher la div des formations et masquer la div de confirmation
-    formationDiv.style.display = "block";
+  // Ajouter un événement pour annuler la suppression
+  cancelButton.addEventListener("click", function () {
+    // Fermer la confirmation sans supprimer et réafficher la liste des formations
     confirmationDiv.style.display = "none";
+    formationDiv.style.display = "block"; // Réafficher la liste des formations
   });
 });
+
+
+
+
+
+
 
 // Ajouter un événement au clic du bouton "Ajouter stagiaire"
 formationButtonAddIntern.addEventListener("click", function () {
