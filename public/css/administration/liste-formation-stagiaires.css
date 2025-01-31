@@ -142,7 +142,6 @@ h2 {
 .container_input_button_formation input:focus {
     background-color: var(--input-focus-bg-color);
     scale: 1.02;
-    font-weight: 500;
     color: var(--primary-color);
 }
 .container_input_button_formation button {
@@ -252,7 +251,6 @@ h2 {
 .container_stagiaires input:focus {
     background-color: var(--input-focus-bg-color);
     scale: 1.03;
-    font-weight: 500;
     color: var(--primary-color);
 }
 .container_stagiaires input::placeholder {
@@ -442,7 +440,6 @@ h2 {
 .container_listes input:focus {
     background-color: var(--input-focus-bg-color);
     scale: 1.03;
-    font-weight: 500;
     color: var(--primary-color);
 }
 .container_listes input::placeholder {
@@ -554,13 +551,7 @@ h2 {
     font-size: 20px;
     font-weight: lighter;
 }
-/* FOOTER */
-footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-  }
+
 
 /*=====RESPONSIVE=====*/
 /*=====DESKTOP=====*/

@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmation alerte</title>
     <link rel="stylesheet" href="">
+    <!-- JS -->
+     <script src="../../js/stagiaires/confirm-alert.js" defer></script>
 </head>
 
 <body>
@@ -42,8 +44,10 @@
         </div>
 
         <div class="main-btn-container">
-            <button class=".btn .main-btn">Annuler</button> <!-- lien vers my mood -->
-            <button class=".btn .main-btn">Valider</button>
+            <button class=".btn .main-btn" onclick="window.location.href='./mymood.html';">Annuler</button> <!-- lien vers my mood -->
+            <a class="confirm_alert_validate_button" href="./mymood.html">
+                <button class=".btn .main-btn">Valider</button>
+            </a>
         </div>
     </main>
 
