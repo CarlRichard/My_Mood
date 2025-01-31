@@ -2,7 +2,7 @@
 const moodLinkSos = document.querySelector(".confirm_alert_validate_button");
 
 moodLinkSos.addEventListener("click", () => {
-  let tokenUser = localStorage.getItem("tokenUser"); // Récupérer le token de l'utilisateur depuis le localStorage
+  let tokenUser = localStorage.getItem("token"); // Récupérer le token de l'utilisateur depuis le localStorage
 
   // Vérifier si le token existe dans le localStorage avant d'envoyer la requête
   if (tokenUser) {

@@ -399,6 +399,95 @@ h2 {
 .modal_stagiaires_valider {
     margin-top: 15px;
 }
+/* roles */
+.container_formations_label_input_role {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.container_modal_stagiaires_role {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 295px;
+    border-radius: 15px;
+    background-color: var(--primary-bg-color);
+    padding: 20px 14px;
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    margin-top: 15px;
+    margin-left: 0px;
+}
+.container_modal_stagiaires_label_input_role {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.modal_label_role {
+    border-radius: 5px;
+    background-color: var(--tertiary-color);
+    color: var(--primary-color);
+    padding: 4px 0px 4px 8px;
+    width: 225px;
+    border: 1px solid var(--secondary-bg-color);
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+}
+.modal_input_role {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: var(--tertiary-color);
+    width: 27px;
+    height: 27px;
+    border-radius: 5px;
+    border: 1px solid var(--border-color);
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    cursor: pointer;
+    position: relative;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.modal_input_role:hover {
+    scale: 1.07;
+    background-color: var(--input-focus-bg-color);
+}
+.modal_input_role:checked::before {
+    content: "✕";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--primary-color);
+    font-size: 16px;
+    font-weight: lighter;
+}
+.container_modal_stagiaires_role button {
+    background-color: var(--tertiary-color);
+    border: 1px solid var(--secondary-bg-color);
+    box-shadow: 2px 2px 8px -3px var(--border-color);
+    border-radius: 5px;
+    padding: 4px 0;
+    width: 100%;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: 0.2s;
+    font-size: 15px;
+}
+.container_modal_stagiaires_role button > span {
+    font-size: 18px;
+    font-weight: lighter;
+}
+.container_modal_stagiaires_role button:hover {
+    scale: 1.02;
+    background-color: var(--button-hover-bg-color);
+    font-weight: 500;
+}
+.modal_stagiaires_valider_role {
+    margin-top: 15px;
+}
 
 /* container h3 listes */
 .container_h3_listes {

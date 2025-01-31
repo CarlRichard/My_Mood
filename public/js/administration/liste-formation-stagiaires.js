@@ -26,68 +26,71 @@ function fetchFormations() {
     console.log("Token récupéré :", tokenUser);
 
     // Faire une requête GET pour récupérer les formations
-fetch("/api/cohortes", {
-  method: "GET", // Méthode HTTP GET
-  headers: {
-    "Content-Type": "application/json", // Définir le type de contenu en JSON
-    Authorization: `Bearer ${tokenUser}`, // Ajouter le token d'authentification dans l'en-tête
-  },
-})
-  .then((response) => response.json()) // Convertir la réponse en JSON
-  .then((data) => {
-    console.log("Réponse après GET :", data); // Afficher la réponse de l'API dans la console
+    fetch("/api/cohortes", {
+      method: "GET", // Méthode HTTP GET
+      headers: {
+        "Content-Type": "application/json", // Définir le type de contenu en JSON
+        Authorization: `Bearer ${tokenUser}`, // Ajouter le token d'authentification dans l'en-tête
+      },
+    })
+      .then((response) => response.json()) // Convertir la réponse en JSON
+      .then((data) => {
+        console.log("Réponse après GET :", data); // Afficher la réponse de l'API dans la console
 
-    // Si la réponse est un tableau directement contenant les formations
-    if (Array.isArray(data) && data.length > 0) {
-      // Sélectionner tous les éléments HTML où les formations seront affichées
-      const formationsLists = document.querySelectorAll(".container_formations_label_input");
+        // Si la réponse est un tableau directement contenant les formations
+        if (Array.isArray(data) && data.length > 0) {
+          // Sélectionner tous les éléments HTML où les formations seront affichées
+          const formationsLists = document.querySelectorAll(
+            ".container_formations_label_input"
+          );
 
-      // Parcourir chaque élément où les formations seront affichées
-      formationsLists.forEach((formationsList) => {
-        // Vider la liste des formations avant de la remplir
-        formationsList.innerHTML = "";
+          // Parcourir chaque élément où les formations seront affichées
+          formationsLists.forEach((formationsList) => {
+            // Vider la liste des formations avant de la remplir
+            formationsList.innerHTML = "";
 
-        // Parcourir chaque formation et créer les éléments correspondants
-        data.forEach((formation) => {
-          // Créer un conteneur pour chaque formation
-          const containerLabelInputFormation = document.createElement("div");
-          containerLabelInputFormation.classList.add("container_label_input_formation");
+            // Parcourir chaque formation et créer les éléments correspondants
+            data.forEach((formation) => {
+              // Créer un conteneur pour chaque formation
+              const containerLabelInputFormation =
+                document.createElement("div");
+              containerLabelInputFormation.classList.add(
+                "container_label_input_formation"
+              );
 
-          // Créer un label pour afficher le nom de la formation
-          const labelFormation = document.createElement("label");
-          labelFormation.classList.add("formation_label");
-          labelFormation.textContent = formation.nom;
+              // Créer un label pour afficher le nom de la formation
+              const labelFormation = document.createElement("label");
+              labelFormation.classList.add("formation_label");
+              labelFormation.textContent = formation.nom;
 
-          // Créer un champ de type checkbox pour chaque formation
-          const inputFormation = document.createElement("input");
-          inputFormation.classList.add("formation_input");
-          inputFormation.type = "checkbox";
-          inputFormation.id = formation.id; // Utiliser l'ID renvoyé par l'API
-          inputFormation.name = "scales";
+              // Créer un champ de type checkbox pour chaque formation
+              const inputFormation = document.createElement("input");
+              inputFormation.classList.add("formation_input");
+              inputFormation.type = "checkbox";
+              inputFormation.id = formation.id; // Utiliser l'ID renvoyé par l'API
+              inputFormation.name = "scales";
 
-          // Ajouter le label et le checkbox dans le conteneur de formation
-          containerLabelInputFormation.appendChild(labelFormation);
-          containerLabelInputFormation.appendChild(inputFormation);
+              // Ajouter le label et le checkbox dans le conteneur de formation
+              containerLabelInputFormation.appendChild(labelFormation);
+              containerLabelInputFormation.appendChild(inputFormation);
 
-          // Ajouter ce conteneur à la liste des formations
-          formationsList.appendChild(containerLabelInputFormation);
-        });
+              // Ajouter ce conteneur à la liste des formations
+              formationsList.appendChild(containerLabelInputFormation);
+            });
+          });
+        } else {
+          console.log("Aucune formation à afficher.");
+        }
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la récupération des formations:", error);
       });
-    } else {
-      console.log("Aucune formation à afficher.");
-    }
-  })
-  .catch((error) => {
-    console.error("Erreur lors de la récupération des formations:", error);
-  });
-
   } else {
     console.log("Aucun token trouvé. Impossible de récupérer les formations.");
   }
 }
 // Appeler la fonction pour récupérer et afficher toutes les formations
 fetchFormations();
-
 
 // Ajouter un événement au clic du bouton "Ajouter formation"
 formationButtonAdd.addEventListener("click", function () {
@@ -138,7 +141,6 @@ formationButtonAdd.addEventListener("click", function () {
     });
 });
 
-
 // Fonction pour supprimer les formations sélectionnées
 formationButtonDelete.addEventListener("click", function () {
   // Sélectionner toutes les cases à cocher pour les formations
@@ -159,12 +161,16 @@ formationButtonDelete.addEventListener("click", function () {
   }
 
   // Afficher la div de confirmation de suppression
-  confirmationDiv.style.display = "block"; // Afficher la confirmation
+  confirmationDiv.style.display = "flex"; // Afficher la confirmation
   formationDiv.style.display = "none"; // Cacher la liste des formations pour éviter des actions en cours
 
   // Ajouter un événement pour valider la suppression
-  const confirmationButton = document.querySelector(".container_liste_formation_stagiaires_vali");
-  const cancelButton = document.querySelector(".container_liste_formation_stagiaires_annul");
+  const confirmationButton = document.querySelector(
+    ".container_liste_formation_stagiaires_vali"
+  );
+  const cancelButton = document.querySelector(
+    ".container_liste_formation_stagiaires_annul"
+  );
 
   confirmationButton.addEventListener("click", function () {
     // Supprimer chaque formation sélectionnée
@@ -182,32 +188,40 @@ formationButtonDelete.addEventListener("click", function () {
         .then((response) => response.json())
         .then((data) => {
           console.log("Réponse après suppression :", data);
-          
+
           // 1. Supprimer la formation de la liste des formations dans le DOM
-          const formationElement = checkbox.closest(".container_label_input_formation");
+          const formationElement = checkbox.closest(
+            ".container_label_input_formation"
+          );
           if (formationElement) {
             formationElement.remove();
           }
 
           // 2. Supprimer la formation de toutes les autres sections de la page (stagiaires, etc.)
-          const allFormationElements = document.querySelectorAll(`input[type="checkbox"][id='${formationId}']`);
+          const allFormationElements = document.querySelectorAll(
+            `input[type="checkbox"][id='${formationId}']`
+          );
           allFormationElements.forEach((input) => {
             // Supprimer l'élément parent contenant la formation, basé sur l'ID
-            const formationParentElement = input.closest(".container_label_input_formation");
+            const formationParentElement = input.closest(
+              ".container_label_input_formation"
+            );
             if (formationParentElement) {
               formationParentElement.remove();
             }
           });
         })
         .catch((error) => {
-          console.error("Erreur lors de la suppression de la formation :", error);
+          console.error(
+            "Erreur lors de la suppression de la formation :",
+            error
+          );
         });
     });
-
     // Fermer la confirmation après la suppression
     confirmationDiv.style.display = "none";
     formationDiv.style.display = "block"; // Réafficher la liste des formations
-    
+
     // Recharger la page après la suppression
     window.location.reload();
   });
@@ -219,12 +233,6 @@ formationButtonDelete.addEventListener("click", function () {
     formationDiv.style.display = "block"; // Réafficher la liste des formations
   });
 });
-
-
-
-
-
-
 
 // Ajouter un événement au clic du bouton "Ajouter stagiaire"
 formationButtonAddIntern.addEventListener("click", function () {
@@ -258,3 +266,126 @@ formationButtonAddIntern.addEventListener("click", function () {
     userFormationInputEmail
   );
 });
+
+// Sélectionner les boutons Valider et Annuler formation
+const modalValiderButtons = document.querySelectorAll(
+  ".modal_stagiaires_valider"
+);
+const modalAnnulerButtons = document.querySelectorAll(
+  ".modal_stagiaires_annuler"
+);
+
+// Fonction pour mettre à jour l'élément <details> avec la formation sélectionnée
+function updateDetailsWithSelectedFormation(detailsElement) {
+  const checkbox = detailsElement.querySelector(".formation_input:checked"); // Récupérer la checkbox sélectionnée
+  const summary = detailsElement.querySelector("summary");
+
+  // Si aucune checkbox n'est cochée, on ne modifie rien
+  if (!checkbox) {
+    summary.textContent = "Formation"; // Texte par défaut
+    return;
+  }
+
+  // Récupérer la formation sélectionnée et mettre à jour le summary
+  const selectedFormation = checkbox.previousElementSibling.textContent; // Nom de la formation associée
+
+  // Mettre à jour le texte du <summary> avec la formation sélectionnée
+  summary.textContent = selectedFormation;
+}
+
+// Ajouter les événements au clic sur chaque checkbox pour ne permettre qu'une seule sélection
+document.querySelectorAll(".formation_input").forEach((checkbox) => {
+  checkbox.addEventListener("change", function () {
+    // Si une case est cochée, décocher toutes les autres
+    if (checkbox.checked) {
+      // On boucle sur toutes les autres checkboxes et on les décoche
+      document.querySelectorAll(".formation_input").forEach((otherCheckbox) => {
+        if (otherCheckbox !== checkbox && otherCheckbox.checked) {
+          otherCheckbox.checked = false;
+        }
+      });
+    }
+  });
+});
+
+
+
+
+// Ajouter les événements au clic sur chaque bouton Valider
+modalValiderButtons.forEach((validerButton) => {
+  validerButton.addEventListener("click", function () {
+    const containerModal = validerButton.closest(".container_modal_stagiaires"); // Trouver le parent modal
+    const detailsElement = containerModal.closest(
+      ".container_stagiaires_details"
+    ); // Trouver le <details> parent
+    updateDetailsWithSelectedFormation(detailsElement);
+    detailsElement.removeAttribute("open"); // Fermer le <details>
+  });
+});
+
+// Ajouter les événements au clic sur chaque bouton Annuler
+modalAnnulerButtons.forEach((annulerButton) => {
+  annulerButton.addEventListener("click", function () {
+    const containerModal = annulerButton.closest(".container_modal_stagiaires"); // Trouver le parent modal
+    const detailsElement = containerModal.closest(
+      ".container_stagiaires_details"
+    ); // Trouver le <details> parent
+    detailsElement.removeAttribute("open"); // Fermer le <details> sans rien faire
+  });
+});
+
+
+
+
+// //////////////////////
+
+// Sélectionner les éléments
+const detailsElement = document.querySelector('.container_stagiaires_details_role');
+const validateButton = document.querySelector('.modal_stagiaires_valider_role');
+const cancelButton = document.querySelector('.modal_stagiaires_annuler_role');
+const checkboxes = document.querySelectorAll('.modal_input_role');
+const summaryElement = detailsElement.querySelector('summary');
+
+// Fonction pour récupérer les cases à cocher sélectionnées (une seule case)
+function getSelectedRole() {
+  let selectedRole = null;
+  checkboxes.forEach(checkbox => {
+    if (checkbox.checked) {
+      selectedRole = checkbox.previousElementSibling.textContent; // Le texte du rôle
+    }
+  });
+  return selectedRole;
+}
+
+// Gérer l'exclusivité des cases à cocher (désélectionner les autres cases lorsqu'une nouvelle est sélectionnée)
+checkboxes.forEach(checkbox => {
+  checkbox.addEventListener('change', function() {
+    if (checkbox.checked) {
+      // Si une case est cochée, désélectionner les autres
+      checkboxes.forEach(otherCheckbox => {
+        if (otherCheckbox !== checkbox) {
+          otherCheckbox.checked = false;
+        }
+      });
+    }
+  });
+});
+
+// Lorsque le bouton "Valider" est cliqué
+validateButton.addEventListener('click', function() {
+  const selectedRole = getSelectedRole();
+  if (selectedRole) {
+    summaryElement.textContent = selectedRole; // Mettre à jour le texte avec le rôle sélectionné
+  } else {
+    summaryElement.textContent = "Aucun rôle sélectionné"; // Texte par défaut si aucune case n'est cochée
+  }
+
+  detailsElement.removeAttribute('open'); // Ferme le <details>
+});
+
+// Lorsque le bouton "Annuler" est cliqué
+cancelButton.addEventListener('click', function() {
+  detailsElement.removeAttribute('open'); // Ferme le <details> sans modifier le texte
+});
+
+
