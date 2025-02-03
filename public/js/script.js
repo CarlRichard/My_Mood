@@ -86,9 +86,9 @@ formStagiaire.addEventListener("submit", (event) => {
 
         // Vérification et redirection selon le rôle
         if (role == "ROLE_ADMIN") {
-          window.location.href = "../pages/administration/liste-formations.html";
-        } else if (role == "ROLE_SUPERVISEUR") {
           window.location.href = "../pages/administration/liste-formation-stagiaires.html";
+        } else if (role == "ROLE_SUPERVISEUR") {
+          window.location.href = "../pages/administration/liste-formations.html";
         } else {
           window.location.href = "./pages/stagiaires/mymood.html";
         }

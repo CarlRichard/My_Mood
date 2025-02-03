@@ -33,6 +33,50 @@ header {
     font-weight: 500;
 }
 
+.header_deconnexion_alert {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 15px;
+    background-color: var(--primary-bg-color);
+    padding: 37px 30px;
+    box-shadow: 2px 2px 8px -2px var(--border-color);
+    margin-top: 17px;
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    width: 341px;
+    display: none;
+}
+.header_deconnexion_alert p {
+    color: var(--tertiary-color);
+    text-align: center;
+    margin-bottom: 20px;
+}
+.header_deconnexion_alert button {
+    background-color: var(--tertiary-color);
+    border: 1px solid var(--secondary-bg-color);
+    box-shadow: 2px 2px 8px -3px var(--border-color);
+    border-radius: 5px;
+    padding: 4px 0;
+    width: 100%;
+    color: var(--secondary-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: 0.2s;
+    font-size: 15px;
+}
+.header_deconnexion_alert button:hover {
+    scale: 1.02;
+    background-color: var(--button-hover-bg-color);
+    font-weight: 500;
+}
+.header_deconnexion_alert button > span {
+    font-size: 24px;
+}
+
 /* MAIN */
 h1 {
     text-align: center;

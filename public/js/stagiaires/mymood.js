@@ -50,6 +50,3 @@ moodButton.addEventListener("click", () => {
     console.log("Aucun token trouvé dans le localStorage"); // Message si le token n'est pas trouvé
   }
 });
-
-
-

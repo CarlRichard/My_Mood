@@ -42,11 +42,21 @@
       </div>
 
       <div class="header_container_button">
-        <button>
+        <button onclick="window.location.href='../stagiaires/mon-profil.html';">
           <span class="material-symbols-outlined"> person </span>Mon profil
         </button>
-        <button>
+        <button class="header_deconnexion">
           <span class="material-symbols-outlined"> cancel </span>Déconnexion
+        </button>
+      </div>
+
+      <div class="header_deconnexion_alert">
+        <p>Êtes-vous sûr de vouloir vous deconnecter ?</p>
+        <button class="header_deconnexion_alert_valid">
+          <span class="material-symbols-outlined"> check </span>Valider
+        </button>
+        <button class="header_deconnexion_alert_valid">
+          <span class="material-symbols-outlined"> close </span>Annuler
         </button>
       </div>
     </header>
@@ -83,10 +93,12 @@
             </div>
             <div class="container_liste_formation_stagiaires_vali_annul">
               <p>Êtes-vous sûr de vouloir confirmer ?</p>
-              <button class="container_liste_formation_stagiaires_vali"><span class="material-symbols-outlined"> check </span
-                >Valider</button>
-              <button class="container_liste_formation_stagiaires_annul"><span class="material-symbols-outlined"> close </span
-                >Annuler</button>
+              <button class="container_liste_formation_stagiaires_vali">
+                <span class="material-symbols-outlined"> check </span>Valider
+              </button>
+              <button class="container_liste_formation_stagiaires_annul">
+                <span class="material-symbols-outlined"> close </span>Annuler
+              </button>
             </div>
           </div>
           <!-- container stagiaires & listes -->
@@ -99,15 +111,15 @@
                 name="first-name" required" placeholder="Prénom"/> <input
                 class="input_name" type="text" id="name" name="name" required"
                 placeholder="Nom"/>
-                <details class="container_stagiaires_details">
-                  <summary></summary>
-                  <!-- modal stagiaire stagiaire -->
-                  <div class="container_modal_stagiaires">
+                <!-- <details class="container_stagiaires_details">
+                  <summary></summary> -->
+                <!-- modal stagiaire stagiaire -->
+                <!-- <div class="container_modal_stagiaires">
                     <div class="container_formations_label_input">
-                      <!-- <div class="container_modal_stagiaires_label_input">
+                      <div class="container_modal_stagiaires_label_input">
                         <label class="modal_label">Formation 1</label>
                         <input class="modal_input" type="checkbox" id="scales" name="scales" />
-                      </div> -->
+                      </div>
                     </div>
                     <button class="modal_stagiaires_valider">
                       <span class="material-symbols-outlined"> check </span
@@ -118,7 +130,7 @@
                       >Annuler
                     </button>
                   </div>
-                </details>
+                </details> -->
                 <details class="container_stagiaires_details_role">
                   <summary></summary>
                   <!-- modal stagiaire role -->
@@ -126,15 +138,30 @@
                     <div class="container_formations_label_input_role">
                       <div class="container_modal_stagiaires_label_input_role">
                         <label class="modal_label_role">Administrateur</label>
-                        <input class="modal_input_role" type="checkbox" id="scales" name="scales" />
+                        <input
+                          class="modal_input_role"
+                          type="checkbox"
+                          id="checkboxAdmin"
+                          name="scales"
+                        />
                       </div>
                       <div class="container_modal_stagiaires_label_input_role">
                         <label class="modal_label_role">Superviseur</label>
-                        <input class="modal_input_role" type="checkbox" id="scales" name="scales" />
+                        <input
+                          class="modal_input_role"
+                          type="checkbox"
+                          id="checkboxSuperviseur"
+                          name="scales"
+                        />
                       </div>
                       <div class="container_modal_stagiaires_label_input_role">
                         <label class="modal_label_role">Étudiant(e)</label>
-                        <input class="modal_input_role" type="checkbox" id="scales" name="scales" />
+                        <input
+                          class="modal_input_role"
+                          type="checkbox"
+                          id="checkboxEtudiant"
+                          name="scales"
+                        />
                       </div>
                     </div>
                     <button class="modal_stagiaires_valider_role">

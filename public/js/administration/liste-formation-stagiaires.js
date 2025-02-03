@@ -1,3 +1,30 @@
+// DECONNEXION
+document.querySelector('.header_deconnexion').addEventListener('click', function() {
+  // Cacher la section .header_container_button
+  document.querySelector('.header_container_button').style.display = 'none';
+  
+  // Afficher la .header_deconnexion_alert
+  document.querySelector('.header_deconnexion_alert').style.display = 'flex';
+});
+
+document.querySelector('.header_deconnexion_alert_valid:nth-of-type(1)').addEventListener('click', function() {
+  // Si l'utilisateur clique sur Valider
+  localStorage.clear();  // Vider le localStorage
+  window.location.href = '../../index.html';  // Rediriger vers index.html
+});
+
+document.querySelector('.header_deconnexion_alert_valid:nth-of-type(2)').addEventListener('click', function() {
+  // Si l'utilisateur clique sur Annuler
+  // Réafficher la section .header_container_button
+  document.querySelector('.header_container_button').style.display = 'flex';
+  
+  // Cacher la .header_deconnexion_alert
+  document.querySelector('.header_deconnexion_alert').style.display = 'none';
+});
+
+
+
+
 // Sélectionner les éléments nécessaires dans le DOM
 const formationInputText = document.querySelector("#text");
 const formationButtonAdd = document.querySelector(".button_add");
@@ -234,38 +261,6 @@ formationButtonDelete.addEventListener("click", function () {
   });
 });
 
-// Ajouter un événement au clic du bouton "Ajouter stagiaire"
-formationButtonAddIntern.addEventListener("click", function () {
-  // Récupérer les valeurs des champs "prénom", "nom" et "email"
-  const userFormationInputFirstName = formationInputFirstName.value;
-  const userFormationInputName = formationInputName.value;
-  const userFormationInputEmail = formationInputEmail.value;
-
-  // Vérifier si le prénom a été renseigné
-  if (!userFormationInputFirstName) {
-    alert("Le prénom est requis !"); // Afficher un message d'alerte si le prénom est vide
-    return; // Arrêter l'exécution de la fonction si le prénom est manquant
-  }
-
-  // Vérifier si le nom a été renseigné
-  if (!userFormationInputName) {
-    alert("Le nom est requis !"); // Afficher un message d'alerte si le nom est vide
-    return; // Arrêter l'exécution de la fonction si le nom est manquant
-  }
-
-  // Vérifier si l'email a été renseigné
-  if (!userFormationInputEmail) {
-    alert("L'email est requis !"); // Afficher un message d'alerte si l'email est vide
-    return; // Arrêter l'exécution de la fonction si l'email est manquant
-  }
-
-  // Si tous les champs sont remplis, afficher les valeurs dans la console
-  console.log(
-    userFormationInputFirstName,
-    userFormationInputName,
-    userFormationInputEmail
-  );
-});
 
 // Sélectionner les boutons Valider et Annuler formation
 const modalValiderButtons = document.querySelectorAll(
@@ -309,8 +304,6 @@ document.querySelectorAll(".formation_input").forEach((checkbox) => {
 });
 
 
-
-
 // Ajouter les événements au clic sur chaque bouton Valider
 modalValiderButtons.forEach((validerButton) => {
   validerButton.addEventListener("click", function () {
@@ -335,10 +328,6 @@ modalAnnulerButtons.forEach((annulerButton) => {
 });
 
 
-
-
-// //////////////////////
-
 // Sélectionner les éléments
 const detailsElement = document.querySelector('.container_stagiaires_details_role');
 const validateButton = document.querySelector('.modal_stagiaires_valider_role');
@@ -346,30 +335,100 @@ const cancelButton = document.querySelector('.modal_stagiaires_annuler_role');
 const checkboxes = document.querySelectorAll('.modal_input_role');
 const summaryElement = detailsElement.querySelector('summary');
 
+// Ajouter un événement au clic du bouton "Ajouter stagiaire"
+formationButtonAddIntern.addEventListener("click", function () {
+  // Récupérer les valeurs des champs "prénom", "nom" et "email"
+  const userFormationInputFirstName = formationInputFirstName.value;
+  const userFormationInputName = formationInputName.value;
+  const userFormationInputEmail = formationInputEmail.value;
+
+  // Vérifier si le prénom a été renseigné
+  if (!userFormationInputFirstName) {
+    alert("Le prénom est requis !");
+    return;
+  }
+
+  // Vérifier si le nom a été renseigné
+  if (!userFormationInputName) {
+    alert("Le nom est requis !");
+    return;
+  }
+
+  // Vérifier si l'email a été renseigné
+  if (!userFormationInputEmail) {
+    alert("L'email est requis !");
+    return;
+  }
+
+  // Vérifier quel rôle est sélectionné
+  const selectedRole = getSelectedRole();
+  if (!selectedRole) {
+    alert("Un rôle est requis !");
+    return;
+  }
+
+  // Récupérer le token depuis le localStorage
+  let tokenUser = localStorage.getItem("token");
+  if (!tokenUser) {
+    alert("Token d'authentification manquant !");
+    return;
+  }
+
+  // Préparer les données à envoyer dans le corps de la requête
+  const data = {
+    prenom: userFormationInputFirstName,
+    nom: userFormationInputName,
+    email: userFormationInputEmail,
+    role: selectedRole // Ajouter le rôle sélectionné
+  };
+
+  // Effectuer la requête POST avec fetch
+  fetch('/mail', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${tokenUser}`
+    },
+    body: JSON.stringify(data)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Erreur lors de l\'ajout du stagiaire');
+    }
+    return response.json();
+  })
+  .then(responseData => {
+    console.log('Stagiaire ajouté avec succès :', responseData);
+    // Actions supplémentaires après l'ajout réussi, comme réinitialiser le formulaire ou afficher un message
+  })
+  .catch(error => {
+    console.error('Une erreur est survenue :', error);
+  });
+});
+
 // Fonction pour récupérer les cases à cocher sélectionnées (une seule case)
 function getSelectedRole() {
   let selectedRole = null;
   checkboxes.forEach(checkbox => {
     if (checkbox.checked) {
-      selectedRole = checkbox.previousElementSibling.textContent; // Le texte du rôle
+      // Vérifier quel rôle correspond à chaque case
+      switch (checkbox.id) {
+        case 'checkboxEtudiant': // Remplacez par l'id de votre checkbox pour ROLE_ETUDIANT
+          selectedRole = 'ROLE_ETUDIANT';
+          break;
+        case 'checkboxSuperviseur': // Remplacez par l'id de votre checkbox pour ROLE_SUPERVISEUR
+          selectedRole = 'ROLE_SUPERVISEUR';
+          break;
+        case 'checkboxAdmin': // Remplacez par l'id de votre checkbox pour ROLE_ADMIN
+          selectedRole = 'ROLE_ADMIN';
+          break;
+        default:
+          break;
+      }
     }
   });
   return selectedRole;
 }
-
-// Gérer l'exclusivité des cases à cocher (désélectionner les autres cases lorsqu'une nouvelle est sélectionnée)
-checkboxes.forEach(checkbox => {
-  checkbox.addEventListener('change', function() {
-    if (checkbox.checked) {
-      // Si une case est cochée, désélectionner les autres
-      checkboxes.forEach(otherCheckbox => {
-        if (otherCheckbox !== checkbox) {
-          otherCheckbox.checked = false;
-        }
-      });
-    }
-  });
-});
 
 // Lorsque le bouton "Valider" est cliqué
 validateButton.addEventListener('click', function() {
