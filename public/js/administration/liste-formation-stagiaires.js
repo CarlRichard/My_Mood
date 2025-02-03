@@ -399,12 +399,14 @@ formationButtonAddIntern.addEventListener("click", function () {
   })
   .then(responseData => {
     console.log('Stagiaire ajouté avec succès :', responseData);
-    // Actions supplémentaires après l'ajout réussi, comme réinitialiser le formulaire ou afficher un message
+    // Recharger la page après un ajout réussi
+    location.reload(); // Rechargement de la page
   })
   .catch(error => {
     console.error('Une erreur est survenue :', error);
   });
 });
+
 
 // Fonction pour récupérer les cases à cocher sélectionnées (une seule case)
 function getSelectedRole() {
@@ -447,4 +449,203 @@ cancelButton.addEventListener('click', function() {
   detailsElement.removeAttribute('open'); // Ferme le <details> sans modifier le texte
 });
 
+// Affichier les stagiaires
+let tokenUser = localStorage.getItem("token");
+
+if (!tokenUser) {
+  console.error('Token non trouvé dans le localStorage');
+} else {
+  fetch('/api/utilisateurs', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${tokenUser}`
+    },
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Réponse réseau non valide');
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (Array.isArray(data)) {
+        const containerListesBorder = document.querySelector('.container_listes_border');
+        
+        // Boucle pour parcourir chaque utilisateur
+        data.forEach(user => {
+          // Créer un conteneur pour l'utilisateur
+          const userDiv = document.createElement('div');
+          userDiv.classList.add('container_listes');
+          userDiv.setAttribute('data-user-id', user.id); // Ajouter un attribut avec l'id de l'utilisateur
+
+          // Créer les éléments d'entrée (prénom, nom)
+          const firstNameInput = document.createElement('input');
+          firstNameInput.classList.add('input_firstname');
+          firstNameInput.type = 'text';
+          firstNameInput.id = 'first-name';
+          firstNameInput.name = 'first-name';
+          firstNameInput.placeholder = 'Prénom';
+          firstNameInput.value = user.prenom; // Ajouter le prénom de l'utilisateur
+
+          const nameInput = document.createElement('input');
+          nameInput.classList.add('input_name');
+          nameInput.type = 'text';
+          nameInput.id = 'name';
+          nameInput.name = 'name';
+          nameInput.placeholder = 'Nom';
+          nameInput.value = user.nom; // Ajouter le nom de l'utilisateur
+
+          // Ajouter les éléments d'entrée à la div de l'utilisateur
+          userDiv.appendChild(firstNameInput);
+          userDiv.appendChild(nameInput);
+
+          // Ajouter les groupes et rôles (reste inchangé)
+          const details = document.createElement('details');
+          details.classList.add('container_stagiaires_details');
+          const summary = document.createElement('summary');
+          summary.textContent = user.groupes[0]?.nom || 'Aucun groupe';
+          details.appendChild(summary);
+
+          const containerModal = document.createElement('div');
+          containerModal.classList.add('container_modal_stagiaires');
+          const buttonValidate = document.createElement('button');
+          buttonValidate.classList.add('modal_stagiaires_valider');
+          buttonValidate.innerHTML = '<span class="material-symbols-outlined"> check </span>Valider';
+          const buttonCancel = document.createElement('button');
+          buttonCancel.classList.add('modal_stagiaires_annuler');
+          buttonCancel.innerHTML = '<span class="material-symbols-outlined"> close </span>Annuler';
+          containerModal.appendChild(buttonValidate);
+          containerModal.appendChild(buttonCancel);
+          details.appendChild(containerModal);
+          userDiv.appendChild(details);
+
+          // Ajouter la section des rôles (reste inchangé)
+          const detailsRoles = document.createElement('details');
+          detailsRoles.classList.add('container_stagiaires_details_role');
+          const summaryRole = document.createElement('summary');
+          summaryRole.textContent = 'Rôles';
+          detailsRoles.appendChild(summaryRole);
+          const containerModalRole = document.createElement('div');
+          containerModalRole.classList.add('container_modal_stagiaires_role');
+
+          const roles = user.roles || [];
+          const rolesList = [
+            { name: 'Administrateur', id: 'checkboxAdmin' },
+            { name: 'Superviseur', id: 'checkboxSuperviseur' },
+            { name: 'Étudiant(e)', id: 'checkboxEtudiant' }
+          ];
+
+          rolesList.forEach(role => {
+            const roleContainer = document.createElement('div');
+            roleContainer.classList.add('container_modal_stagiaires_label_input_role');
+            const label = document.createElement('label');
+            label.classList.add('modal_label_role');
+            label.textContent = role.name;
+
+            const checkbox = document.createElement('input');
+            checkbox.classList.add('modal_input_role');
+            checkbox.type = 'checkbox';
+            checkbox.id = role.id;
+            checkbox.name = role.name;
+
+            if (roles.includes(role.name)) {
+              checkbox.checked = true;
+            }
+
+            roleContainer.appendChild(label);
+            roleContainer.appendChild(checkbox);
+            containerModalRole.appendChild(roleContainer);
+          });
+
+          const buttonValidateRole = document.createElement('button');
+          buttonValidateRole.classList.add('modal_stagiaires_valider_role');
+          buttonValidateRole.innerHTML = '<span class="material-symbols-outlined"> check </span>Valider';
+          const buttonCancelRole = document.createElement('button');
+          buttonCancelRole.classList.add('modal_stagiaires_annuler_role');
+          buttonCancelRole.innerHTML = '<span class="material-symbols-outlined"> close </span>Annuler';
+          containerModalRole.appendChild(buttonValidateRole);
+          containerModalRole.appendChild(buttonCancelRole);
+          detailsRoles.appendChild(containerModalRole);
+          userDiv.appendChild(detailsRoles);
+
+          // Créer l'input pour l'email
+          const emailInput = document.createElement('input');
+          emailInput.classList.add('input_email');
+          emailInput.type = 'email';
+          emailInput.id = 'email';
+          emailInput.placeholder = 'Adresse mail';
+          emailInput.value = user.email; // Ajouter l'email de l'utilisateur
+
+          userDiv.appendChild(emailInput);
+
+          // Créer l'input pour le checkbox
+          const checkboxInput = document.createElement('input');
+          checkboxInput.classList.add('liste_input_check');
+          checkboxInput.type = 'checkbox';
+          checkboxInput.id = 'scales';
+          checkboxInput.name = 'scales';
+
+          userDiv.appendChild(checkboxInput);
+
+          // Ajouter la div de l'utilisateur au conteneur
+          containerListesBorder.appendChild(userDiv);
+
+          // Sélectionner le bouton supprimer déjà existant
+          const deleteButton = document.querySelector('.container_listes_button');
+
+          // Activer/désactiver le bouton de suppression en fonction de la case cochée
+          checkboxInput.addEventListener('change', (event) => {
+            if (event.target.checked) {
+              deleteButton.disabled = false; // Activer le bouton
+              deleteButton.setAttribute('data-user-id', user.id); // Lier l'utilisateur au bouton
+            } else {
+              // Désactiver le bouton si aucune case n'est cochée
+              deleteButton.disabled = !document.querySelectorAll('.liste_input_check:checked').length;
+            }
+          });
+
+// Ajouter l'événement de suppression au bouton
+deleteButton.addEventListener('click', () => {
+  const userIdToDelete = deleteButton.getAttribute('data-user-id');
+
+  if (userIdToDelete) {
+    fetch(`/api/utilisateurs/${userIdToDelete}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tokenUser}`
+      }
+    })
+      .then(response => {
+        if (response.ok) {
+          // Supprimer l'utilisateur du DOM
+          const userDivToDelete = document.querySelector(`[data-user-id="${userIdToDelete}"]`);
+          if (userDivToDelete) {
+            userDivToDelete.remove();
+          }
+          console.log(`Utilisateur ${userIdToDelete} supprimé`);
+
+          // Recharger la page après suppression
+          location.reload(); // Recharger la page pour refléter les changements
+        } else {
+          console.error('Erreur lors de la suppression de l\'utilisateur');
+        }
+      })
+      .catch(error => {
+        console.error('Erreur de requête :', error);
+      });
+  }
+});
+
+
+        });
+      } else {
+        console.error("Les données ne sont pas sous forme de tableau.");
+      }
+    })
+    .catch(error => {
+      console.error('Il y a eu un problème avec la requête fetch :', error);
+    });
+}
 

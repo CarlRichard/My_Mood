@@ -668,7 +668,7 @@ h2 {
     border: 1px solid var(--secondary-color);
     box-shadow: 2px 2px 8px -4px var(--secondary-color);
     cursor: pointer;
-    margin-top: 30px;
+    margin-bottom: 30px;
     transition: 0.2s;
     width: fit-content;
     display: flex;
@@ -699,7 +699,7 @@ h2 {
         gap: 80px;
     }
     .container_listes_button {
-        margin-top: 30px;
+        margin-bottom: 30px;
     }
     .container_h4_stagiaires > h4 {
         text-align: center;
