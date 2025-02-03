@@ -12,8 +12,8 @@
 }
 
 .notif_container {
-    width: 612px;
-    height: 343px;
+    width: 700px;
+    height: 400px;
     border-radius: 15px;
     background-color: var(--primary-bg-color);
     display: flex;
@@ -25,16 +25,20 @@
 .notif_container>p {
     color: var(--tertiary-color);
     text-align: center;
+    font-size: 20px;
 }
 
 .notif_button {
-    width: fit-content;
+    width: 200px;
+    height: 50px;
     padding: 11px 48px;
     border-radius: 7px;
     border: 1px solid var(--primary-bg-color);
     background-color: var(--tertiary-color);
     color: var(--secondary-color);
     cursor: pointer;
+    font-size: 18px;
+
 }
 
 .notif_button:hover {
