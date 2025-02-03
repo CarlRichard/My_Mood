@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+use App\Repository\CohorteRepository;
 use App\Service\MailerService;
 use App\Service\PasswordGenerator;
 use App\Service\EmailService;
@@ -104,7 +105,7 @@ class UtilisateurController extends AbstractController
      * Créer un utilisateur et envoyer le mot de passe par email
      */
     #[Route('/mail', name: 'mail_user', methods: ['POST'])]
-    public function createUserMail(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, MailerService $mailerService)
+    public function createUserMail(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, MailerService $mailerService, CohorteRepository $cohorteRepository)
     {
         $data = json_decode($request->getContent(), true);
 
@@ -133,6 +134,17 @@ class UtilisateurController extends AbstractController
         $plainPassword = bin2hex(random_bytes(4)); // Un mot de passe temporaire de 8 caractères
         $hashedPassword = $passwordHasher->hashPassword($user, $plainPassword);
         $user->setPassword($hashedPassword);
+        if (isset($data['groupes'])) {
+            foreach ($data['groupes'] as $cohorteId) {
+                $cohorte = $cohorteRepository->find($cohorteId);
+                if ($cohorte) {
+                    $user->addGroupe($cohorte);
+                } else {
+                    return new JsonResponse(['message' => 'Cohorte non trouvée'], 404);
+                }
+            }
+        }
+        
 
         // Essayer d'envoyer l'email
         try {
