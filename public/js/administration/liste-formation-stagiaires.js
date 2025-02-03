@@ -373,38 +373,68 @@ formationButtonAddIntern.addEventListener("click", function () {
     alert("Token d'authentification manquant !");
     return;
   }
+  function getCheckboxId() {
+    // Récupérer toutes les cases à cocher avec la classe 'formation_input'
+    let checkboxes = document.getElementsByClassName('formation_input');
+    
+    // Initialiser un tableau pour stocker les IDs des cases à cocher sélectionnées
+    let groupes = [];
 
-  // Préparer les données à envoyer dans le corps de la requête
-  const data = {
-    prenom: userFormationInputFirstName,
-    nom: userFormationInputName,
-    email: userFormationInputEmail,
-    role: selectedRole // Ajouter le rôle sélectionné
-  };
+    // Boucler sur toutes les cases à cocher pour vérifier si elles sont cochées
+    for (let i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i].checked) {
+            groupes.push(checkboxes[i].id); // Ajouter l'ID de la case cochée
+        }
+    }
+
+    // Vérifier si des cases ont été sélectionnées
+    if (groupes.length === 0) {
+        alert('Veuillez sélectionner au moins un groupe');
+        return; // Arrêter la fonction si aucun groupe n'est sélectionné
+    }
+
+    // Préparer les données à envoyer dans le corps de la requête
+    const data = {
+        prenom: userFormationInputFirstName,
+        nom: userFormationInputName,
+        email: userFormationInputEmail,
+        role: selectedRole, // Ajouter le rôle sélectionné
+        groupes: groupes // Les groupes (IDs des cases à cocher sélectionnées)
+    };
+
+    // Faire la requête POST pour envoyer les données
+    fetch('/mail', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${tokenUser}`
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur lors de l\'ajout du stagiaire');
+        }
+        return response.json();
+    })
+    .then(responseData => {
+        console.log('Stagiaire ajouté avec succès :', responseData);
+        alert('Stagiaire ajouté avec succès'); // Message de succès
+        location.reload(); // Recharger la page après un ajout réussi
+    })
+    .catch(error => {
+        console.error('Une erreur est survenue :', error);
+        alert('Une erreur est survenue lors de l\'ajout du stagiaire.'); // Message d'erreur pour l'utilisateur
+    });
+}
+
+
+ getCheckboxId(); // Appeler cette fonction lorsque tu veux envoyer les données
+
 
   // Effectuer la requête POST avec fetch
-  fetch('/mail', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${tokenUser}`
-    },
-    body: JSON.stringify(data)
-  })
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Erreur lors de l\'ajout du stagiaire');
-    }
-    return response.json();
-  })
-  .then(responseData => {
-    console.log('Stagiaire ajouté avec succès :', responseData);
-    // Recharger la page après un ajout réussi
-    location.reload(); // Rechargement de la page
-  })
-  .catch(error => {
-    console.error('Une erreur est survenue :', error);
-  });
+
+
 });
 
 
