@@ -34,11 +34,11 @@ class Alerte
     private ?int $id = null;
 
     #[ORM\Column(type: 'datetime')]
-    #[Groups(['alerte:read', 'alerte:write'])]
+    #[Groups(['alerte:read', 'alerte:write', 'utilisateur:read'])]
     private ?\DateTimeInterface $dateCreation = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['alerte:read', 'alerte:write'])]
+    #[Groups(['alerte:read', 'alerte:write', 'utilisateur:read'])]
     #[Assert\NotBlank(message: 'Le statut est obligatoire.')]
     #[Assert\Choice(
         choices: ['EN_COURS', 'RESOLUE', 'ANNULEE'],

@@ -21,11 +21,11 @@ class Historique
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(['historique:read'])]
+    #[Groups(['historique:read', 'utilisateur:read'])]
     private ?\DateTimeInterface $dateCreation  = null;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['historique:read'])]
+    #[Groups(['historique:read', 'utilisateur:read'])]
     private ?int $humeur = null;
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'historiques')]

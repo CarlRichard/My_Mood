@@ -25,7 +25,7 @@ class Cohorte
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['cohorte:read'])]  // Ajout du groupe de sérialisation
+    #[Groups(['cohorte:read', 'utilisateur:read'])]  // Ajout du groupe de sérialisation
     private ?string $nom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
