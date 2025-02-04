@@ -1,29 +1,32 @@
 // DECONNEXION
-document.querySelector('.header_deconnexion').addEventListener('click', function() {
-  // Cacher la section .header_container_button
-  document.querySelector('.header_container_button').style.display = 'none';
-  
-  // Afficher la .header_deconnexion_alert
-  document.querySelector('.header_deconnexion_alert').style.display = 'flex';
-});
+document
+  .querySelector(".header_deconnexion")
+  .addEventListener("click", function () {
+    // Cacher la section .header_container_button
+    document.querySelector(".header_container_button").style.display = "none";
 
-document.querySelector('.header_deconnexion_alert_valid:nth-of-type(1)').addEventListener('click', function() {
-  // Si l'utilisateur clique sur Valider
-  localStorage.clear();  // Vider le localStorage
-  window.location.href = '../../index.html';  // Rediriger vers index.html
-});
+    // Afficher la .header_deconnexion_alert
+    document.querySelector(".header_deconnexion_alert").style.display = "flex";
+  });
 
-document.querySelector('.header_deconnexion_alert_valid:nth-of-type(2)').addEventListener('click', function() {
-  // Si l'utilisateur clique sur Annuler
-  // Réafficher la section .header_container_button
-  document.querySelector('.header_container_button').style.display = 'flex';
-  
-  // Cacher la .header_deconnexion_alert
-  document.querySelector('.header_deconnexion_alert').style.display = 'none';
-});
+document
+  .querySelector(".header_deconnexion_alert_valid:nth-of-type(1)")
+  .addEventListener("click", function () {
+    // Si l'utilisateur clique sur Valider
+    localStorage.clear(); // Vider le localStorage
+    window.location.href = "../../index.html"; // Rediriger vers index.html
+  });
 
+document
+  .querySelector(".header_deconnexion_alert_valid:nth-of-type(2)")
+  .addEventListener("click", function () {
+    // Si l'utilisateur clique sur Annuler
+    // Réafficher la section .header_container_button
+    document.querySelector(".header_container_button").style.display = "flex";
 
-
+    // Cacher la .header_deconnexion_alert
+    document.querySelector(".header_deconnexion_alert").style.display = "none";
+  });
 
 // Sélectionner les éléments nécessaires dans le DOM
 const formationInputText = document.querySelector("#text");
@@ -261,7 +264,6 @@ formationButtonDelete.addEventListener("click", function () {
   });
 });
 
-
 // Sélectionner les boutons Valider et Annuler formation
 const modalValiderButtons = document.querySelectorAll(
   ".modal_stagiaires_valider"
@@ -303,7 +305,6 @@ document.querySelectorAll(".formation_input").forEach((checkbox) => {
   });
 });
 
-
 // Ajouter les événements au clic sur chaque bouton Valider
 modalValiderButtons.forEach((validerButton) => {
   validerButton.addEventListener("click", function () {
@@ -327,13 +328,14 @@ modalAnnulerButtons.forEach((annulerButton) => {
   });
 });
 
-
 // Sélectionner les éléments
-const detailsElement = document.querySelector('.container_stagiaires_details_role');
-const validateButton = document.querySelector('.modal_stagiaires_valider_role');
-const cancelButton = document.querySelector('.modal_stagiaires_annuler_role');
-const checkboxes = document.querySelectorAll('.modal_input_role');
-const summaryElement = detailsElement.querySelector('summary');
+const detailsElement = document.querySelector(
+  ".container_stagiaires_details_role"
+);
+const validateButton = document.querySelector(".modal_stagiaires_valider_role");
+const cancelButton = document.querySelector(".modal_stagiaires_annuler_role");
+const checkboxes = document.querySelectorAll(".modal_input_role");
+const summaryElement = detailsElement.querySelector("summary");
 
 // Ajouter un événement au clic du bouton "Ajouter stagiaire"
 formationButtonAddIntern.addEventListener("click", function () {
@@ -375,84 +377,79 @@ formationButtonAddIntern.addEventListener("click", function () {
   }
   function getCheckboxId() {
     // Récupérer toutes les cases à cocher avec la classe 'formation_input'
-    let checkboxes = document.getElementsByClassName('formation_input');
-    
+    let checkboxes = document.getElementsByClassName("formation_input");
+
     // Initialiser un tableau pour stocker les IDs des cases à cocher sélectionnées
     let groupes = [];
 
     // Boucler sur toutes les cases à cocher pour vérifier si elles sont cochées
     for (let i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            groupes.push(checkboxes[i].id); // Ajouter l'ID de la case cochée
-        }
+      if (checkboxes[i].checked) {
+        groupes.push(checkboxes[i].id); // Ajouter l'ID de la case cochée
+      }
     }
 
     // Vérifier si des cases ont été sélectionnées
     if (groupes.length === 0) {
-        alert('Veuillez sélectionner au moins un groupe');
-        return; // Arrêter la fonction si aucun groupe n'est sélectionné
+      alert("Veuillez sélectionner au moins un groupe");
+      return; // Arrêter la fonction si aucun groupe n'est sélectionné
     }
 
     // Préparer les données à envoyer dans le corps de la requête
     const data = {
-        prenom: userFormationInputFirstName,
-        nom: userFormationInputName,
-        email: userFormationInputEmail,
-        role: selectedRole, // Ajouter le rôle sélectionné
-        groupes: groupes // Les groupes (IDs des cases à cocher sélectionnées)
+      prenom: userFormationInputFirstName,
+      nom: userFormationInputName,
+      email: userFormationInputEmail,
+      role: selectedRole, // Ajouter le rôle sélectionné
+      groupes: groupes, // Les groupes (IDs des cases à cocher sélectionnées)
     };
 
     // Faire la requête POST pour envoyer les données
-    fetch('/mail', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${tokenUser}`
-        },
-        body: JSON.stringify(data)
+    fetch("/mail", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${tokenUser}`,
+      },
+      body: JSON.stringify(data),
     })
-    .then(response => {
+      .then((response) => {
         if (!response.ok) {
-            throw new Error('Erreur lors de l\'ajout du stagiaire');
+          throw new Error("Erreur lors de l'ajout du stagiaire");
         }
         return response.json();
-    })
-    .then(responseData => {
-        console.log('Stagiaire ajouté avec succès :', responseData);
-        alert('Stagiaire ajouté avec succès'); // Message de succès
+      })
+      .then((responseData) => {
+        console.log("Stagiaire ajouté avec succès :", responseData);
+        alert("Stagiaire ajouté avec succès"); // Message de succès
         location.reload(); // Recharger la page après un ajout réussi
-    })
-    .catch(error => {
-        console.error('Une erreur est survenue :', error);
-        alert('Une erreur est survenue lors de l\'ajout du stagiaire.'); // Message d'erreur pour l'utilisateur
-    });
-}
+      })
+      .catch((error) => {
+        console.error("Une erreur est survenue :", error);
+        alert("Une erreur est survenue lors de l'ajout du stagiaire."); // Message d'erreur pour l'utilisateur
+      });
+  }
 
-
- getCheckboxId(); // Appeler cette fonction lorsque tu veux envoyer les données
-
+  getCheckboxId(); // Appeler cette fonction lorsque tu veux envoyer les données
 
   // Effectuer la requête POST avec fetch
-
-
 });
-
 
 // Fonction pour récupérer les cases à cocher sélectionnées (une seule case)
 function getSelectedRole() {
   let selectedRole = null;
-  checkboxes.forEach(checkbox => {
+  checkboxes.forEach((checkbox) => {
     if (checkbox.checked) {
       // Vérifier quel rôle correspond à chaque case
       switch (checkbox.id) {
-        case 'checkboxEtudiant': // Remplacez par l'id de votre checkbox pour ROLE_ETUDIANT
-          selectedRole = 'ROLE_ETUDIANT';
+        case "checkboxEtudiant": // Remplacez par l'id de votre checkbox pour ROLE_ETUDIANT
+          selectedRole = "ROLE_ETUDIANT";
           break;
-        case 'checkboxSuperviseur': // Remplacez par l'id de votre checkbox pour ROLE_SUPERVISEUR
-          selectedRole = 'ROLE_SUPERVISEUR';
+        case "checkboxSuperviseur": // Remplacez par l'id de votre checkbox pour ROLE_SUPERVISEUR
+          selectedRole = "ROLE_SUPERVISEUR";
           break;
-        case 'checkboxAdmin': // Remplacez par l'id de votre checkbox pour ROLE_ADMIN
-          selectedRole = 'ROLE_ADMIN';
+        case "checkboxAdmin": // Remplacez par l'id de votre checkbox pour ROLE_ADMIN
+          selectedRole = "ROLE_ADMIN";
           break;
         default:
           break;
@@ -463,7 +460,7 @@ function getSelectedRole() {
 }
 
 // Lorsque le bouton "Valider" est cliqué
-validateButton.addEventListener('click', function() {
+validateButton.addEventListener("click", function () {
   const selectedRole = getSelectedRole();
   if (selectedRole) {
     summaryElement.textContent = selectedRole; // Mettre à jour le texte avec le rôle sélectionné
@@ -471,59 +468,62 @@ validateButton.addEventListener('click', function() {
     summaryElement.textContent = "Aucun rôle sélectionné"; // Texte par défaut si aucune case n'est cochée
   }
 
-  detailsElement.removeAttribute('open'); // Ferme le <details>
+  detailsElement.removeAttribute("open"); // Ferme le <details>
 });
 
 // Lorsque le bouton "Annuler" est cliqué
-cancelButton.addEventListener('click', function() {
-  detailsElement.removeAttribute('open'); // Ferme le <details> sans modifier le texte
+cancelButton.addEventListener("click", function () {
+  detailsElement.removeAttribute("open"); // Ferme le <details> sans modifier le texte
 });
 
 // Affichier les stagiaires
 let tokenUser = localStorage.getItem("token");
 
 if (!tokenUser) {
-  console.error('Token non trouvé dans le localStorage');
+  console.error("Token non trouvé dans le localStorage");
 } else {
-  fetch('/api/utilisateurs', {
-    method: 'GET',
+  fetch("/api/utilisateurs", {
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${tokenUser}`
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${tokenUser}`,
     },
   })
-    .then(response => {
+    .then((response) => {
       if (!response.ok) {
-        throw new Error('Réponse réseau non valide');
+        throw new Error("Réponse réseau non valide");
       }
       return response.json();
     })
-    .then(data => {
+    .then((data) => {
       if (Array.isArray(data)) {
-        const containerListesBorder = document.querySelector('.container_listes_border');
-        
+        const containerListesBorder = document.querySelector(
+          ".container_listes_border"
+        );
+        console.log(data);
+
         // Boucle pour parcourir chaque utilisateur
-        data.forEach(user => {
+        data.forEach((user) => {
           // Créer un conteneur pour l'utilisateur
-          const userDiv = document.createElement('div');
-          userDiv.classList.add('container_listes');
-          userDiv.setAttribute('data-user-id', user.id); // Ajouter un attribut avec l'id de l'utilisateur
+          const userDiv = document.createElement("div");
+          userDiv.classList.add("container_listes");
+          userDiv.setAttribute("data-user-id", user.id); // Ajouter un attribut avec l'id de l'utilisateur
 
           // Créer les éléments d'entrée (prénom, nom)
-          const firstNameInput = document.createElement('input');
-          firstNameInput.classList.add('input_firstname');
-          firstNameInput.type = 'text';
-          firstNameInput.id = 'first-name';
-          firstNameInput.name = 'first-name';
-          firstNameInput.placeholder = 'Prénom';
+          const firstNameInput = document.createElement("input");
+          firstNameInput.classList.add("input_firstname");
+          firstNameInput.type = "text";
+          firstNameInput.id = "first-name";
+          firstNameInput.name = "first-name";
+          firstNameInput.placeholder = "Prénom";
           firstNameInput.value = user.prenom; // Ajouter le prénom de l'utilisateur
 
-          const nameInput = document.createElement('input');
-          nameInput.classList.add('input_name');
-          nameInput.type = 'text';
-          nameInput.id = 'name';
-          nameInput.name = 'name';
-          nameInput.placeholder = 'Nom';
+          const nameInput = document.createElement("input");
+          nameInput.classList.add("input_name");
+          nameInput.type = "text";
+          nameInput.id = "name";
+          nameInput.name = "name";
+          nameInput.placeholder = "Nom";
           nameInput.value = user.nom; // Ajouter le nom de l'utilisateur
 
           // Ajouter les éléments d'entrée à la div de l'utilisateur
@@ -531,51 +531,81 @@ if (!tokenUser) {
           userDiv.appendChild(nameInput);
 
           // Ajouter les groupes et rôles (reste inchangé)
-          const details = document.createElement('details');
-          details.classList.add('container_stagiaires_details');
-          const summary = document.createElement('summary');
-          summary.textContent = user.groupes[0]?.nom || 'Aucun groupe';
+          const details = document.createElement("details");
+          details.classList.add("container_stagiaires_details");
+          const summary = document.createElement("summary");
+          summary.textContent = user.groupes[0]?.nom || "Aucun groupe";
           details.appendChild(summary);
 
-          const containerModal = document.createElement('div');
-          containerModal.classList.add('container_modal_stagiaires');
-          const buttonValidate = document.createElement('button');
-          buttonValidate.classList.add('modal_stagiaires_valider');
-          buttonValidate.innerHTML = '<span class="material-symbols-outlined"> check </span>Valider';
-          const buttonCancel = document.createElement('button');
-          buttonCancel.classList.add('modal_stagiaires_annuler');
-          buttonCancel.innerHTML = '<span class="material-symbols-outlined"> close </span>Annuler';
+          const containerModal = document.createElement("div");
+          containerModal.classList.add("container_modal_stagiaires");
+          const buttonValidate = document.createElement("button");
+          buttonValidate.classList.add("modal_stagiaires_valider");
+          buttonValidate.innerHTML =
+            '<span class="material-symbols-outlined"> check </span>Valider';
+          const buttonCancel = document.createElement("button");
+          buttonCancel.classList.add("modal_stagiaires_annuler");
+          buttonCancel.innerHTML =
+            '<span class="material-symbols-outlined"> close </span>Annuler';
           containerModal.appendChild(buttonValidate);
           containerModal.appendChild(buttonCancel);
           details.appendChild(containerModal);
           userDiv.appendChild(details);
 
           // Ajouter la section des rôles (reste inchangé)
-          const detailsRoles = document.createElement('details');
-          detailsRoles.classList.add('container_stagiaires_details_role');
-          const summaryRole = document.createElement('summary');
-          summaryRole.textContent = 'Rôles';
+          const detailsRoles = document.createElement("details");
+          detailsRoles.classList.add("container_stagiaires_details_role");
+          const summaryRole = document.createElement("summary");
+          summaryRole.textContent = "Rôles";
+          // Exemple de correspondance des rôles selon les valeurs renvoyées par la base de données
+          const rolesMapping = {
+            ROLE_ETUDIANT: "Étudiant(e)",
+            ROLE_SUPERVISEUR: "Superviseur",
+            ROLE_ADMIN: "Administrateur",
+            // Ajouter d'autres rôles ici si nécessaire
+          };
+
+          // Vérification de ce que contient user.roles
+          console.log("Roles:", user.roles);
+
+          // Si user.roles est un tableau d'identifiants (par exemple ['ROLE_ETUDIANT', 'ROLE_SUPERVISEUR']), mappage des rôles
+          let roleName = "Aucun rôle";
+          if (Array.isArray(user.roles) && user.roles.length > 0) {
+            // Transformer chaque rôle en nom
+            roleName = user.roles
+              .map((role) => rolesMapping[role] || "Inconnu")
+              .join(", ");
+          } else if (user.roles) {
+            // Si user.roles n'est pas un tableau mais une seule valeur
+            roleName = rolesMapping[user.roles] || "Inconnu";
+          }
+
+          // Afficher les rôles dans le résumé
+          summaryRole.textContent = roleName;
+
           detailsRoles.appendChild(summaryRole);
-          const containerModalRole = document.createElement('div');
-          containerModalRole.classList.add('container_modal_stagiaires_role');
+          const containerModalRole = document.createElement("div");
+          containerModalRole.classList.add("container_modal_stagiaires_role");
 
           const roles = user.roles || [];
           const rolesList = [
-            { name: 'Administrateur', id: 'checkboxAdmin' },
-            { name: 'Superviseur', id: 'checkboxSuperviseur' },
-            { name: 'Étudiant(e)', id: 'checkboxEtudiant' }
+            { name: "Administrateur", id: "checkboxAdmin" },
+            { name: "Superviseur", id: "checkboxSuperviseur" },
+            { name: "Étudiant(e)", id: "checkboxEtudiant" },
           ];
 
-          rolesList.forEach(role => {
-            const roleContainer = document.createElement('div');
-            roleContainer.classList.add('container_modal_stagiaires_label_input_role');
-            const label = document.createElement('label');
-            label.classList.add('modal_label_role');
+          rolesList.forEach((role) => {
+            const roleContainer = document.createElement("div");
+            roleContainer.classList.add(
+              "container_modal_stagiaires_label_input_role"
+            );
+            const label = document.createElement("label");
+            label.classList.add("modal_label_role");
             label.textContent = role.name;
 
-            const checkbox = document.createElement('input');
-            checkbox.classList.add('modal_input_role');
-            checkbox.type = 'checkbox';
+            const checkbox = document.createElement("input");
+            checkbox.classList.add("modal_input_role");
+            checkbox.type = "checkbox";
             checkbox.id = role.id;
             checkbox.name = role.name;
 
@@ -588,33 +618,35 @@ if (!tokenUser) {
             containerModalRole.appendChild(roleContainer);
           });
 
-          const buttonValidateRole = document.createElement('button');
-          buttonValidateRole.classList.add('modal_stagiaires_valider_role');
-          buttonValidateRole.innerHTML = '<span class="material-symbols-outlined"> check </span>Valider';
-          const buttonCancelRole = document.createElement('button');
-          buttonCancelRole.classList.add('modal_stagiaires_annuler_role');
-          buttonCancelRole.innerHTML = '<span class="material-symbols-outlined"> close </span>Annuler';
+          const buttonValidateRole = document.createElement("button");
+          buttonValidateRole.classList.add("modal_stagiaires_valider_role");
+          buttonValidateRole.innerHTML =
+            '<span class="material-symbols-outlined"> check </span>Valider';
+          const buttonCancelRole = document.createElement("button");
+          buttonCancelRole.classList.add("modal_stagiaires_annuler_role");
+          buttonCancelRole.innerHTML =
+            '<span class="material-symbols-outlined"> close </span>Annuler';
           containerModalRole.appendChild(buttonValidateRole);
           containerModalRole.appendChild(buttonCancelRole);
           detailsRoles.appendChild(containerModalRole);
           userDiv.appendChild(detailsRoles);
 
           // Créer l'input pour l'email
-          const emailInput = document.createElement('input');
-          emailInput.classList.add('input_email');
-          emailInput.type = 'email';
-          emailInput.id = 'email';
-          emailInput.placeholder = 'Adresse mail';
+          const emailInput = document.createElement("input");
+          emailInput.classList.add("input_email");
+          emailInput.type = "email";
+          emailInput.id = "email";
+          emailInput.placeholder = "Adresse mail";
           emailInput.value = user.email; // Ajouter l'email de l'utilisateur
 
           userDiv.appendChild(emailInput);
 
           // Créer l'input pour le checkbox
-          const checkboxInput = document.createElement('input');
-          checkboxInput.classList.add('liste_input_check');
-          checkboxInput.type = 'checkbox';
-          checkboxInput.id = 'scales';
-          checkboxInput.name = 'scales';
+          const checkboxInput = document.createElement("input");
+          checkboxInput.classList.add("liste_input_check");
+          checkboxInput.type = "checkbox";
+          checkboxInput.id = "scales";
+          checkboxInput.name = "scales";
 
           userDiv.appendChild(checkboxInput);
 
@@ -622,60 +654,65 @@ if (!tokenUser) {
           containerListesBorder.appendChild(userDiv);
 
           // Sélectionner le bouton supprimer déjà existant
-          const deleteButton = document.querySelector('.container_listes_button');
+          const deleteButton = document.querySelector(
+            ".container_listes_button"
+          );
 
           // Activer/désactiver le bouton de suppression en fonction de la case cochée
-          checkboxInput.addEventListener('change', (event) => {
+          checkboxInput.addEventListener("change", (event) => {
             if (event.target.checked) {
               deleteButton.disabled = false; // Activer le bouton
-              deleteButton.setAttribute('data-user-id', user.id); // Lier l'utilisateur au bouton
+              deleteButton.setAttribute("data-user-id", user.id); // Lier l'utilisateur au bouton
             } else {
               // Désactiver le bouton si aucune case n'est cochée
-              deleteButton.disabled = !document.querySelectorAll('.liste_input_check:checked').length;
+              deleteButton.disabled = !document.querySelectorAll(
+                ".liste_input_check:checked"
+              ).length;
             }
           });
 
-// Ajouter l'événement de suppression au bouton
-deleteButton.addEventListener('click', () => {
-  const userIdToDelete = deleteButton.getAttribute('data-user-id');
+          // Ajouter l'événement de suppression au bouton
+          deleteButton.addEventListener("click", () => {
+            const userIdToDelete = deleteButton.getAttribute("data-user-id");
 
-  if (userIdToDelete) {
-    fetch(`/api/utilisateurs/${userIdToDelete}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${tokenUser}`
-      }
-    })
-      .then(response => {
-        if (response.ok) {
-          // Supprimer l'utilisateur du DOM
-          const userDivToDelete = document.querySelector(`[data-user-id="${userIdToDelete}"]`);
-          if (userDivToDelete) {
-            userDivToDelete.remove();
-          }
-          console.log(`Utilisateur ${userIdToDelete} supprimé`);
+            if (userIdToDelete) {
+              fetch(`/api/utilisateurs/${userIdToDelete}`, {
+                method: "DELETE",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${tokenUser}`,
+                },
+              })
+                .then((response) => {
+                  if (response.ok) {
+                    // Supprimer l'utilisateur du DOM
+                    const userDivToDelete = document.querySelector(
+                      `[data-user-id="${userIdToDelete}"]`
+                    );
+                    if (userDivToDelete) {
+                      userDivToDelete.remove();
+                    }
+                    console.log(`Utilisateur ${userIdToDelete} supprimé`);
 
-          // Recharger la page après suppression
-          location.reload(); // Recharger la page pour refléter les changements
-        } else {
-          console.error('Erreur lors de la suppression de l\'utilisateur');
-        }
-      })
-      .catch(error => {
-        console.error('Erreur de requête :', error);
-      });
-  }
-});
-
-
+                    // Recharger la page après suppression
+                    location.reload(); // Recharger la page pour refléter les changements
+                  } else {
+                    console.error(
+                      "Erreur lors de la suppression de l'utilisateur"
+                    );
+                  }
+                })
+                .catch((error) => {
+                  console.error("Erreur de requête :", error);
+                });
+            }
+          });
         });
       } else {
         console.error("Les données ne sont pas sous forme de tableau.");
       }
     })
-    .catch(error => {
-      console.error('Il y a eu un problème avec la requête fetch :', error);
+    .catch((error) => {
+      console.error("Il y a eu un problème avec la requête fetch :", error);
     });
 }
-

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page d'administration</title>
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- GOOGLE ICONS -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
+      rel="stylesheet"
+    />
+    <!-- CSS -->
+    <link rel="stylesheet" href="../../css/administration/admin.css" />
+    <link rel="stylesheet" href="../../utils/global.css" />
+    <link rel="stylesheet" href="../../utils/variables2.css" />
+    <!-- JS -->
+    <script src="../../js/administration/admin.js" defer></script>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo-container">
+        <a href="../../pages/stagiaires/mymood.html">
+          <img
+            class="rotating logo"
+            src="../../assets/logo-mymood.png"
+            alt="Logo du site MyMood"
+          />
+        </a>
+      </div>
+      <div class="header_container_button">
+        <button
+          onclick="window.location.href='./liste-formation-stagiaires.html';"
+        >
+          <span class="material-symbols-outlined"> list_alt </span>Listes des
+          utilisateurs
+        </button>
+        <button class="header_deconnexion">
+          <span class="material-symbols-outlined"> cancel </span>Déconnexion
+        </button>
+        
+        <div class="header_deconnexion_alert">
+          <p>Êtes-vous sûr de vouloir vous deconnecter ?</p>
+          <button class="header_deconnexion_alert_valid">
+            <span class="material-symbols-outlined"> check </span>Valider
+          </button>
+          <button class="header_deconnexion_alert_valid">
+            <span class="material-symbols-outlined"> close </span>Annuler
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <h1><span>M</span>y<span>M</span>ood</h1>
+      <h2>Ton humeur, notre soutien.</h2>
+
+      <section class="section_admin">
+        <label class="choisir_utilisateur_label" for="utilisateur"
+          >Choisir un utilisateur :</label
+        >
+        <select
+          class="choisir_utilisateur_select"
+          id="utilisateur"
+          name="utilisateur"
+        >
+          <!-- Les utilisateurs seront ajoutés ici dynamiquement -->
+        </select>
+
+        <form class="update_form" id="updateForm">
+          <label class="choisir_utilisateur_label" for="id">ID de l'utilisateur :</label>
+          <input class="choisir_utilisateur_input" type="text" id="id" name="id" readonly />
+
+          <label class="choisir_utilisateur_label" for="nom">Nom :</label>
+          <input class="choisir_utilisateur_input" type="text" id="nom" name="nom" required />
+
+          <label class="choisir_utilisateur_label" for="prenom">Prénom :</label>
+          <input class="choisir_utilisateur_input" type="text" id="prenom" name="prenom" required />
+
+          <label class="choisir_utilisateur_label" for="email">Email :</label>
+          <input class="choisir_utilisateur_input" type="email" id="email" name="email" required />
+
+          <label class="choisir_utilisateur_label" for="password">Mot de passe :</label>
+          <input
+          class="choisir_utilisateur_input"
+            type="password"
+            id="password"
+            name="password"
+            required
+          />
+
+          <label class="choisir_utilisateur_label" for="role">Rôle :</label>
+          <select class="choisir_utilisateur_select" id="role" name="role" required>
+            <option value="ROLE_ETUDIANT">Etudiant</option>
+            <option value="ROLE_SUPERVISEUR">Superviseur</option>
+            <option value="ROLE_ADMIN">Administrateur</option>
+          </select>
+
+          <button class="button_submit" type="submit"><span class="material-symbols-outlined">
+            person_add
+            </span>Mettre à jour</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

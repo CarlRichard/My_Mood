@@ -660,6 +660,38 @@ h2 {
     font-size: 16px;
     font-weight: lighter;
 }
+.container_listes_buttons {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 20px;
+    justify-content: space-between;
+}
+.container_listes_button_redirection {
+    color: var(--secondary-color);
+    border-radius: 5px;
+    padding: 8px 10px;
+    background-color: var(--tertiary-color);
+    border: 1px solid var(--secondary-color);
+    box-shadow: 2px 2px 8px -4px var(--secondary-color);
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: 0.2s;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    flex-shrink: 0;
+}
+.container_listes_button_redirection:hover {
+    scale: 1.03;
+    background-color: var(--button-hover-bg-color);
+    font-weight: 500;
+}
+.container_listes_button_redirection > span {
+    font-size: 20px;
+    font-weight: lighter;
+}
 .container_listes_button {
     color: var(--secondary-color);
     border-radius: 5px;
@@ -735,5 +767,12 @@ h2 {
     /* container listes */
     .container_listes_border {
         gap: 60px;
+    }
+}
+/*=====SMARTPHONE=====*/
+@media (max-width: 426px) {
+    .container_listes_buttons {
+        flex-wrap: wrap;
+        gap: 0px;
     }
 }
