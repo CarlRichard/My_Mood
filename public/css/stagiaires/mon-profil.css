@@ -38,19 +38,18 @@ input {
     display: flex;
     width: 100%;
     justify-content: space-around;
-    margin-top: 40px;
+    margin: 40px 0;
 }
 
 
 
 /* RESPONSIVE */
-/* TABLETTE */
+/* TABLET */
 @media (max-width: 900px) {
     input {
         width: 325px;
     }
 }
-
 
 /* SMARTPHONE */
 @media (max-width: 600px) {
