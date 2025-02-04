@@ -60,7 +60,6 @@
                     option.textContent = `${utilisateur.nom} ${utilisateur.prenom}`;
                     select.appendChild(option);
                 });
-
                 select.addEventListener('change', loadUtilisateurData);
             }
         }
@@ -82,7 +81,7 @@
                     document.getElementById('nom').value = utilisateur.nom;
                     document.getElementById('prenom').value = utilisateur.prenom;
                     document.getElementById('email').value = utilisateur.email;
-                    document.getElementById('role').value = utilisateur.roles[0]; // Assumer qu'il y a un seul rôle pour l'utilisateur
+                    document.getElementById('role').value = utilisateur.roles[0]; 
                 }
             }
         }
