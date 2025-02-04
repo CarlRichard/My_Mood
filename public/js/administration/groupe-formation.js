@@ -54,12 +54,12 @@ if (!isNaN(cohortId)) {
 let myRequest = `/api/utilisateurs`;
 
 fetch(myRequest)
-  .then(response => response.json())
+  .then(response => response.json())  // On récupère les données de l'API et on les convertit en JSON
   .then(data => {
     console.log("Utilisateurs récupérés :", data); // Vérification dans la console
     showResult(data, cohortId);
   })
-  .catch(error => console.log(error));
+  .catch(error => console.log(error));  // En cas d'erreur lors de la requête, afficher l'erreur dans la console
 
 const showResult = (data, cohortId) => {
   const container = document.querySelector('.container-mood-stagiaire');
@@ -116,4 +116,18 @@ const showResult = (data, cohortId) => {
   // Mettre à jour l'affichage de la moyenne
   averageSpan.innerHTML = `${averageMood}`;
   slider.value = averageMood;
+};
+
+
+const getMoodClass = (mood) => {
+  // Vérifier si mood est 0, indéfini, ou nul
+  if (mood === 0 || mood === undefined || mood === null) {
+    return 'gris';  // Retourner gris si aucune humeur n'est disponible
+  } else if (mood < 40) {
+    return 'green';  
+  } else if (mood < 70) {
+    return 'orange';  
+  } else if (mood < 80) {
+    return 'red';  
+  }
 };

@@ -84,16 +84,37 @@
 .stagiaire>span {
     width: 48px;
     height: 48px;
-    background-color: #64BCEB;
     color: white;
     border-radius: 50px;
     align-content: center;
     text-align: center;
+    font-weight: bold;
+
 }
 
 .stagiaire>p {
     width: 108px;
 }
+
+
+
+    .green {
+        background-color: var(--fourth-bg-color); 
+        
+    }
+    
+    .orange {
+       background-color: #CFC50F;
+    }
+    
+    .red {
+        background-color: var(--fifth-bg-color);
+    }
+    
+    .gris {
+        background-color: #696969;
+    }
+
 
 
 /*=====TABLET=====*/
