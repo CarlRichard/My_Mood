@@ -13,7 +13,6 @@ profilButton.addEventListener("click", function () {
 });
 
 logoutButton.addEventListener("click", function () {
-// Envoi de la requête POST à l'API Symfony pour la déconnexion
   
   fetch("/logout", {
     method: "POST",
@@ -34,76 +33,87 @@ logoutButton.addEventListener("click", function () {
       console.error("Erreur lors de la déconnexion:", error);
     });
 });
+// Fonction pour récupérer les paramètres GET de l'URL
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
 
+// Récupérer l'ID de la cohorte depuis l'URL et le convertir en nombre
+const cohortId = parseInt(getQueryParam("id"), 10);
+
+// Sélectionner le <h2> et y afficher l'ID de la cohorte
+let myH2 = document.querySelector('h2');
+if (!isNaN(cohortId)) {
+  myH2.innerHTML = `Cohorte ID : ${cohortId}`;
+} else {
+  myH2.innerHTML = "Aucune cohorte sélectionnée";
+}
+
+// Requête pour récupérer les utilisateurs
 let myRequest = `/api/utilisateurs`;
 
 fetch(myRequest)
   .then(response => response.json())
   .then(data => {
-    console.log(data);  // Vérification des données dans la console
-
-    // Sélectionner le <h2> où sera affiché le nom du groupe
-    let myH2 = document.querySelector('h2');
-
-    // Vérifier si des groupes existent et mettre à jour le <h2>
-    if (data[0] && data[0].groupes && data[0].groupes[0]) {
-      myH2.innerHTML = `${data[0].groupes[0].nom}`;
-      
-      // Une fois le <h2> mis à jour, filtrer et afficher les utilisateurs
-      showResult(data, myH2.innerHTML);
-    }
+    console.log("Utilisateurs récupérés :", data); // Vérification dans la console
+    showResult(data, cohortId);
   })
   .catch(error => console.log(error));
 
-  const showResult = (data, groupName) => {
-    const container = document.querySelector('.container-mood-stagiaire');
-    container.innerHTML = ''; // Vider le conteneur avant d'afficher
-  
-    // Sélectionner le slider et la span où afficher la moyenne
-    const averageSpan = document.querySelector('.average-slider + span');
-    const slider = document.querySelector('.slider');
-  
-    // 🔍 Filtrer les utilisateurs du groupe
-    const filteredUsers = data.filter(user =>
-      user.groupes && user.groupes.some(group => group.nom === groupName)
-    );
-  
-    let totalMood = 0;
-    let moodCount = 0;
-  
-    // Boucle sur les utilisateurs filtrés
-    filteredUsers.forEach(element => {
-      const moodStagiaireDiv = document.createElement('div');
-      moodStagiaireDiv.classList.add('mood-stagiaire');
-  
-      const stagiaireDiv = document.createElement('div');
-      stagiaireDiv.classList.add('stagiaire');
-  
-      const nameP = document.createElement('p');
-      nameP.innerHTML = `${element.nom} ${element.prenom}`;
-  
-      const humeurSpan = document.createElement('span');
-      if (element.historiques && element.historiques.length > 0) {
-        let humeur = parseInt(element.historiques[0].humeur, 10); // Convertir en nombre
-        if (!isNaN(humeur)) {
-          totalMood += humeur;
-          moodCount++;
-        }
-        humeurSpan.innerHTML = `${humeur}`;
+const showResult = (data, cohortId) => {
+  const container = document.querySelector('.container-mood-stagiaire');
+  container.innerHTML = ''; // Vider le conteneur avant d'afficher
+
+  // Sélectionner le slider et la span où afficher la moyenne
+  const averageSpan = document.querySelector('.average-slider + span');
+  const slider = document.querySelector('.slider');
+
+  // 🔍 Filtrer les utilisateurs par l'ID de la cohorte
+  const filteredUsers = data.filter(user =>
+    user.groupes && user.groupes.some(group => {
+      console.log(`Utilisateur: ${user.nom} ${user.prenom}, Cohortes:`, user.groupes);
+      return group.id === cohortId;
+    })
+  );
+
+  console.log("Utilisateurs filtrés :", filteredUsers); // Vérification après filtrage
+
+  let totalMood = 0;
+  let moodCount = 0;
+
+  // Boucle sur les utilisateurs filtrés
+  filteredUsers.forEach(element => {
+    const moodStagiaireDiv = document.createElement('div');
+    moodStagiaireDiv.classList.add('mood-stagiaire');
+
+    const stagiaireDiv = document.createElement('div');
+    stagiaireDiv.classList.add('stagiaire');
+
+    const nameP = document.createElement('p');
+    nameP.innerHTML = `${element.nom} ${element.prenom}`;
+
+    const humeurSpan = document.createElement('span');
+    if (element.historiques && element.historiques.length > 0) {
+      let humeur = parseInt(element.historiques[0].humeur, 10); // Convertir en nombre
+      if (!isNaN(humeur)) {
+        totalMood += humeur;
+        moodCount++;
       }
-  
-      // Assembler les éléments
-      stagiaireDiv.appendChild(nameP);
-      stagiaireDiv.appendChild(humeurSpan);
-      moodStagiaireDiv.appendChild(stagiaireDiv);
-      container.appendChild(moodStagiaireDiv);
-    });
-  
-    // Calcul de la moyenne des humeurs
-    let averageMood = moodCount > 0 ? Math.round(totalMood / moodCount) : 0;
-  
-    // Mettre à jour l'affichage de la moyenne
-    averageSpan.innerHTML = `${averageMood}`;
-    slider.value = averageMood;
-  };
-  
+      humeurSpan.innerHTML = `${humeur}`;
+    }
+
+    // Assembler les éléments
+    stagiaireDiv.appendChild(nameP);
+    stagiaireDiv.appendChild(humeurSpan);
+    moodStagiaireDiv.appendChild(stagiaireDiv);
+    container.appendChild(moodStagiaireDiv);
+  });
+
+  // Calcul de la moyenne des humeurs
+  let averageMood = moodCount > 0 ? Math.round(totalMood / moodCount) : 0;
+
+  // Mettre à jour l'affichage de la moyenne
+  averageSpan.innerHTML = `${averageMood}`;
+  slider.value = averageMood;
+};
