@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Utilisateur;
 use App\Repository\CohorteRepository;
+use App\Repository\UtilisateurRepository;
 use App\Service\MailerService;
 use App\Service\PasswordGenerator;
 use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -144,7 +146,7 @@ class UtilisateurController extends AbstractController
                 }
             }
         }
-        
+
 
         // Essayer d'envoyer l'email
         try {
@@ -161,4 +163,32 @@ class UtilisateurController extends AbstractController
             return new JsonResponse(['message' => 'Erreur lors de l\'envoi de l\'email: ' . $e->getMessage()], 500);
         }
     }
+
+
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
+    /**
+     * Récupérer un utilisateur par son nom d'utilisateur
+     */
+    #[Route('/api/utilisateurs/username/{username}', name: 'get_user_by_username', methods: ['GET'])]
+    public function getUserByUsername(Request $request, string $username, UtilisateurRepository $utilisateurRepository): JsonResponse
+    {
+        // Récupérer l'utilisateur authentifié à partir du token
+        $user = $this->security->getUser(); // Utiliser la méthode getUser()
+
+
+        // Retourner les informations de l'utilisateur
+        return $this->json([
+            'id' => $user->getId(),
+            'email' => $user->getEmail(),
+            'nom' => $user->getNom(),
+            'prenom' => $user->getPrenom()
+        ]);
+    }
+
 }

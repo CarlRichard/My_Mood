@@ -59,8 +59,8 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\JoinTable(name: 'utilisateur_cohorte')]  
     #[Groups(['utilisateur:read'])] 
     private Collection $groupes;
-
-    #[ORM\OneToMany(targetEntity: Alerte::class, mappedBy: 'utilisateur')]
+    
+    #[ORM\OneToMany(mappedBy: "utilisateur", targetEntity: Alerte::class, cascade: ["remove"])]
     #[Groups(['utilisateur:read'])] 
     private Collection $alertes;
 
