@@ -85,7 +85,8 @@ header {
     border-radius: 7px;
     padding: 5px 15px;
     border: var(--button-border);
-    color: var(--secondary-color);  
+    color: var(--secondary-color);
+    background: var(--seventh-bg-color);  
     cursor: pointer;
 }
 
@@ -123,14 +124,15 @@ header {
 }
 
 /* links */
-.header-link {
-    display: inline-block;
+.link {
     text-decoration: none;
-    text-align: center;
-    background: var(--seventh-bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;   
+}
+.header-link {
     width: 172px;
     height: 42px;
-    line-height: 28px;   /* => pour centrer verticalement => 42 - 14 = 28 */
     font-size: var(--fs-middle-text);
 }
 
@@ -201,9 +203,6 @@ footer {
         width: 130px;
         height: 38px;
     }
-    .header-link {
-    line-height: 24px;   /* => pour centrer verticalement => 38 - 14 = 24 */
-    }
    
     /* inputs */
     input {
@@ -239,18 +238,15 @@ footer {
         font-size: var(--fs-middle-text);
     }
 
-    /* buttons */
+    /* buttons, links */
     .right-btn-container {   /* div container bouton(s) de droite */ 
         margin-right: 0;
-     }
+    }
     .header-btn, .header-link {
         width: 115px;
         height: 35px;
         border-radius: 4px;
         font-size: var(--fs-little-text);
-    }
-    .header-link {
-        line-height: 23px;   /* => pour centrer verticalement => 35 - 12 = 23 */
     }
     .main-btn {
         font-size: var(--fs-middle-text);

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon profil</title>
+    <title>Mon profil administration</title>
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -29,7 +29,7 @@
         </div>
 
         <div class="right-btn-container">
-            <button class="btn header-btn">Administration</button> <!-- lien vers page liste formations -->
+            <a href="./liste-formations.html" class="btn link header-link">Administration</a>
             <button class="btn header-btn">Déconnexion</button>
         </div>
     </Header>
@@ -40,17 +40,17 @@
         </h1>
         <h2>Ton humeur, notre soutien.</h2>
 
-        <form action="">
+        <form action="" class="card-btn-container">
             <div class="inputs">
-                <input type="text">
-                <input type="text">
-                <input type="text">
-                <input type="text">
-                <input type="text">
+                <input type="text" placeholder="Prénom">
+                <input type="text" placeholder="Nom">
+                <input type="text" placeholder="Adresse mail">
+                <input type="text" placeholder="Nouveau mot de passe">
+                <input type="text" placeholder="Confirmer nouveau mot de passe">
             </div>
 
             <div class="main-btn-container">
-                <button class="btn main-btn go-back">Annuler</button> <!-- js : history.back()-->
+                <a href="" class="btn main-btn link go-back">Annuler</a> <!-- retour sur la page précédente => js : history.back() -->
 
                 <button class="btn main-btn">Valider</button>
             </div>
