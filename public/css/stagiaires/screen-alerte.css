@@ -38,7 +38,6 @@
     color: var(--secondary-color);
     cursor: pointer;
     font-size: 18px;
-
 }
 
 .notif_button:hover {
@@ -57,6 +56,16 @@
       width: 416px;
       height: 297px;
     }
+
+    .notif_container>p {
+        font-size: 16px;
+    }
+
+    .notif_button {
+        width: 118px;
+        height: 41px;
+        font-size:16px;
+    }
   }
   
   
@@ -69,5 +78,15 @@
     .notif_container {
         width: 311px;
         height: 343px;
+    }
+
+    .notif_container>p {
+        font-size: 16px;
+    }
+
+    .notif_button {
+        width: 118px;
+        height: 41px;
+        font-size:16px;
     }
   }
