@@ -35,48 +35,75 @@ logoutButton.addEventListener("click", function () {
     });
 });
 
-let myRequest=`/api/utilisateurs`
+let myRequest = `/api/utilisateurs`;
+
 fetch(myRequest)
-  .then(response => response.json())  // On convertit la réponse de l'API en JSON
-  .then(data => showResult(data))     // On passe les données à la fonction showResult pour les afficher
-  .catch(error => console.log(error)); // Si une erreur survient, on l'affiche dans la console
+  .then(response => response.json())
+  .then(data => {
+    console.log(data);  // Vérification des données dans la console
 
-const showResult = (data) => {
-  console.log(data);  // On affiche les données dans la console pour vérifier ce qu'on a reçu
+    // Sélectionner le <h2> où sera affiché le nom du groupe
+    let myH2 = document.querySelector('h2');
 
-  // Mettre à jour le nom du groupe dans le <h2>
-  let myH2 = document.querySelector('h2');  // On sélectionne le titre <h2> dans le HTML
-  if (data[0] && data[0].groupes && data[0].groupes[0]) {  // On vérifie que les données du groupe existent
-    myH2.innerHTML = `${data[0].groupes[0].nom}`;  // On affiche le nom du premier groupe dans le <h2>
-  }
+    // Vérifier si des groupes existent et mettre à jour le <h2>
+    if (data[0] && data[0].groupes && data[0].groupes[0]) {
+      myH2.innerHTML = `${data[0].groupes[0].nom}`;
+      
+      // Une fois le <h2> mis à jour, filtrer et afficher les utilisateurs
+      showResult(data, myH2.innerHTML);
+    }
+  })
+  .catch(error => console.log(error));
 
-  // Sélectionner le conteneur où les stagiaires seront ajoutés
-  const container = document.querySelector('.container-mood-stagiaire');
-  container.innerHTML = ''; // On vide le conteneur pour éviter d'afficher des doublons à chaque chargement
-
-  // Boucle pour chaque utilisateur
-  data.forEach(element => {
-    // Créer un nouveau div pour chaque stagiaire
-    const moodStagiaireDiv = document.createElement('div');  // On crée un div pour l'humeur du stagiaire
-    moodStagiaireDiv.classList.add('mood-stagiaire');  // On lui ajoute la classe 'mood-stagiaire'
-
-    const stagiaireDiv = document.createElement('div');  // On crée un div pour les infos du stagiaire
-    stagiaireDiv.classList.add('stagiaire');  // On lui ajoute la classe 'stagiaire'
-
-    // Créer le paragraphe pour le nom et prénom
-    const nameP = document.createElement('p');  // On crée un élément <p> pour afficher le nom et prénom
-    nameP.innerHTML = `${element.nom} ${element.prenom}`;  // On insère le nom et prénom du stagiaire
-
-    // Créer le span pour l'humeur
-    const humeurSpan = document.createElement('span');  // On crée un élément <span> pour l'humeur
-    if (element.historiques && element.historiques.length > 0) {  // Si des historiques d'humeur existent
-      humeurSpan.innerHTML = `${element.historiques[0].humeur}`;  // On affiche la première humeur dans le span
-    } 
-
-    // Assembler les éléments
-    stagiaireDiv.appendChild(nameP);  // On ajoute le <p> avec le nom au div stagiaire
-    stagiaireDiv.appendChild(humeurSpan);  // On ajoute le <span> avec l'humeur au div stagiaire
-    moodStagiaireDiv.appendChild(stagiaireDiv);  // On met le div stagiaire dans le div mood-stagiaire
-    container.appendChild(moodStagiaireDiv);  // On ajoute le tout dans le conteneur principal sur la page
-  });
-};
+  const showResult = (data, groupName) => {
+    const container = document.querySelector('.container-mood-stagiaire');
+    container.innerHTML = ''; // Vider le conteneur avant d'afficher
+  
+    // Sélectionner le slider et la span où afficher la moyenne
+    const averageSpan = document.querySelector('.average-slider + span');
+    const slider = document.querySelector('.slider');
+  
+    // 🔍 Filtrer les utilisateurs du groupe
+    const filteredUsers = data.filter(user =>
+      user.groupes && user.groupes.some(group => group.nom === groupName)
+    );
+  
+    let totalMood = 0;
+    let moodCount = 0;
+  
+    // Boucle sur les utilisateurs filtrés
+    filteredUsers.forEach(element => {
+      const moodStagiaireDiv = document.createElement('div');
+      moodStagiaireDiv.classList.add('mood-stagiaire');
+  
+      const stagiaireDiv = document.createElement('div');
+      stagiaireDiv.classList.add('stagiaire');
+  
+      const nameP = document.createElement('p');
+      nameP.innerHTML = `${element.nom} ${element.prenom}`;
+  
+      const humeurSpan = document.createElement('span');
+      if (element.historiques && element.historiques.length > 0) {
+        let humeur = parseInt(element.historiques[0].humeur, 10); // Convertir en nombre
+        if (!isNaN(humeur)) {
+          totalMood += humeur;
+          moodCount++;
+        }
+        humeurSpan.innerHTML = `${humeur}`;
+      }
+  
+      // Assembler les éléments
+      stagiaireDiv.appendChild(nameP);
+      stagiaireDiv.appendChild(humeurSpan);
+      moodStagiaireDiv.appendChild(stagiaireDiv);
+      container.appendChild(moodStagiaireDiv);
+    });
+  
+    // Calcul de la moyenne des humeurs
+    let averageMood = moodCount > 0 ? Math.round(totalMood / moodCount) : 0;
+  
+    // Mettre à jour l'affichage de la moyenne
+    averageSpan.innerHTML = `${averageMood}`;
+    slider.value = averageMood;
+  };
+  
