@@ -20,46 +20,80 @@ document
   .querySelector(".header_deconnexion_alert_valid:nth-of-type(2)")
   .addEventListener("click", function () {
     // Si l'utilisateur clique sur Annuler
-    // Réafficher le bouton de déconnexion
     document.querySelector(".header_deconnexion").style.display = "flex";
-
-    // Cacher l'alerte de déconnexion
     document.querySelector(".header_deconnexion_alert").style.display = "none";
   });
 
 
+// Fonction pour charger les utilisateurs dans le <select>
+async function loadUtilisateurs() {
+    const select = document.getElementById('utilisateur');
 
-// Fonction pour charger les données d'un utilisateur sélectionné dans le formulaire
-async function loadUtilisateurData() {
-    const id = document.getElementById('utilisateur').value; // Récupère l'ID de l'utilisateur sélectionné
-
-    if (id) {
-        // Envoie une requête GET pour récupérer les détails de l'utilisateur avec l'ID spécifié
-        const response = await fetch(`/api/utilisateurs/${id}`, {
+    try {
+        const response = await fetch('/api/utilisateurs', {
             headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token') // Ajoute le token d'authentification
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         });
 
-        // Si la réponse est correcte (code 200), on traite les données reçues
-        if (response.ok) {
-            const utilisateur = await response.json(); // Parse la réponse JSON et la stocke dans la variable 'utilisateur'
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des utilisateurs');
+        }
+
+        const utilisateurs = await response.json();
+
+        // Vider le select avant de le remplir
+        select.innerHTML = '<option value="">Sélectionner un utilisateur</option>';
+
+        // Ajouter chaque utilisateur dans le <select>
+        utilisateurs.forEach(utilisateur => {
+            const option = document.createElement('option');
+            option.value = utilisateur.id;
+            option.textContent = `${utilisateur.nom} ${utilisateur.prenom}`;
+            select.appendChild(option);
+        });
+
+        // Ajouter un événement pour charger les données au changement de sélection
+        select.addEventListener('change', loadUtilisateurData);
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
+}
+
+// Fonction pour charger les données d'un utilisateur sélectionné dans le formulaire
+async function loadUtilisateurData() {
+    const id = document.getElementById('utilisateur').value;
+
+    if (id) {
+        try {
+            const response = await fetch(`/api/utilisateurs/${id}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Erreur lors de la récupération des données utilisateur');
+            }
+
+            const utilisateur = await response.json();
 
             // Remplir les champs du formulaire avec les données de l'utilisateur
             document.getElementById('id').value = utilisateur.id;
             document.getElementById('nom').value = utilisateur.nom;
             document.getElementById('prenom').value = utilisateur.prenom;
             document.getElementById('email').value = utilisateur.email;
-            document.getElementById('role').value = utilisateur.roles[0]; // Assumer qu'il y a un seul rôle pour l'utilisateur
+            document.getElementById('role').value = utilisateur.roles[0] || 'ROLE_ETUDIANT';
+        } catch (error) {
+            console.error('Erreur:', error);
         }
     }
 }
 
 // Soumettre le formulaire pour mettre à jour l'utilisateur
 document.getElementById('updateForm').addEventListener('submit', async function (event) {
-    event.preventDefault(); // Empêche la soumission du formulaire de recharger la page
+    event.preventDefault();
 
-    // Récupère les valeurs des champs du formulaire
     const id = document.getElementById('id').value;
     const nom = document.getElementById('nom').value;
     const prenom = document.getElementById('prenom').value;
@@ -67,29 +101,31 @@ document.getElementById('updateForm').addEventListener('submit', async function 
     const password = document.getElementById('password').value;
     const role = document.getElementById('role').value;
 
-    // Envoie une requête PUT pour mettre à jour les informations de l'utilisateur
-    const response = await fetch(`/api/utilisateurs/${id}`, {
-        method: 'PUT', // Méthode PUT pour la mise à jour
-        headers: {
-            'Content-Type': 'application/json', // En-tête pour indiquer que le corps est en JSON
-            'Authorization': 'Bearer ' + localStorage.getItem('token') // Ajoute le token d'authentification
-        },
-        body: JSON.stringify({
-            nom: nom,
-            prenom: prenom,
-            email: email,
-            password: password,
-            roles: [role] // On envoie les rôles sous forme de tableau, même s'il n'y en a qu'un
-        })
-    });
+    try {
+        const response = await fetch(`/api/utilisateurs/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify({
+                nom,
+                prenom,
+                email,
+                password,
+                roles: [role]
+            })
+        });
 
-    // Vérifie la réponse de la requête
-    if (response.ok) {
-        alert('Utilisateur mis à jour avec succès'); // Affiche un message de succès
-    } else {
-        alert('Erreur lors de la mise à jour de l\'utilisateur'); // Affiche un message d'erreur
+        if (response.ok) {
+            alert('Utilisateur mis à jour avec succès');
+        } else {
+            throw new Error('Erreur lors de la mise à jour de l\'utilisateur');
+        }
+    } catch (error) {
+        alert(error.message);
     }
 });
 
-// Charger les utilisateurs lors du chargement de la page
-window.onload = loadUtilisateurs; // Appelle la fonction pour charger les utilisateurs dès que la page est prête
+// Charger les utilisateurs au chargement de la page
+window.onload = loadUtilisateurs;
