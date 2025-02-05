@@ -13,7 +13,7 @@ profilButton.addEventListener("click", function () {
 });
 
 logoutButton.addEventListener("click", function () {
-  
+
   fetch("/logout", {
     method: "POST",
     headers: {
@@ -101,18 +101,18 @@ const showResult = (data, cohortId) => {
   filteredUsers.forEach(element => {
     const moodStagiaireDiv = document.createElement('div');
     moodStagiaireDiv.classList.add('mood-stagiaire');
-  
+
     const stagiaireDiv = document.createElement('div');
     stagiaireDiv.classList.add('stagiaire');
-  
+
     const nameP = document.createElement('p');
     nameP.innerHTML = `${element.nom} ${element.prenom}`;
-  
+
     const humeurSpan = document.createElement('span');
-    
+
     // Initialisation de 'humeur' à 0 par défaut
     let humeur = 0;
-  
+
     if (element.historiques && element.historiques.length > 0) {
       humeur = parseInt(element.historiques[0].humeur, 10); // Convertir en nombre
       if (!isNaN(humeur)) {
@@ -120,25 +120,26 @@ const showResult = (data, cohortId) => {
         moodCount++;
       }
     }
-    
+
+
     humeurSpan.innerHTML = `${humeur}`;
-  
+
     // Appliquer la classe correspondant à l'humeur
     const moodClass = getMoodClass(humeur);  // Appeler la fonction pour obtenir la classe CSS
     humeurSpan.classList.add(moodClass);  // Cela colorera seulement le cercle autour du chiffre
 
-     // Condition pour appliquer le fond rouge si alerte active
+    // Condition pour appliquer le fond rouge si alerte active
     if (element.alertes && element.alertes[0] && element.alertes[0].statut) {
-    moodStagiaireDiv.classList.add('rouge');  // Ajoute une classe rouge au conteneur
+      moodStagiaireDiv.classList.add('rouge');  // Ajoute une classe rouge au conteneur
     }
-  
+
     // Assembler les éléments
     stagiaireDiv.appendChild(nameP);
     stagiaireDiv.appendChild(humeurSpan);
     moodStagiaireDiv.appendChild(stagiaireDiv);
     container.appendChild(moodStagiaireDiv);
   });
-  
+
   // Calcul de la moyenne des humeurs
   let averageMood = moodCount > 0 ? Math.round(totalMood / moodCount) : 0;
 
@@ -147,16 +148,48 @@ const showResult = (data, cohortId) => {
   slider.value = averageMood;
 };
 
-
 const getMoodClass = (mood) => {
   // Vérifier si mood est 0, indéfini, ou nul
   if (mood === 0 || mood === undefined || mood === null) {
     return 'gris';  // Retourner gris si aucune humeur n'est disponible
   } else if (mood < 40) {
-    return 'green';  
+    return 'green';
   } else if (mood < 70) {
-    return 'orange';  
+    return 'orange';
   } else if (mood < 80) {
-    return 'red';  
+    return 'red';
   }
 };
+
+// Récupérer le token de l'utilisateur depuis le localStorage
+let tokenUser = localStorage.getItem("token");
+
+// Fonction pour mettre à jour le statut d'une alerte
+function updateAlerteStatut(id, newStatut) {
+  fetch(`https://localhost/api/alertes/${id}/statut`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${tokenUser}`
+
+    },
+    body: JSON.stringify({
+      statut: newStatut, // Le nouveau statut à appliquer
+    }),
+  })
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error('Erreur lors de la mise à jour de l\'alerte');
+      }
+    })
+    .then(data => {
+      console.log('Statut mis à jour avec succès', data);
+    })
+    .catch(error => {
+      console.error('Erreur:', error);
+    });
+}
+
+
