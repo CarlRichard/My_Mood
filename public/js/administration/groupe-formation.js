@@ -101,30 +101,44 @@ const showResult = (data, cohortId) => {
   filteredUsers.forEach(element => {
     const moodStagiaireDiv = document.createElement('div');
     moodStagiaireDiv.classList.add('mood-stagiaire');
-
+  
     const stagiaireDiv = document.createElement('div');
     stagiaireDiv.classList.add('stagiaire');
-
+  
     const nameP = document.createElement('p');
     nameP.innerHTML = `${element.nom} ${element.prenom}`;
-
+  
     const humeurSpan = document.createElement('span');
+    
+    // Initialisation de 'humeur' à 0 par défaut
+    let humeur = 0;
+  
     if (element.historiques && element.historiques.length > 0) {
-      let humeur = parseInt(element.historiques[0].humeur, 10); // Convertir en nombre
+      humeur = parseInt(element.historiques[0].humeur, 10); // Convertir en nombre
       if (!isNaN(humeur)) {
         totalMood += humeur;
         moodCount++;
       }
-      humeurSpan.innerHTML = `${humeur}`;
     }
+    
+    humeurSpan.innerHTML = `${humeur}`;
+  
+    // Appliquer la classe correspondant à l'humeur
+    const moodClass = getMoodClass(humeur);  // Appeler la fonction pour obtenir la classe CSS
+    humeurSpan.classList.add(moodClass);  // Cela colorera seulement le cercle autour du chiffre
 
+     // Condition pour appliquer le fond rouge si alerte active
+    if (element.alertes && element.alertes[0] && element.alertes[0].statut) {
+    moodStagiaireDiv.classList.add('rouge');  // Ajoute une classe rouge au conteneur
+    }
+  
     // Assembler les éléments
     stagiaireDiv.appendChild(nameP);
     stagiaireDiv.appendChild(humeurSpan);
     moodStagiaireDiv.appendChild(stagiaireDiv);
     container.appendChild(moodStagiaireDiv);
   });
-
+  
   // Calcul de la moyenne des humeurs
   let averageMood = moodCount > 0 ? Math.round(totalMood / moodCount) : 0;
 
