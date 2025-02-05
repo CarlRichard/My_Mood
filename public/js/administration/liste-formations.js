@@ -64,3 +64,11 @@ function displayFormations(formations) {
 // Appeler la fonction au chargement de la page
 document.addEventListener("DOMContentLoaded", fetchFormations);
 
+
+const logoutButton = document.querySelector(".header-btn");
+logoutButton.addEventListener("click", function () {
+    localStorage.removeItem("token"); // Supprimer le token
+    localStorage.removeItem("ID_User"); // Supprimer le token
+    localStorage.removeItem("role"); // Supprimer le token
+    window.location.href = "../../index.html"; // Rediriger vers la page de connexion
+  });
