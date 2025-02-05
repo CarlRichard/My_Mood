@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,5 +31,13 @@ class ApiLoginController extends AbstractController
             'user' => $user->getUserIdentifier(), // Utilisez getUserIdentifier() pour récupérer l'identifiant
             'role' => $role,  // Renvoyer le rôle de l'utilisateur
         ]);
+    }
+
+    #[Route('/api/logout', name: 'api_logout', methods: ['POST'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    public function logout(JWTTokenManagerInterface $jwtManager): JsonResponse
+    {
+        // Ajouter le token actuel à une liste noire (ex: Redis, DB)
+        return new JsonResponse(['message' => 'Déconnexion réussie'], 200);
     }
 }

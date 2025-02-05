@@ -80,6 +80,11 @@ class UtilisateurController extends AbstractController
             return new JsonResponse(['message' => 'Email, nom et prénom requis'], 400);
         }
 
+            // Si les rôles sont envoyés, on les met à jour
+        if (isset($data['roles']) && is_array($data['roles'])) {
+            $utilisateur->setRoles($data['roles']);
+        }
+
         // Mise à jour des données
         $utilisateur->setEmail($data['email']);
         $utilisateur->setNom($data['nom']);
@@ -91,10 +96,7 @@ class UtilisateurController extends AbstractController
             $utilisateur->setPassword($hashedPassword);
         }
 
-        // Mise à jour du rôle, s'il est spécifié, sinon on garde le rôle actuel
-        if (isset($data['role']) && in_array($data['role'], ['ROLE_ETUDIANT', 'ROLE_SUPERVISEUR', 'ROLE_ADMIN'])) {
-            $utilisateur->setRoles([$data['role']]);
-        }
+
 
         // Sauvegarde en base
         $entityManager->persist($utilisateur);

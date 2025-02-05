@@ -25,8 +25,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
             controller: 'App\Controller\UtilisateurController::createUser'
         ),
     ],
-    normalizationContext: ['groups' => ['utilisateur:read']], // pour la lecture des utilisateurs
-)]
+        normalizationContext: ['groups' => ['utilisateur:read']],
+        denormalizationContext: ['groups' => ['utilisateur:write']]
+    )]
+    
 #[ORM\Table(name: 'utilisateur')]
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -41,7 +43,7 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['utilisateur:read', 'cohorte:read'])] 
+    #[Groups(['utilisateur:read', 'cohorte:read', 'utilisateur:write'])] 
     private array $roles = ["ROLE_ETUDIANT"];
 
     #[ORM\Column(length: 255)]
