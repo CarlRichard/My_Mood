@@ -37,7 +37,7 @@ class Alerte
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['alerte:read'])]
+    #[Groups(['alerte:read','utilisateur:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: 'datetime')]
