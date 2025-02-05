@@ -19,6 +19,9 @@ class JWTCreatedListener
         // Ajouter le rôle de l'utilisateur au token
         $payload['role'] = $user->getRoles(); // getRoles() retourne un tableau, assure-toi que cela te convient
 
+        // Ajouter l'ID de l'utilisateur au token
+        $payload['id'] = $user->getId(); // Ajouter l'ID de l'utilisateur
+
         // Mettre à jour le payload du token
         $event->setData($payload);
     }

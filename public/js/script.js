@@ -72,6 +72,7 @@ formStagiaire.addEventListener("submit", (event) => {
         const decodedToken = JSON.parse(atob(token.split('.')[1]));  // Décoder le payload du JWT
         console.log(decodedToken);  
         const role = decodedToken.role
+        const IDUser = decodedToken.id
 
       ///  const token = result.token;
       //  const role = result.role;
@@ -83,6 +84,8 @@ formStagiaire.addEventListener("submit", (event) => {
         // Si le token est valide, le stocker dans le localStorage
         localStorage.setItem("role", JSON.stringify(role));
         localStorage.setItem("token", token);
+        localStorage.setItem("ID_User", JSON.stringify(IDUser));
+
 
         // Vérification et redirection selon le rôle
         if (role == "ROLE_ADMIN") {
