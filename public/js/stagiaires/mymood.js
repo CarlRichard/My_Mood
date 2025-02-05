@@ -21,7 +21,7 @@ moodButton.addEventListener("click", () => {
       method: "POST", // Définir la méthode de la requête HTTP (POST)
       headers: {
         "Content-Type": "application/json", // Spécifier que les données envoyées sont au format JSON
-        "Authorization": `Bearer ${tokenUser}`, // Ajouter le token dans l'en-tête pour authentification
+        Authorization: `Bearer ${tokenUser}`, // Ajouter le token dans l'en-tête pour authentification
       },
       body: JSON.stringify({
         score: sliderValue, // Inclure la valeur du slider dans le corps de la requête
@@ -50,3 +50,35 @@ moodButton.addEventListener("click", () => {
     console.log("Aucun token trouvé dans le localStorage"); // Message si le token n'est pas trouvé
   }
 });
+
+// recupérer l'humeur pour le curseur
+// fetch("/api/utilisateurs")
+//   .then((response) => {
+//     // Vérifie si la réponse est ok (status 200-299)
+//     if (!response.ok) {
+//       throw new Error("Erreur réseau : " + response.status);
+//     }
+//     return response.json(); // On suppose que la réponse est en JSON
+//   })
+//   .then((data) => {
+//     // Récupérer le token de l'utilisateur depuis le localStorage
+//     let tokenUser = localStorage.getItem("token");
+
+//     // Vérifier si le token existe
+//     if (tokenUser) {
+//       console.log("Token récupéré :", tokenUser);
+//       // Tu peux maintenant utiliser le token pour d'autres appels API ou traitements.
+//       // Créer et afficher le nouveau message
+//       const humeurScore = document.createElement("p");
+//       humeurScore.classList.add("msg_ok_humeur");
+//       humeurScore.textContent = `Votre dernière humeur était à 25.`;
+//       divHumeur.appendChild(humeurScore);
+//     } else {
+//       console.log("Aucun token trouvé dans le localStorage");
+//     }
+
+//     console.log(data); // Affiche les données dans la console
+//   })
+//   .catch((error) => {
+//     console.error("Erreur :", error); // Si une erreur survient, on l'affiche
+//   });

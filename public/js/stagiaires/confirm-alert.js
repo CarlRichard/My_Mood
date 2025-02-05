@@ -21,7 +21,10 @@ moodLinkSos.addEventListener("click", () => {
     })
       .then((response) => response.json()) // Traiter la réponse du serveur au format JSON
       .then((data) => {
-        console.log("Réponse du serveur :", data); // Afficher les données de la réponse);
+        console.log("Réponse du serveur :", data); // Afficher les données de la réponse
+
+        // Rediriger vers la page ./mymood.html après l'envoi de la requête
+        window.location.href = './mymood.html';
       })
       .catch((error) => {
         console.error("Erreur de la requête fetch :", error); // Gérer les erreurs liées à la requête fetch
