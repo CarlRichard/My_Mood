@@ -13,26 +13,12 @@ profilButton.addEventListener("click", function () {
 });
 
 logoutButton.addEventListener("click", function () {
-
-  fetch("/logout", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.message === "Déconnexion réussie") {
-        // Effacer le token dans localStorage
-        localStorage.removeItem("token");
-        // Rediriger vers la page de connexion
-        window.location.href = "../../index.html";
-      }
-    })
-    .catch((error) => {
-      console.error("Erreur lors de la déconnexion:", error);
-    });
+  localStorage.removeItem("token"); // Supprimer le token
+  localStorage.removeItem("ID_User"); // Supprimer le token
+  localStorage.removeItem("role"); // Supprimer le token
+  window.location.href = "../../index.html"; // Rediriger vers la page de connexion
 });
+
 
 // Fonction pour récupérer les paramètres GET de l'URL
 function getQueryParam(param) {
