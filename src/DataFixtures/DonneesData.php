@@ -23,10 +23,6 @@ class DonneesData extends Fixture
         $cohorteB->setNom('Back-end');
         $manager->persist($cohorteB);
 
-        $cohorteA = new Cohorte();
-        $cohorteA->setNom('Front-end');
-        $manager->persist($cohorteA);
-
         $cohorteC = new Cohorte();
         $cohorteC->setNom('CDA');
         $manager->persist($cohorteC);

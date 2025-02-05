@@ -100,47 +100,47 @@ const showResult = (data, cohortId) => {
   filteredUsers.forEach(element => {
     const moodStagiaireDiv = document.createElement('div');
     moodStagiaireDiv.classList.add('mood-stagiaire');
-  
+
     const stagiaireDiv = document.createElement('div');
     stagiaireDiv.classList.add('stagiaire');
-  
+
     const nameP = document.createElement('p');
     nameP.innerHTML = `${element.nom} ${element.prenom}`;
-  
+
     const humeurSpan = document.createElement('span');
-  
+
     let humeur = 0;
     if (element.historiques && element.historiques.length > 0) {
-      humeur = parseInt(element.historiques[0].humeur, 10); 
+      humeur = parseInt(element.historiques[0].humeur, 10);
       if (!isNaN(humeur)) {
         totalMood += humeur;
         moodCount++;
       }
     }
-  
+
     humeurSpan.innerHTML = `${humeur}`;
     const moodClass = getMoodClass(humeur);
     humeurSpan.classList.add(moodClass);
-  
+
     // Ajouter un fond rouge si alerte active
     if (element.alertes && element.alertes[0] && element.alertes[0].statut === "EN_COURS") {
       moodStagiaireDiv.classList.add('rouge');
     }
-    
-  
+
+
     // Assembler les éléments
     stagiaireDiv.appendChild(nameP);
     stagiaireDiv.appendChild(humeurSpan);
     moodStagiaireDiv.appendChild(stagiaireDiv);
     container.appendChild(moodStagiaireDiv);
-  
+
     // Ajouter un événement de clic sur la div stagiaire
-    stagiaireDiv.addEventListener('click', function() {
+    stagiaireDiv.addEventListener('click', function () {
       // Vérifier si l'utilisateur a des alertes
       if (element.alertes && element.alertes.length > 0) {
         const lastAlerte = element.alertes[element.alertes.length - 1]; // Dernière alerte
         console.log('Dernière alerte de l\'utilisateur:', lastAlerte);
-  
+
         // Appeler la fonction pour mettre à jour le statut de l'alerte
         const newStatut = lastAlerte.statut === 'RESOLUE' ? 'EN_COURS' : 'RESOLUE'; // Inverser le statut pour l'exemple
         updateAlerteStatut(lastAlerte.id, newStatut);
@@ -149,7 +149,7 @@ const showResult = (data, cohortId) => {
       }
     });
   });
-  
+
 
   // Calcul de la moyenne des humeurs
   let averageMood = moodCount > 0 ? Math.round(totalMood / moodCount) : 0;
@@ -163,18 +163,18 @@ const getMoodClass = (mood) => {
   // Vérifier si mood est 0, indéfini, ou nul
   if (mood === 0 || mood === undefined || mood === null) {
     return 'gris';  // Retourner gris si aucune humeur n'est disponible
-  } else if (mood < 40) {
+  } else if (mood <= 40) {
     return 'green';
-  } else if (mood < 70) {
+  } else if (mood <= 70) {
     return 'orange';
-  } else if (mood < 80) {
+  } else if (mood > 71) {
     return 'red';
   }
 };
 
 // Récupérer le token de l'utilisateur depuis le localStorage
 let tokenUser = localStorage.getItem("token");
-let newStatut ="RESOLUE"
+let newStatut = "RESOLUE"
 
 // Fonction pour mettre à jour le statut d'une alerte
 function updateAlerteStatut(id, newStatut) {
@@ -192,14 +192,14 @@ function updateAlerteStatut(id, newStatut) {
     .then(response => {
       if (response.ok) {
         return response.json();
-      
+
       } else {
         throw new Error('Erreur lors de la mise à jour de l\'alerte');
       }
     })
     .then(data => {
       console.log('Statut mis à jour avec succès', data);
-      moodStagiaireDiv.classList.remove('rouge'); 
+      window.location.reload();
     })
     .catch(error => {
       console.error('Erreur:', error);
