@@ -46,8 +46,8 @@ function displayFormations(formations) {
   
     formations.forEach(formation => {
       // Création du bouton pour chaque formation
-      const formationButton = document.createElement("button");
-      formationButton.classList.add("formation-btn");
+      const formationButton = document.createElement("a");
+      formationButton.classList.add("formation-btn" , "link" , "card-link" , "btn");
       formationButton.innerText = formation.nom;
   
       // Ajout de l'événement pour rediriger au clic avec l'ID en paramètre GET

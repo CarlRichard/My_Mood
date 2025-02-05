@@ -33,6 +33,7 @@ logoutButton.addEventListener("click", function () {
       console.error("Erreur lors de la déconnexion:", error);
     });
 });
+
 // Fonction pour récupérer les paramètres GET de l'URL
 function getQueryParam(param) {
   const urlParams = new URLSearchParams(window.location.search);
@@ -42,10 +43,24 @@ function getQueryParam(param) {
 // Récupérer l'ID de la cohorte depuis l'URL et le convertir en nombre
 const cohortId = parseInt(getQueryParam("id"), 10);
 
-// Sélectionner le <h2> et y afficher l'ID de la cohorte
+// Sélectionner le <h2>
 let myH2 = document.querySelector('h2');
+
 if (!isNaN(cohortId)) {
-  myH2.innerHTML = `Cohorte ID : ${cohortId}`;
+  // Requête pour récupérer les détails de la cohorte
+  fetch(`/api/cohortes/${cohortId}`)
+    .then(response => response.json())
+    .then(data => {
+      if (data.nom) {
+        myH2.innerHTML = `Cohorte : ${data.nom}`; // Afficher le nom de la cohorte
+      } else {
+        myH2.innerHTML = "Cohorte introuvable";
+      }
+    })
+    .catch(error => {
+      console.error("Erreur lors de la récupération de la cohorte :", error);
+      myH2.innerHTML = "Erreur lors du chargement de la cohorte";
+    });
 } else {
   myH2.innerHTML = "Aucune cohorte sélectionnée";
 }
@@ -69,7 +84,7 @@ const showResult = (data, cohortId) => {
   const averageSpan = document.querySelector('.average-slider + span');
   const slider = document.querySelector('.slider');
 
-  // 🔍 Filtrer les utilisateurs par l'ID de la cohorte
+  // Filtrer les utilisateurs par l'ID de la cohorte
   const filteredUsers = data.filter(user =>
     user.groupes && user.groupes.some(group => {
       console.log(`Utilisateur: ${user.nom} ${user.prenom}, Cohortes:`, user.groupes);

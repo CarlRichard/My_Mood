@@ -36,7 +36,7 @@ class DonneesData extends Fixture
 
         // Création d'utilisateurs avec Faker
         $user1 = new Utilisateur();
-        $user1->setEmail('etudiant@example.com');
+        $user1->setEmail('etudiant@test.com');
         $user1->setNom($faker->lastName);
         $user1->setPrenom($faker->firstName);
         $user1->setRoles(['ROLE_ETUDIANT']);
@@ -44,7 +44,7 @@ class DonneesData extends Fixture
         $manager->persist($user1);
 
         $user2 = new Utilisateur();
-        $user2->setEmail('superviseur@example.com');
+        $user2->setEmail('superviseur@test.com');
         $user2->setNom('Smith');
         $user2->setPrenom('Jane');
         $user2->setRoles(['ROLE_SUPERVISEUR']);
@@ -52,7 +52,7 @@ class DonneesData extends Fixture
         $manager->persist($user2);
 
         $user3 = new Utilisateur();
-        $user3->setEmail('admin@example.com');
+        $user3->setEmail('admin@test.com');
         $user3->setNom('Brown');
         $user3->setPrenom('Mike');
         $user3->setRoles(['ROLE_ADMIN']);

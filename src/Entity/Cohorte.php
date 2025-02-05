@@ -21,7 +21,7 @@ class Cohorte
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['cohorte:read'])]
+    #[Groups(['cohorte:read', 'utilisateur:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -38,7 +38,7 @@ class Cohorte
      * @var Collection<int, Utilisateur>
      */
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: 'groupes')]
-    #[ApiSubresource] // Cette annotation expose les utilisateurs comme une sous-ressource
+    #[ApiSubresource] // expose les utilisateurs comme une sous-ressource
     #[Groups(['cohorte:read'])]
     private Collection $utilisateurs;
 
@@ -51,7 +51,7 @@ class Cohorte
     public function setDefaultDateCreation(): void
     {
         if ($this->dateCreation === null) {
-            $this->dateCreation = new \DateTime(); // Définit la date actuelle si aucune date n'est spécifiée
+            $this->dateCreation = new \DateTime(); // met a la date actuelle si non precisé
         }
     }
 
