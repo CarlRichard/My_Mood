@@ -211,7 +211,7 @@ h2 {
   font-size: 16px;
   text-align: center;
   font-weight: 500;
-  color: red;
+  color: #0048a3;
 }
   /* FOOTER */
   footer {
@@ -288,6 +288,9 @@ h2 {
   .msg_ok_humeur {
   font-size: 15px;
   }
+  .msg_derniere_humeur {
+    font-size: 15px;
+  }
 }
 
 /*=====SMARTPHONE=====*/
@@ -357,5 +360,8 @@ h2 {
   }
   .msg_ok_humeur {
     font-size: 13px;
+    } 
+    .msg_derniere_humeur {
+      font-size: 13px;
     }
 }
