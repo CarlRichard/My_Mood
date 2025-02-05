@@ -9,18 +9,25 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
+// Alerte.php
+
 #[ORM\Entity(repositoryClass: AlerteRepository::class)]
 #[ApiResource(
     normalizationContext: ['groups' => ['alerte:read']],
-    denormalizationContext: ['groups' => ['alerte:write']],
+    denormalizationContext: ['groups' => ['alerte:write', 'alerte:update_statut']], // Ajouter le groupe 'alerte:update_statut'
     operations: [
         new \ApiPlatform\Metadata\Post(
             controller: 'App\Controller\AlerteController::createSOS', 
             name: 'create_sos' 
         ),
         new \ApiPlatform\Metadata\Put(),
+        new \ApiPlatform\Metadata\Patch(
+            uriTemplate: '/alertes/{id}/statut',
+            security: "is_granted('ROLE_SUPERVISEUR') or is_granted('ROLE_ADMIN')",
+            denormalizationContext: ['groups' => ['alerte:update_statut']]
+        ),
         new \ApiPlatform\Metadata\Delete(
-                security: "is_granted('ROLE_SUPERVISEUR')",      
+            security: "is_granted('ROLE_SUPERVISEUR')",      
         ),
         new \ApiPlatform\Metadata\Get(),
     ]
@@ -38,7 +45,7 @@ class Alerte
     private ?\DateTimeInterface $dateCreation = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['alerte:read', 'alerte:write', 'utilisateur:read'])]
+    #[Groups(['alerte:read', 'alerte:write', 'utilisateur:read', 'alerte:update_statut'])]  // Ajout du groupe pour 'statut' dans la mise à jour
     #[Assert\NotBlank(message: 'Le statut est obligatoire.')]
     #[Assert\Choice(
         choices: ['EN_COURS', 'RESOLUE', 'ANNULEE'],
@@ -49,8 +56,6 @@ class Alerte
     #[ORM\ManyToOne(inversedBy: 'alertes')]
     private ?Utilisateur $utilisateur = null;
 
-
-
     #[ORM\PrePersist]
     public function setDefaultDateCreation(): void
     {
@@ -60,7 +65,6 @@ class Alerte
     }
 
     // Getters et setters
-
     public function getId(): ?int
     {
         return $this->id;
@@ -96,8 +100,6 @@ class Alerte
     public function setUtilisateur(?Utilisateur $utilisateur): static
     {
         $this->utilisateur = $utilisateur;
-
         return $this;
     }
-
 }

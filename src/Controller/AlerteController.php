@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class AlerteController extends AbstractController
 {
@@ -33,4 +34,35 @@ class AlerteController extends AbstractController
 
         return new JsonResponse(['status' => 'Alerte créés'], JsonResponse::HTTP_CREATED);
     }
+
+    #[Route('/api/alertes/{id}/statut', name: 'update_alerte_statut_patch', methods: ['PATCH'])]
+    #[IsGranted('ROLE_SUPERVISEUR')]  // Seuls les superviseurs peuvent modifier le statut
+    public function patchStatut(Alerte $alerte, Request $request, EntityManagerInterface $entityManager): JsonResponse
+    {
+        // Décoder le contenu de la requête
+        $data = json_decode($request->getContent(), true);
+
+        // Vérification si le champ "statut" est présent dans la requête
+        if (!isset($data['statut'])) {
+            return new JsonResponse(['error' => 'Le champ "statut" est obligatoire'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
+        $nouveauStatut = $data['statut'];
+
+        // Vérification de la validité du statut
+        if (!in_array($nouveauStatut, ['EN_COURS', 'RESOLUE', 'ANNULEE'])) {
+            return new JsonResponse(['error' => 'Statut invalide'], JsonResponse::HTTP_BAD_REQUEST);
+        }
+
+        // Mettre à jour le statut de l'alerte
+        $alerte->setStatut($nouveauStatut);
+
+        // Laisser la date_creation inchangée (pas de modification de la date)
+        $entityManager->flush();
+
+        return new JsonResponse(['message' => 'Statut mis à jour avec succès'], JsonResponse::HTTP_OK);
+    }
 }
+    
+
+
