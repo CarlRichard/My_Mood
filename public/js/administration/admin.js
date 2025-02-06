@@ -59,8 +59,6 @@ async function loadUtilisateurs() {
         console.error('Erreur:', error);
     }
 }
-
-// Fonction pour charger les données d'un utilisateur sélectionné dans le formulaire
 async function loadUtilisateurData() {
     const id = document.getElementById('utilisateur').value;
 
@@ -84,13 +82,25 @@ async function loadUtilisateurData() {
             document.getElementById('prenom').value = utilisateur.prenom;
             document.getElementById('email').value = utilisateur.email;
             document.getElementById('role').value = utilisateur.roles[0] || 'ROLE_ETUDIANT';
+
+            // Ajouter les formations à partir du groupe (groupes)
+            const selectFormation = document.getElementById('formation');
+            
+            // Sélectionner les formations actuelles de l'utilisateur
+            utilisateur.groupes.forEach(groupe => {
+                const option = selectFormation.querySelector(`option[value='${groupe.id}']`);
+                if (option) {
+                    option.selected = true; // Sélectionner cette formation
+                }
+            });
+
         } catch (error) {
             console.error('Erreur:', error);
         }
     }
 }
 
-// Soumettre le formulaire pour mettre à jour l'utilisateur
+
 document.getElementById('updateForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
@@ -100,6 +110,8 @@ document.getElementById('updateForm').addEventListener('submit', async function 
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const role = document.getElementById('role').value;
+    const selectedFormations = Array.from(document.getElementById('formation').selectedOptions)
+    .map(option => option.value);
 
     try {
         const response = await fetch(`/api/utilisateurs/${id}`, {
@@ -113,7 +125,8 @@ document.getElementById('updateForm').addEventListener('submit', async function 
                 prenom,
                 email,
                 password,
-                roles: [role]
+                roles: [role],
+                groupes: selectedFormations  
             })
         });
 
@@ -126,6 +139,37 @@ document.getElementById('updateForm').addEventListener('submit', async function 
         alert(error.message);
     }
 });
+async function loadFormations() {
+    const selectFormation = document.getElementById('formation');
+
+    try {
+        const response = await fetch('/api/cohortes', {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Erreur lors de la récupération des formations');
+        }
+
+        const formations = await response.json();
+
+        // Ajouter chaque formation dans le <select>
+        formations.forEach(formation => {
+            const option = document.createElement('option');
+            option.value = formation.id;
+            option.textContent = formation.nom;
+            selectFormation.appendChild(option);
+        });
+
+    } catch (error) {
+        console.error('Erreur:', error);
+    }
+}
 
 // Charger les utilisateurs au chargement de la page
-window.onload = loadUtilisateurs;
+window.onload = function() {
+    loadUtilisateurs();
+    loadFormations(); 
+};
