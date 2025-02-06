@@ -74,8 +74,6 @@ formStagiaire.addEventListener("submit", (event) => {
         const role = decodedToken.role
         const IDUser = decodedToken.id
 
-      ///  const token = result.token;
-      //  const role = result.role;
 
         if (!token || token.length < 2) {
           throw new Error("Token invalide");
