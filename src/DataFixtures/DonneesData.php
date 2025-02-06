@@ -55,6 +55,23 @@ class DonneesData extends Fixture
         $user3->setPassword(password_hash('password', PASSWORD_BCRYPT));
         $manager->persist($user3);
 
+        $user4 = new Utilisateur();
+        $user4->setEmail('Mike.dat@test.com');
+        $user4->setNom('Dat');
+        $user4->setPrenom('Mike');
+        $user4->setRoles(['ROLE_ETUDIANT']);
+        $user4->setPassword(password_hash('password', PASSWORD_BCRYPT));
+        $manager->persist($user4);
+
+
+        $user5 = new Utilisateur();
+        $user5->setEmail('k.Wilson@test.com');
+        $user5->setNom('Wilson');
+        $user5->setPrenom('Kelly');
+        $user5->setRoles(['ROLE_ADMIN']);
+        $user5->setPassword(password_hash('password', PASSWORD_BCRYPT));
+        $manager->persist($user5);
+
         // Création de quelques autres utilisateurs
         for ($i = 0; $i < 10; $i++) {
             $user = new Utilisateur();
@@ -70,10 +87,13 @@ class DonneesData extends Fixture
         $user1->addGroupe($cohorteA);
         $user2->addGroupe($cohorteA);
         $user3->addGroupe($cohorteB);
+        $user4->addGroupe($cohorteA);
+        $user5->addGroupe($cohorteA);
+
 
         // Créer des historiques pour les utilisateurs
         $historique1 = new Historique();
-        $historique1->setHumeur($faker->numberBetween(1, 10)); // Score d'humeur aléatoire entre 1 et 10
+        $historique1->setHumeur($faker->numberBetween(1, 100)); // Score d'humeur aléatoire entre 1 et 100
         $historique1->setDateCreation($faker->dateTimeThisYear);
         $historique1->setUtilisateur($user1);
         $manager->persist($historique1);
@@ -90,6 +110,17 @@ class DonneesData extends Fixture
         $historique3->setUtilisateur($user3);
         $manager->persist($historique3);
 
+        $historique4 = new Historique();
+        $historique4->setHumeur($faker->numberBetween(1, 10));
+        $historique4->setDateCreation($faker->dateTimeThisYear);
+        $historique4->setUtilisateur($user4);
+        $manager->persist($historique4);
+
+        $historique5 = new Historique();
+        $historique5->setHumeur($faker->numberBetween(1, 10));
+        $historique5->setDateCreation($faker->dateTimeThisYear);
+        $historique5->setUtilisateur($user5);
+        $manager->persist($historique5);
         // Créer des alertes pour certains utilisateurs
         $alerte1 = new Alerte();
         $alerte1->setStatut('EN_COURS');
