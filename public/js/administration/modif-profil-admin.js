@@ -9,7 +9,7 @@ okButton.addEventListener("click", function () {
 });
 
 adminButton.addEventListener("click", function () {
-  window.location.href = "";
+  window.location.href = "../../pages/administration/liste-formation-stagiaires.html";
 });
 
 logoutButton.addEventListener("click", function () {
