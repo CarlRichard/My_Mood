@@ -1,33 +1,80 @@
 /*=====DESKTOP=====*/
 /* HEADER */
 header {
-  display: flex;
   justify-content: space-between;
-  align-items: center;
 }
-.header_button {
-  padding: 10px 15px;
-  border-radius: 4px;
-  background-color: var(--tertiary-color);
+.header_container_button {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 16px;
+  margin-right: 20px;
+}
+.header_container_button button {
   color: var(--secondary-color);
-  margin-right: 25px;
+  border-radius: 7px;
+  background-color: var(--tertiary-color);
+  padding: 10px 20px;
+  cursor: pointer;
   box-shadow: 2px 2px 8px -2px var(--border-color);
   border: 1px solid var(--secondary-bg-color);
   transition: 0.2s;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 5px;
-  cursor: pointer;
 }
-.header_button:hover {
-  scale: 1.04;
+.header_container_button button > span {
+  font-size: 20px;
+  font-weight: lighter;
+}
+.header_container_button button:hover {
+  scale: 1.02;
   background-color: var(--button-hover-bg-color);
   font-weight: 500;
 }
-.header_button > span {
-  font-size: 20px;
-  font-weight: lighter;
+
+.header_deconnexion_alert {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 15px;
+  background-color: var(--primary-bg-color);
+  padding: 37px 30px;
+  box-shadow: 2px 2px 8px -2px var(--border-color);
+  margin-top: 17px;
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  width: 341px;
+  display: none;
+}
+.header_deconnexion_alert p {
+  color: var(--tertiary-color);
+  text-align: center;
+  margin-bottom: 20px;
+}
+.header_deconnexion_alert button {
+  background-color: var(--tertiary-color);
+  border: 1px solid var(--secondary-bg-color);
+  box-shadow: 2px 2px 8px -3px var(--border-color);
+  border-radius: 5px;
+  padding: 4px 0;
+  width: 100%;
+  color: var(--secondary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: 0.2s;
+  font-size: 15px;
+}
+.header_deconnexion_alert button:hover {
+  scale: 1.02;
+  background-color: var(--button-hover-bg-color);
+  font-weight: 500;
+}
+.header_deconnexion_alert button > span {
+  font-size: 24px;
 }
 
 /* MAIN */

@@ -375,6 +375,7 @@ formationButtonAddIntern.addEventListener("click", function () {
     alert("Token d'authentification manquant !");
     return;
   }
+  
   function getCheckboxId() {
     // Récupérer toutes les cases à cocher avec la classe 'formation_input'
     let checkboxes = document.getElementsByClassName("formation_input");

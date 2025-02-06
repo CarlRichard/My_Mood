@@ -1,3 +1,33 @@
+// DECONNEXION
+document
+  .querySelector(".header_deconnexion")
+  .addEventListener("click", function () {
+    // Cacher la section .header_container_button
+    document.querySelector(".header_container_button").style.display = "none";
+
+    // Afficher la .header_deconnexion_alert
+    document.querySelector(".header_deconnexion_alert").style.display = "flex";
+  });
+
+document
+  .querySelector(".header_deconnexion_alert_valid:nth-of-type(1)")
+  .addEventListener("click", function () {
+    // Si l'utilisateur clique sur Valider
+    localStorage.clear(); // Vider le localStorage
+    window.location.href = "../../index.html"; // Rediriger vers index.html
+  });
+
+document
+  .querySelector(".header_deconnexion_alert_valid:nth-of-type(2)")
+  .addEventListener("click", function () {
+    // Si l'utilisateur clique sur Annuler
+    // Réafficher la section .header_container_button
+    document.querySelector(".header_container_button").style.display = "flex";
+
+    // Cacher la .header_deconnexion_alert
+    document.querySelector(".header_deconnexion_alert").style.display = "none";
+  });
+
 // Sélectionner les éléments du DOM nécessaires : slider, bouton, et lien
 const slider = document.querySelector(".slider");
 const moodButton = document.querySelector(".humeur_button");
